@@ -1,0 +1,110 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: Roboto, serif;
+  background: #2E4662;
+}
+
+.col-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  min-height: -webkit-fill-available;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+}
+
+.card {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background: #1388DB;
+  margin: 0.2em;
+  border-radius: 1em;
+  color: azure;
+  padding: 0;
+}
+
+.category-title {
+  font-size: xx-large;
+  font-weight: 600;
+}
+
+input,
+button {
+  border: none;
+  margin: 0.2em;
+  padding: 0.7em 1em;
+  background: azure;
+  border-radius: 1em;
+}
+
+button {
+  cursor: pointer;
+}
+
+.hidden {
+  opacity: 0.3;
+}
+
+.admin-play {
+  background: #50B750;
+  color: white;
+  border: 1px black solid;
+}
+
+.admin-stop {
+  background: #D9534F;
+  color: white;
+  border: 1px black solid;
+}
+
+.admin-winner {
+  background: #d1d900;
+  color: #0f0f0f;
+  border: 1px black solid;
+}
+
+.answered {
+  opacity: 0.35;
+}
+
+.open-question {
+  display: flex;
+  position: absolute;
+  background: #0F6BAC;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 10%;
+  justify-content: center;
+  align-items: center;
+  font-size: 5em;
+  font-weight: 800;
+  z-index: 1;
+  text-align: center;
+}

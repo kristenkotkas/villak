@@ -1,0 +1,25 @@
+.game-card-amount {
+  font-size: 3.5em;
+  font-weight: 800;
+}
+
+.admin-card-amount {
+  font-size: x-large;
+  font-weight: 800;
+  margin-bottom: 0.3em;
+}
+
+.silver {
+  background: #A9A9A9;
+}
+
+.admin-card-open {
+  background: #50B750;
+  color: black;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}

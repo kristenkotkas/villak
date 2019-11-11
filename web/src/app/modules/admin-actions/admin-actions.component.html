@@ -1,0 +1,31 @@
+<section style="height: 10%; display: flex">
+  <section class="row">
+    <section *ngFor="let round of game.rounds" class="col">
+      <div class="card"
+           [ngClass]="{hidden: !round.active}">
+        <section>
+          Round: {{round.id}}
+          <button *ngIf="!round.active"
+                  (click)="setActiveRound(round.id)">Set active
+          </button>
+        </section>
+      </div>
+    </section>
+    <section class="col">
+      <div class="card">
+        <section>
+          <button class="admin-play" (click)="getPlayer('intro').play()">♫ Intro ►</button>
+          <button class="admin-stop" (click)="stop('intro', '../../../assets/sounds/Jeopardy Intro.mp3')">■</button>
+          <button class="admin-play" (click)="getPlayer('think').play()">♫ Thinking ►</button>
+          <button class="admin-stop" (click)="stop('think', '../../../assets/sounds/think.mp3')">■</button>
+        </section>
+        <section>
+          <button (click)="getPlayer('plus').play();">♫ ✓</button>
+          <button (click)="getPlayer('minus').play();">♫ x</button>
+          <button (click)="resetButton()">Reset buttons</button>
+          <button (click)="getPlayer('ding').play(); showQuickest()">Show quickest</button>
+        </section>
+      </div>
+    </section>
+  </section>
+</section>

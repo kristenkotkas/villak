@@ -1,0 +1,25 @@
+<section *ngIf="!isShowButton()">
+  <section class="row">
+    <section class="col">
+      <div class="card category-title click"
+           *ngFor="let team of teams"
+           (click)="selectTeam(team)"
+           [ngClass]="{selected: isTeamSelected() && team.id === selectedTeam.id}"
+      >{{team.name}}</div>
+      <div class="card category-title select-team click"
+           (click)="onValiClicked()"
+      >Vali
+      </div>
+    </section>
+  </section>
+</section>
+
+<section *ngIf="isShowButton()">
+  <span class="card game-button category-title click"
+        (click)="answer()"
+        [ngClass]="{answered: selectedTeam.havePressed}">
+    <span>{{selectedTeam.name}}</span>
+    <br/>
+    <span>Tahan vastata</span>
+</span>
+</section>

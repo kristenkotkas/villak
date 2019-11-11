@@ -1,0 +1,35 @@
+.team-name {
+  font-size: x-large;
+}
+
+.team-score {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.score-neg {
+  background: #D9534F;
+  color: #0f0f0f;
+}
+
+.score-plus {
+  background: #50B750;
+  color: #0f0f0f;
+}
+
+.quickest {
+  background: white;
+  color: #0f0f0f;
+}
+
+.team-pressed {
+  background: #50B750;
+  border: none;
+  margin: 0.2em;
+  padding: 0.7em 1em;
+  border-radius: 1em;
+}
+
+.open-winner {
+  color: #FF983D;
+}

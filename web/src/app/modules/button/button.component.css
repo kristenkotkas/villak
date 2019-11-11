@@ -1,0 +1,23 @@
+.game-button {
+  right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  position: absolute;
+}
+
+.select-team {
+  background: #50B750;
+}
+
+.click {
+  cursor: pointer;
+}
+
+.click:focus-within {
+  opacity: 0.8 !important;
+}
+
+.selected {
+  background: #D9534F;
+}
