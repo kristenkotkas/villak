@@ -1,16 +1,18 @@
 package eu.kotkas.villak.core;
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 
 /**
  * @author Kristen Kotkas
  */
-@lombok.Data
-@RequiredArgsConstructor
-@AllArgsConstructor
+@Data
 public class Message {
   private Long event;
-  private int id;
+  private Long id;
   private Long payload;
+
+  @Override
+  public String toString() {
+    return String.format("event=%d, id=%d, payload=%d", event, id, payload);
+  }
 }
