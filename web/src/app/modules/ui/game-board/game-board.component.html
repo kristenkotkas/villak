@@ -1,19 +1,19 @@
-<section class="row" *ngIf="!!activeRound">
-  <section *ngFor="let category of activeRound.categories" class="col">
-    <section *ngFor="let question of category.questions" class="col">
+<div class="row" *ngIf="!!activeRound">
+  <div *ngFor="let category of activeRound.categories" class="col">
+    <div *ngFor="let question of category.questions" class="col">
       <div class="card" *ngIf="!admin" [ngClass]="{answered: isStateAnswered(question)}">
-        <section *ngIf="isStateSilver(question)" class="open-question silver">
+        <div *ngIf="isStateSilver(question)" class="open-question silver">
           Hõbevillak
-        </section>
-        <section *ngIf="isStateOpen(question)" class="open-question">
-          <section *ngIf="!isWithPicture(question)">{{question.question}}</section>
+        </div>
+        <div *ngIf="isStateOpen(question)" class="open-question">
+          <div *ngIf="!isWithPicture(question)">{{question.question}}</div>
           <img *ngIf="isWithPicture(question)" src="{{question.pictureUri}}">
-        </section>
-        <section *ngIf="isStateClosed(question)"
+        </div>
+        <div *ngIf="isStateClosed(question)"
                  class="game-card-amount">
-          <section *ngIf="question.amount > 0">{{question.amount}}</section>
-        </section>
-        <section *ngIf="isStateAnswered(question)"></section>
+          <div *ngIf="question.amount > 0">{{question.amount}}</div>
+        </div>
+        <div *ngIf="isStateAnswered(question)"></div>
       </div>
 
       <div class="card" *ngIf="admin"
@@ -22,8 +22,8 @@
            hidden: isStateAnswered(question),
            'admin-card-open': isStateOpen(question) || isStateSilver(question)
            }">
-        <section class="admin-card-amount">
-          <section>
+        <div class="admin-card-amount">
+          <div>
             {{question.amount}}
             <button *ngIf="question.isSilver && isStateClosed(question)"
                     (click)="getPlayer('silver').play(); showSilver(question)">Show silver
@@ -45,19 +45,19 @@
                     (click)="setAnswered(question)">Answered
             </button>
             <button *ngIf="isStateAnswered(question)" (click)="reset(question)">Reset</button>
-          </section>
-        </section>
-        <section>
+          </div>
+        </div>
+        <div>
           <p>
             Question: <strong>{{!!question.pictureUri ? 'Picture: ' : ''}}{{question.question}}</strong>
           </p>
           <p>
             Answer: <strong>{{question.answer}}</strong>
           </p>
-        </section>
+        </div>
         <audio *ngIf="isWithSound(question)" id="player_sound_{{question.id}}" src="../{{question.sound}}"></audio>
       </div>
-    </section>
+    </div>
 
-  </section>
-</section>
+  </div>
+</div>

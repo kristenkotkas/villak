@@ -1,17 +1,17 @@
-<section class="row">
-  <section *ngFor="let team of game.teams" class="col">
+<div class="row">
+  <div *ngFor="let team of game.teams" class="col">
 
     <div *ngIf="!admin" class="card" [ngClass]="{
       'score-neg': team.score < 0,
       'score-plus': team.score > 0,
       'quickest': team.quickest
       }">
-      <section class="team-name">
+      <div class="team-name">
         {{team.name}}
-      </section>
-      <section class="team-score">
+      </div>
+      <div class="team-score">
         {{team.score}} €
-      </section>
+      </div>
     </div>
 
     <div *ngIf="admin" class="card" [ngClass]="{
@@ -19,24 +19,24 @@
       'score-plus': team.score > 0,
       'quickest': team.quickest
       }">
-      <section>
+      <div>
         {{team.name}} <span [ngClass]="{'team-pressed': team.timePressed > 0}">{{team.timePressed}}</span>
-      </section>
-      <section>
+      </div>
+      <div>
         <strong>{{team.score}} €</strong>
-      </section>
-      <section>
+      </div>
+      <div>
         <input type="number" [(ngModel)]="currentAmount">
         <button class="admin-play" (click)="getPlayer('plus').play(); plus(team)">Right</button>
         <button class="admin-stop" (click)="getPlayer('minus').play(); minus(team)">Wrong</button>
         <button class="admin-winner" (click)="toggleWinner(team)">Winner</button>
-      </section>
+      </div>
     </div>
-    <section *ngIf="team.winner"
+    <div *ngIf="team.winner"
              class="open-question open-winner">
       Võitja:<br/>
       {{team.name}} <br/>
       {{team.score}} €
-    </section>
-  </section>
-</section>
+    </div>
+  </div>
+</div>

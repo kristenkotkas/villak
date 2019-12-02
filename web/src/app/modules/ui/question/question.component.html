@@ -1,22 +1,22 @@
-<section class="row" *ngIf="!!activeRound">
-  <section *ngFor="let category of activeRound.categories" class="col">
+<div class="row" *ngIf="!!activeRound">
+  <div *ngFor="let category of activeRound.categories" class="col">
     <div class="card" *ngIf="!admin">
-      <section>
-        <section *ngIf="isShowCategoryName(category)"
+      <div>
+        <div *ngIf="isShowCategoryName(category)"
                  class="category-title">
           {{category.name}}
-        </section>
-      </section>
+        </div>
+      </div>
     </div>
     <div class="card" *ngIf="admin"
          [ngClass]="{hidden: !isShowCategoryName(category)}">
-      <section>
-        <section class="category-title">
+      <div>
+        <div class="category-title">
           {{category.name}}
           <button *ngIf="!isShowCategoryName(category)" (click)="showName(category)">Show</button>
           <button *ngIf="isShowCategoryName(category)" (click)="hideName(category)">Hide</button>
-        </section>
-      </section>
+        </div>
+      </div>
     </div>
-  </section>
-</section>
+  </div>
+</div>
