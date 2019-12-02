@@ -7,7 +7,7 @@ import {Game} from '../game-data/model/game';
 import {Question} from '../game-data/model/question';
 import {Round} from '../game-data/model/round';
 import {Team} from '../game-data/model/team';
-import {Message} from '../model/message';
+import {Message} from '../game-data/model/message';
 import {WebsocketService} from './websocket.service';
 
 @Injectable({

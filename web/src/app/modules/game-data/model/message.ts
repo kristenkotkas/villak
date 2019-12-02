@@ -1,4 +1,4 @@
-import {Action} from '../game-data/model/action';
+import {Action} from './action';
 
 export class Message {
   event: Action = undefined;

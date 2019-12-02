@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Response} from 'selenium-webdriver/http';
 import * as SockJs from 'sockjs-client';
 import * as Stomp from 'stompjs';
-import {Message} from '../model/message';
+import {Message} from '../game-data/model/message';
 import {Util} from './util';
 
 @Injectable({
