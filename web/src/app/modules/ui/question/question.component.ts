@@ -31,14 +31,14 @@ export class QuestionComponent implements OnInit, OnChanges {
 
   showName(category: Category): void {
     this.ws.send({
-      event: Action.CATEGORY_SHOW,
+      action: Action.CATEGORY_SHOW,
       id: category.id
     });
   }
 
   hideName(category: Category): void {
     this.ws.send({
-      event: Action.CATEGORY_HIDE,
+      action: Action.CATEGORY_HIDE,
       id: category.id
     });
   }

@@ -1,0 +1,154 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "teams",
+    "rounds"
+  ],
+  "properties": {
+    "teams": {
+      "$id": "#/properties/teams",
+      "type": "array",
+      "title": "The Teams Schema",
+      "items": {
+        "$id": "#/properties/teams/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "$id": "#/properties/teams/items/properties/name",
+            "type": "string",
+            "title": "The Name Schema",
+            "default": "",
+            "examples": [
+              "Team 1"
+            ],
+            "pattern": "^(.*)$"
+          }
+        }
+      }
+    },
+    "rounds": {
+      "$id": "#/properties/rounds",
+      "type": "array",
+      "title": "The Rounds Schema",
+      "items": {
+        "$id": "#/properties/rounds/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "categories"
+        ],
+        "properties": {
+          "categories": {
+            "$id": "#/properties/rounds/items/properties/categories",
+            "type": "array",
+            "title": "The Categories Schema",
+            "items": {
+              "$id": "#/properties/rounds/items/properties/categories/items",
+              "type": "object",
+              "title": "The Items Schema",
+              "required": [
+                "name",
+                "questions"
+              ],
+              "properties": {
+                "name": {
+                  "$id": "#/properties/rounds/items/properties/categories/items/properties/name",
+                  "type": "string",
+                  "title": "The Name Schema",
+                  "default": "",
+                  "examples": [
+                    "Category 1"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "questions": {
+                  "$id": "#/properties/rounds/items/properties/categories/items/properties/questions",
+                  "type": "array",
+                  "title": "The Questions Schema",
+                  "items": {
+                    "$id": "#/properties/rounds/items/properties/categories/items/properties/questions/items",
+                    "type": "object",
+                    "title": "The Items Schema",
+                    "required": [
+                      "amount",
+                      "question",
+                      "answer"
+                    ],
+                    "properties": {
+                      "amount": {
+                        "$id": "#/properties/rounds/items/properties/categories/items/properties/questions/items/properties/amount",
+                        "type": "integer",
+                        "title": "The Amount Schema",
+                        "default": 0,
+                        "examples": [
+                          50
+                        ]
+                      },
+                      "question": {
+                        "$id": "#/properties/rounds/items/properties/categories/items/properties/questions/items/properties/question",
+                        "type": "string",
+                        "title": "The Question Schema",
+                        "default": "",
+                        "examples": [
+                          "Quest 1"
+                        ],
+                        "pattern": "^(.*)$"
+                      },
+                      "answer": {
+                        "$id": "#/properties/rounds/items/properties/categories/items/properties/questions/items/properties/answer",
+                        "type": "string",
+                        "title": "The Answer Schema",
+                        "default": "",
+                        "examples": [
+                          "Answer 1"
+                        ],
+                        "pattern": "^(.*)$"
+                      },
+                      "pictureUri": {
+                        "$id": "#/properties/rounds/items/properties/categories/items/properties/questions/items/properties/pictureUri",
+                        "type": "string",
+                        "title": "The Pictureuri Schema",
+                        "default": "",
+                        "examples": [
+                          "some string"
+                        ],
+                        "pattern": "^(.*)$"
+                      },
+                      "soundUri": {
+                        "$id": "#/properties/rounds/items/properties/categories/items/properties/questions/items/properties/soundUri",
+                        "type": "string",
+                        "title": "The Sounduri Schema",
+                        "default": "",
+                        "examples": [
+                          "some string"
+                        ],
+                        "pattern": "^(.*)$"
+                      },
+                      "silver": {
+                        "$id": "#/properties/rounds/items/properties/categories/items/properties/questions/items/properties/silver",
+                        "type": "boolean",
+                        "title": "The Silver Schema",
+                        "default": false,
+                        "examples": [
+                          false
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

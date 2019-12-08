@@ -19,28 +19,30 @@ export class DataService {
   currentData = this.data.asObservable();
 
   constructor(private ws: WebsocketService) {
-    ws.listen(msg => this.updateDate(msg));
+    ws.listen((game: Game) => {
+      this.data.next(game);
+    });
   }
 
   private updateDate(message: Message): void {
-    if (message.event === Action.OPEN || message.event === Action.CLOSE ||
-      message.event === Action.ANSWERED || message.event === Action.SILVER) {
+    if (message.action === Action.OPEN || message.action === Action.CLOSE ||
+      message.action === Action.ANSWERED || message.action === Action.SILVER) {
       this.handleQuestionEvent(message);
-    } else if (message.event === Action.SCORE) {
+    } else if (message.action === Action.SCORE) {
       this.handleScoreEvent(message);
-    } else if (message.event === Action.CATEGORY_SHOW || message.event === Action.CATEGORY_HIDE) {
+    } else if (message.action === Action.CATEGORY_SHOW || message.action === Action.CATEGORY_HIDE) {
       this.handleOpenQuestion(message);
-    } else if (message.event === Action.ACTIVE_ROUND) {
+    } else if (message.action === Action.ACTIVE_ROUND) {
       this.handleActiveRound(message);
-    } else if (message.event === Action.PRESS_BUTTON) {
+    } else if (message.action === Action.PRESS_BUTTON) {
       this.handlePressButton(message);
-    } else if (message.event === Action.RESET_BUTTON) {
+    } else if (message.action === Action.RESET_BUTTON) {
       this.handleResetButton(message);
-    } else if (message.event === Action.SHOW_QUICKEST) {
+    } else if (message.action === Action.SHOW_QUICKEST) {
       this.handleShowQuickest(message);
-    } else if (message.event === Action.CLOSE_BUTTON) {
+    } else if (message.action === Action.CLOSE_BUTTON) {
       this.handleCloseButton(message);
-    } else if (message.event === Action.TOGGLE_WINNER) {
+    } else if (message.action === Action.TOGGLE_WINNER) {
       this.handleToggleWinner(message);
     }
   }
@@ -51,7 +53,7 @@ export class DataService {
       round.categories.forEach((cat: Category) => {
         cat.questions.forEach((que: Question) => {
           if (que.id === message.id) {
-            que.state = message.event;
+            que.state = message.action;
           }
         });
       });
@@ -74,7 +76,7 @@ export class DataService {
     next.rounds.forEach((round: Round) => {
       round.categories.forEach((cat: Category) => {
         if (cat.id === message.id) {
-          cat.nameState = (<Action.CATEGORY_SHOW | Action.CATEGORY_HIDE> message.event);
+          cat.nameState = (<Action.CATEGORY_SHOW | Action.CATEGORY_HIDE> message.action);
         }
       });
     });

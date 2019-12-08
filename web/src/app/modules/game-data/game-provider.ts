@@ -8,16 +8,8 @@ export class GameProvider {
   // todo: kristen - see vist üldse maha lasta
 
   static createGame(): Game {
-    const teams: Team[] = [
-      this.getTeam(0, 'First team', 0),
-    ];
-    const rounds: Round[] = [
-      this.getRound(0, [
-        this.getCategory(0, 'Category', [
-          this.getQuestion(0, 50, false, 'Hint', 'Answer'),
-        ])
-      ])
-    ];
+    const teams: Team[] = [];
+    const rounds: Round[] = [];
     return this.getGame(teams, rounds);
   }
 

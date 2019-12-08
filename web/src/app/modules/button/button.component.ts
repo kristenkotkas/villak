@@ -45,7 +45,7 @@ export class ButtonComponent implements OnInit {
   answer(): void {
     if (!this.selectedTeam.havePressed) {
       this.ws.send({
-        event: Action.PRESS_BUTTON,
+        action: Action.PRESS_BUTTON,
         id: this.selectedTeam.id,
         payload: Date.now()
       });

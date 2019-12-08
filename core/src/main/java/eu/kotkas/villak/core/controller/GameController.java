@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
  * @author Kristen Kotkas
  */
 @Controller
+@RequiredArgsConstructor
+@Log4j2
 public class GameController {
 
   private final DataService dataService;

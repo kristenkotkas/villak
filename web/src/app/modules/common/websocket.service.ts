@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {Response} from 'selenium-webdriver/http';
 import * as SockJs from 'sockjs-client';
 import * as Stomp from 'stompjs';
+import {Action} from '../game-data/model/action';
+import {Game} from '../game-data/model/game';
 import {Message} from '../game-data/model/message';
 import {Util} from './util';
 
@@ -18,11 +20,12 @@ export class WebsocketService {
   constructor() {
   }
 
-  listen(callback: (msg: Message) => void): void {
+  listen(callback: (nextGame: Game) => void): void {
     this.stompClient.connect({}, frame => {
       this.stompClient.subscribe('/response', response => {
-        callback(new Message(response));
+        callback(Game.parseGame(response.body));
       });
+      this.send({action: Action.GET_CURRENT, id: -1});
     });
   }
 
