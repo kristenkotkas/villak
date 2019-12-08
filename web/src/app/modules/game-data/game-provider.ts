@@ -5,6 +5,7 @@ import {Round} from './model/round';
 import {Team} from './model/team';
 
 export class GameProvider {
+  // todo: kristen - see vist üldse maha lasta
 
   static createGame(): Game {
     const teams: Team[] = [

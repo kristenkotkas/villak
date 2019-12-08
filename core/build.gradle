@@ -21,7 +21,8 @@ configurations {
 }
 
 dependencies {
-  testCompile group: 'junit', name: 'junit', version: '4.12'
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
   implementation 'org.springframework.boot:spring-boot-starter'
   compileOnly 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok'
@@ -33,6 +34,10 @@ dependencies {
   compile("org.webjars:bootstrap:3.3.7")
   compile("org.webjars:jquery:3.1.0")
   compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.1.1'
+}
+
+test {
+  useJUnitPlatform()
 }
 
 bootJar {
