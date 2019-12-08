@@ -30,17 +30,17 @@ export class QuestionComponent implements OnInit, OnChanges {
   }
 
   showName(category: Category): void {
-    this.ws.send({
+    this.ws.send([{
       action: Action.CATEGORY_SHOW,
       id: category.id
-    });
+    }]);
   }
 
   hideName(category: Category): void {
-    this.ws.send({
+    this.ws.send([{
       action: Action.CATEGORY_HIDE,
       id: category.id
-    });
+    }]);
   }
 
   isShowCategoryName(category: Category): boolean {

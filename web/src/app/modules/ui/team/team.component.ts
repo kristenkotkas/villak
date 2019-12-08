@@ -42,20 +42,20 @@ export class TeamComponent implements OnInit, OnChanges {
   }
 
   plus(team: Team): void {
-    this.ws.send({
+    this.ws.send([{
       action: Action.SCORE,
       id: team.id,
       payload: this.currentAmount
-    });
+    }]);
     this.currentAmount = 0;
   }
 
   minus(team: Team): void {
-    this.ws.send({
+    this.ws.send([{
       action: Action.SCORE,
       id: team.id,
       payload: -(this.currentAmount)
-    });
+    }]);
     this.currentAmount = 0;
     this.resetButton();
   }
@@ -65,16 +65,16 @@ export class TeamComponent implements OnInit, OnChanges {
   }
 
   resetButton(): void {
-    this.ws.send({
+    this.ws.send([{
       action: Action.RESET_BUTTON,
       id: -1
-    });
+    }]);
   }
 
   toggleWinner(team: Team): void {
-    this.ws.send({
+    this.ws.send([{
       action: Action.TOGGLE_WINNER,
       id: team.id
-    });
+    }]);
   }
 }

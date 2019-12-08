@@ -9,6 +9,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
+
 /**
  * @author Kristen Kotkas
  */
@@ -21,8 +23,8 @@ public class GameController {
 
   @MessageMapping("/request")
   @SendTo("/response")
-  public Game message(Message message) {
-    log.info(message);
-    return dataService.getNextState(message);
+  public Game message(List<Message> messages) {
+    log.info(messages);
+    return dataService.getNextState(messages);
   }
 }

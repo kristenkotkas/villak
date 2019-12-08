@@ -25,12 +25,12 @@ export class WebsocketService {
       this.stompClient.subscribe('/response', response => {
         callback(Game.parseGame(response.body));
       });
-      this.send({action: Action.GET_CURRENT, id: -1});
+      this.send([{action: Action.GET_CURRENT, id: -1}]);
     });
   }
 
-  send(message: Message): Promise<Response> {
-    return this.stompClient.send('/request', {}, JSON.stringify(message));
+  send(messages: Message[]): Promise<Response> {
+    return this.stompClient.send('/request', {}, JSON.stringify(messages));
   }
 
 }

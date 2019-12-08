@@ -44,11 +44,11 @@ export class ButtonComponent implements OnInit {
 
   answer(): void {
     if (!this.selectedTeam.havePressed) {
-      this.ws.send({
+      this.ws.send([{
         action: Action.PRESS_BUTTON,
         id: this.selectedTeam.id,
         payload: Date.now()
-      });
+      }]);
     }
   }
 }

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,20 +41,24 @@ public class DataServiceImpl implements DataService {
   }
 
   @Override
-  public Game getNextState(Message message) {
+  public Game getNextState(List<Message> messages) {
     Game nextState;
     if (currentState == null) {
       nextState = GameMapper.MAPPER.invert(dataDao.getInitialGame());
     } else {
-      nextState = reduce(currentState, message);
+      nextState = reduce(currentState, messages);
     }
     currentState = nextState;
     return nextState;
   }
 
   @Override
-  public Game reduce(Game game, Message message) {
-    return REDUCERS.get(message.getAction()).reduce(game, message);
+  public Game reduce(Game game, List<Message> messages) {
+    Game nextStage = game;
+    for (Message message : messages) {
+      nextStage = REDUCERS.get(message.getAction()).reduce(nextStage, message);
+    }
+    return nextStage;
   }
 
 }

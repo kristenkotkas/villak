@@ -21,10 +21,10 @@ export class AdminActionsComponent implements OnInit {
   }
 
   setActiveRound(roundId: number): void {
-    this.ws.send({
+    this.ws.send([{
       action: Action.ACTIVE_ROUND,
       id: roundId
-    });
+    }]);
   }
 
   stop(playerName: string, src: string): void {
@@ -34,17 +34,17 @@ export class AdminActionsComponent implements OnInit {
   }
 
   resetButton(): void {
-    this.ws.send({
+    this.ws.send([{
       action: Action.RESET_BUTTON,
       id: -1
-    });
+    }]);
   }
 
   showQuickest(): void {
-    this.ws.send({
+    this.ws.send([{
       action: Action.SHOW_QUICKEST,
       id: -1
-    });
+    }]);
   }
 
   getPlayer(player: string): HTMLElement {

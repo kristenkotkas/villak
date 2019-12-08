@@ -57,40 +57,43 @@ export class GameBoardComponent implements OnInit, OnChanges {
   }
 
   show(question: Question): void {
-    this.ws.send({
-      action: Action.OPEN,
-      id: question.id
-    });
-   //this.ws.send({
-   //  action: Action.RESET_BUTTON,
-   //  id: -1
-   //});
+    this.ws.send([
+      {
+        action: Action.OPEN,
+        id: question.id
+      },
+      {
+        action: Action.RESET_BUTTON,
+        id: -1
+      }
+    ]);
   }
 
   showSilver(question: Question): void {
-    this.ws.send({
+    this.ws.send([{
       action: Action.SILVER,
       id: question.id
-    });
+    }]);
   }
 
   setAnswered(question: Question): void {
-    // todo: kristen - saata sõnumite array
-    this.ws.send({
-      action: Action.ANSWERED,
-      id: question.id
-    });
-    //this.ws.send({
-    //  action: Action.CLOSE_BUTTON,
-    //  id: -1
-    //});
+    this.ws.send([
+      {
+        action: Action.ANSWERED,
+        id: question.id
+      },
+      {
+        action: Action.CLOSE_BUTTON,
+        id: -1
+      }
+    ]);
   }
 
   reset(question: Question): void {
-    this.ws.send({
+    this.ws.send([{
       action: Action.CLOSE,
       id: question.id
-    });
+    }]);
   }
 
   getPlayer(player: string): HTMLElement {
