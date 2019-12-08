@@ -23,7 +23,7 @@ public class DataDao {
   public GameDto getInitialGame() {
     ObjectMapper mapper = new ObjectMapper();
     try {
-      GameDto game = mapper.readValue(new File(Main.getDataLocationPath()), GameDto.class);
+      GameDto game = mapper.readValue(new File(Main.getDataFileLocation()), GameDto.class);
       log.info(game);
       return game;
     } catch (IOException e) {

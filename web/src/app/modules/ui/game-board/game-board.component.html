@@ -35,7 +35,7 @@
             </span>
             <span *ngIf="isWithSound(question)">
               <button *ngIf="isStateClosed(question) || isStateSilver(question)"
-                      (click)="show(question); getPlayer('sound_' + question.id).play()">Show
+                      (click)="show(question)">Show
               </button>
               <button (click)="getPlayer('sound_' + question.id).play()">►</button>
               <button (click)="getPlayer('sound_' + question.id).pause()">■</button>
@@ -55,7 +55,7 @@
             Answer: <strong>{{question.answer}}</strong>
           </p>
         </div>
-        <audio *ngIf="isWithSound(question)" id="player_sound_{{question.id}}" src="../{{question.sound}}"></audio>
+        <audio *ngIf="isWithSound(question)" id="player_sound_{{question.id}}" src="{{question.soundUri}}"></audio>
       </div>
     </div>
 

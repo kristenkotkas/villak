@@ -11,8 +11,10 @@ import {ClientComponent} from './modules/client/client.component';
 import {GameBoardComponent} from './modules/ui/game-board/game-board.component';
 import {QuestionComponent} from './modules/ui/question/question.component';
 import {TeamComponent} from './modules/ui/team/team.component';
+import { MainComponent } from './modules/main/main.component';
 
 const appRoutes: Routes = [
+  {path: '', component: MainComponent},
   {path: 'admin', component: AdminComponent},
   {path: 'client', component: ClientComponent},
   {path: 'button', component: ButtonComponent},
@@ -27,7 +29,8 @@ const appRoutes: Routes = [
     TeamComponent,
     QuestionComponent,
     ButtonComponent,
-    AdminActionsComponent
+    AdminActionsComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

@@ -53,7 +53,7 @@ export class GameBoardComponent implements OnInit, OnChanges {
   }
 
   isWithPicture(question: Question): boolean {
-    return question.pictureUri !== undefined;
+    return question.pictureUri !== undefined && question.pictureUri !== null;
   }
 
   show(question: Question): void {
@@ -101,6 +101,6 @@ export class GameBoardComponent implements OnInit, OnChanges {
   }
 
   isWithSound(question: Question): boolean {
-    return !!question.sound;
+    return !!question.soundUri;
   }
 }

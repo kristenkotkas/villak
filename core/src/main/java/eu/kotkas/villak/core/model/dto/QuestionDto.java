@@ -2,6 +2,7 @@ package eu.kotkas.villak.core.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import eu.kotkas.villak.core.Main;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,4 +34,11 @@ public class QuestionDto implements Serializable {
   private String soundUri;
   private Boolean silver;
 
+  public void setPictureUri(String pictureUri) {
+    this.pictureUri = String.format("http://localhost:%s/files/%s", Main.getPort(), pictureUri);
+  }
+
+  public void setSoundUri(String soundUri) {
+    this.soundUri = String.format("http://localhost:%s/files/%s", Main.getPort(), soundUri);
+  }
 }

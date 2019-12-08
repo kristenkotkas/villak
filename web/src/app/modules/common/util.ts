@@ -5,8 +5,9 @@ export class Util {
 
   public static getApiUrl(): string {
     const url = window.location.origin;
-    const localUrl = 'http://localhost:8084';
-    return url.indexOf('localhost') !== -1 ? localUrl : url;
+    console.log(url);
+    const localUrl = `http://localhost:8085`;
+    return url.indexOf('localhost:4200') !== -1 ? localUrl : url;
   }
 
 }

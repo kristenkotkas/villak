@@ -8,7 +8,7 @@ export class Question {
   answer: string;
   state: Action;
   pictureUri: string = '';
-  sound: string = '';
+  soundUri: string = '';
 
   constructor(id: number,
               amount: number,
@@ -24,6 +24,6 @@ export class Question {
     this.answer = answer;
     this.state = Action.CLOSE;
     this.pictureUri = pictureUri;
-    this.sound = sound;
+    this.soundUri = sound;
   }
 }
