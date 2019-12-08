@@ -3,7 +3,7 @@ import {Action} from './action';
 export class Question {
   id: number;
   amount: number;
-  isSilver: boolean;
+  silver: boolean;
   question: string;
   answer: string;
   state: Action;
@@ -19,7 +19,7 @@ export class Question {
               sound?: string) {
     this.id = id;
     this.amount = amount;
-    this.isSilver = isSilver;
+    this.silver = isSilver;
     this.question = question;
     this.answer = answer;
     this.state = Action.CLOSE;

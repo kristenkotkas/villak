@@ -1,6 +1,11 @@
 package eu.kotkas.villak.core.model;
 
-import lombok.Data;
+import eu.kotkas.villak.core.model.enums.Action;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.io.Serializable;
 
 /**
  * @author Kristen Kotkas

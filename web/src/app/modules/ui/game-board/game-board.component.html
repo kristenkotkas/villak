@@ -18,14 +18,14 @@
 
       <div class="card" *ngIf="admin"
            [ngClass]="{
-           silver: question.isSilver,
+           silver: question.silver,
            hidden: isStateAnswered(question),
            'admin-card-open': isStateOpen(question) || isStateSilver(question)
            }">
         <div class="admin-card-amount">
           <div>
             {{question.amount}}
-            <button *ngIf="question.isSilver && isStateClosed(question)"
+            <button *ngIf="question.silver && isStateClosed(question)"
                     (click)="getPlayer('silver').play(); showSilver(question)">Show silver
             </button>
             <span *ngIf="!isWithSound(question)">
