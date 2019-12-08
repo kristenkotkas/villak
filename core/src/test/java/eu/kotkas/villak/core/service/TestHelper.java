@@ -1,18 +1,17 @@
 package eu.kotkas.villak.core.service;
 
-import eu.kotkas.villak.core.model.Category;
-import eu.kotkas.villak.core.model.Game;
-import eu.kotkas.villak.core.model.Question;
-import eu.kotkas.villak.core.model.Round;
-import eu.kotkas.villak.core.model.Team;
+import eu.kotkas.villak.core.model.*;
 import eu.kotkas.villak.core.model.dto.CategoryDto;
 import eu.kotkas.villak.core.model.dto.QuestionDto;
 import eu.kotkas.villak.core.model.dto.RoundDto;
 import eu.kotkas.villak.core.model.dto.TeamDto;
+import eu.kotkas.villak.core.model.enums.Action;
 import eu.kotkas.villak.core.model.enums.NameState;
 import eu.kotkas.villak.core.model.enums.QuestionState;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
@@ -27,6 +26,10 @@ public class TestHelper {
   static final String TEST_STRING = "TEST_STRING";
   static final int TEST_INT = -1;
   static final boolean TEST_BOOELAN = true;
+
+  static List<Message> getSingleMessage(Action action, long id, Integer payload) {
+    return Collections.singletonList(new Message(action.name(), id, payload));
+  }
 
   static void assertRound(Round round) {
     assertFalse(round.isActive());
