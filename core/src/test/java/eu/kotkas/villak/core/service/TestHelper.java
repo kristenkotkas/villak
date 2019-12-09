@@ -27,7 +27,7 @@ public class TestHelper {
   static final int TEST_INT = -1;
   static final boolean TEST_BOOELAN = true;
 
-  static List<Message> getSingleMessage(Action action, long id, Integer payload) {
+  static List<Message> getSingleMessage(Action action, long id, Long payload) {
     return Collections.singletonList(new Message(action.name(), id, payload));
   }
 
@@ -67,7 +67,7 @@ public class TestHelper {
     assertEquals(team.getName(), TEST_STRING);
     assertEquals(team.getScore(), 0);
     assertFalse(team.isHavePressed());
-    assertEquals(team.getTimePressed(), 0);
+    assertEquals(team.getTimePressed().longValue(), 0L);
     assertFalse(team.isQuickest());
     assertFalse(team.isWinner());
   }

@@ -26,7 +26,7 @@ public enum Reducer {
   QUESTION_CLOSE((game, message) -> getQuestionNextStage(game, message, q -> q.setState(QuestionState.CLOSE))),
   QUESTION_ANSWERED((game, message) -> getQuestionNextStage(game, message, q -> q.setState(QuestionState.ANSWERED))),
   QUESTION_SILVER((game, message) -> getQuestionNextStage(game, message, q -> q.setState(QuestionState.SILVER))),
-  TEAM_SCORE((game, message) -> getTeamNextStage(game, message, t -> t.setScore(t.getScore() + message.getPayload()))),
+  TEAM_SCORE((game, message) -> getTeamNextStage(game, message, t -> t.setScore(t.getScore() + message.getPayload().intValue()))),
   CATEGORY_SHOW((game, message) -> getCategoryNextStage(game, message, c -> c.setNameState(NameState.CATEGORY_SHOW))),
   CATEGORY_HIDE((game, message) -> getCategoryNextStage(game, message, c -> c.setNameState(NameState.CATEGORY_HIDE))),
   ROUND_ACTIVE((game, message) -> getRoundNextStage(game, message, r -> r.setActive(r.getId() == message.getId()))),
@@ -38,7 +38,7 @@ public enum Reducer {
     Game clone = SerializationUtils.clone(game);
     clone.getTeams().stream()
       .filter(team -> team.getTimePressed() > 0)
-      .min(Comparator.comparingInt(Team::getTimePressed))
+      .min(Comparator.comparingLong(Team::getTimePressed))
       .ifPresent(team -> team.setQuickest(true));
     return clone;
   }),
@@ -46,7 +46,7 @@ public enum Reducer {
     Game clone = SerializationUtils.clone(game);
     clone.getTeams().forEach(team -> {
       team.setHavePressed(false);
-      team.setTimePressed(0);
+      team.setTimePressed(0L);
       team.setQuickest(false);
     });
     return clone;
@@ -55,7 +55,7 @@ public enum Reducer {
     Game clone = SerializationUtils.clone(game);
     clone.getTeams().forEach(team -> {
       team.setHavePressed(true);
-      team.setTimePressed(0);
+      team.setTimePressed(0L);
       team.setQuickest(false);
     });
     return clone;

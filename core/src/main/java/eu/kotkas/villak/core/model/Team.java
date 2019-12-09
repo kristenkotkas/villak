@@ -24,7 +24,7 @@ public class Team implements Serializable {
   private int score = 0;
   private boolean havePressed;
   @Builder.Default
-  private int timePressed = 0;
+  private Long timePressed = 0L;
   private boolean quickest;
   private boolean winner;
 

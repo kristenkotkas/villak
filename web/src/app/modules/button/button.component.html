@@ -1,4 +1,12 @@
-<div *ngIf="!isShowButton()">
+<div *ngIf="!isSynced()">
+  <span class="card game-button category-title sync-buttons click" (click)="sync()">
+    <span>Sync buttons</span>
+    <br/>
+    <span>To sync buttons, press all the sync buttons simultaneously</span>
+  </span>
+</div>
+
+<div *ngIf="isSynced() && !isShowButton()">
   <div class="row">
     <div class="col">
       <div class="card category-title click"
@@ -7,19 +15,19 @@
            [ngClass]="{selected: isTeamSelected() && team.id === selectedTeam.id}"
       >{{team.name}}</div>
       <div class="card category-title select-team click"
-           (click)="onValiClicked()"
-      >Vali
+           (click)="onValiClicked()">
+        Select
       </div>
     </div>
   </div>
 </div>
 
-<div *ngIf="isShowButton()">
+<div *ngIf="isSynced() && isShowButton()">
   <span class="card game-button category-title click"
         (click)="answer()"
         [ngClass]="{answered: selectedTeam.havePressed}">
     <span>{{selectedTeam.name}}</span>
     <br/>
     <span>Tahan vastata</span>
-</span>
+  </span>
 </div>

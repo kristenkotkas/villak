@@ -69,13 +69,13 @@ class DataServiceImplTest {
     assertTeam(game, 2, Team::getScore, 0);
 
     // score is increased
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.SCORE, 0, 100));
+    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.SCORE, 0, 100L));
     assertTeam(gameSt2, 0, Team::getScore, 100);
     assertTeam(gameSt2, 1, Team::getScore, 0);
     assertTeam(gameSt2, 2, Team::getScore, 0);
 
     // score is reduced
-    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.SCORE, 1, -150));
+    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.SCORE, 1, -150L));
     assertTeam(gameSt3, 0, Team::getScore, 100);
     assertTeam(gameSt3, 1, Team::getScore, -150);
     assertTeam(gameSt3, 2, Team::getScore, 0);
@@ -132,9 +132,9 @@ class DataServiceImplTest {
     assertTeam(game, 2, Team::isHavePressed, false);
 
     // initial timePressed = 0
-    assertTeam(game, 0, Team::getTimePressed, 0);
-    assertTeam(game, 1, Team::getTimePressed, 0);
-    assertTeam(game, 2, Team::getTimePressed, 0);
+    assertTeam(game, 0, Team::getTimePressed, 0L);
+    assertTeam(game, 1, Team::getTimePressed, 0L);
+    assertTeam(game, 2, Team::getTimePressed, 0L);
 
     // initial quickest = false
     assertTeam(game, 0, Team::isQuickest, false);
@@ -145,24 +145,24 @@ class DataServiceImplTest {
   @Test
   void reduce_team_pressButton_Reset() {
     // first pressed
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 0, 123));
+    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 0, 123L));
     assertTeam(gameSt2, 0, Team::isHavePressed, true);
     assertTeam(gameSt2, 1, Team::isHavePressed, false);
     assertTeam(gameSt2, 2, Team::isHavePressed, false);
 
-    assertTeam(gameSt2, 0, Team::getTimePressed, 123);
-    assertTeam(gameSt2, 1, Team::getTimePressed, 0);
-    assertTeam(gameSt2, 2, Team::getTimePressed, 0);
+    assertTeam(gameSt2, 0, Team::getTimePressed, 123L);
+    assertTeam(gameSt2, 1, Team::getTimePressed, 0L);
+    assertTeam(gameSt2, 2, Team::getTimePressed, 0L);
 
     // second pressed
-    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.PRESS_BUTTON, 2, 64));
+    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.PRESS_BUTTON, 2, 64L));
     assertTeam(gameSt3, 0, Team::isHavePressed, true);
     assertTeam(gameSt3, 1, Team::isHavePressed, false);
     assertTeam(gameSt3, 2, Team::isHavePressed, true);
 
-    assertTeam(gameSt3, 0, Team::getTimePressed, 123);
-    assertTeam(gameSt3, 1, Team::getTimePressed, 0);
-    assertTeam(gameSt3, 2, Team::getTimePressed, 64);
+    assertTeam(gameSt3, 0, Team::getTimePressed, 123L);
+    assertTeam(gameSt3, 1, Team::getTimePressed, 0L);
+    assertTeam(gameSt3, 2, Team::getTimePressed, 64L);
 
     // reset button
     Game gameSt4 = dataService.reduce(gameSt3, getSingleMessage(Action.RESET_BUTTON, -1, null));
@@ -170,9 +170,9 @@ class DataServiceImplTest {
     assertTeam(gameSt4, 1, Team::isHavePressed, false);
     assertTeam(gameSt4, 2, Team::isHavePressed, false);
 
-    assertTeam(gameSt4, 0, Team::getTimePressed, 0);
-    assertTeam(gameSt4, 1, Team::getTimePressed, 0);
-    assertTeam(gameSt4, 2, Team::getTimePressed, 0);
+    assertTeam(gameSt4, 0, Team::getTimePressed, 0L);
+    assertTeam(gameSt4, 1, Team::getTimePressed, 0L);
+    assertTeam(gameSt4, 2, Team::getTimePressed, 0L);
 
     assertTeam(gameSt4, 0, Team::isQuickest, false);
     assertTeam(gameSt4, 1, Team::isQuickest, false);
@@ -190,7 +190,7 @@ class DataServiceImplTest {
 
   @Test
   void reduce_showQuickest_onePressedOthersZero() {
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 1, 123));
+    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 1, 123L));
     Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.SHOW_QUICKEST, -1, null));
 
     assertTeam(gameSt3, 0, Team::isQuickest, false);
@@ -200,9 +200,9 @@ class DataServiceImplTest {
 
   @Test
   void reduce_showQuickest_quickestUniqueAllPressed() {
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 2, 100));
-    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.PRESS_BUTTON, 0, 101));
-    Game gameSt4 = dataService.reduce(gameSt3, getSingleMessage(Action.PRESS_BUTTON, 1, 102));
+    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 2, 100L));
+    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.PRESS_BUTTON, 0, 101L));
+    Game gameSt4 = dataService.reduce(gameSt3, getSingleMessage(Action.PRESS_BUTTON, 1, 102L));
     Game gameSt5 = dataService.reduce(gameSt4, getSingleMessage(Action.SHOW_QUICKEST, -1, null));
 
     assertTeam(gameSt5, 0, Team::isQuickest, false);
@@ -219,9 +219,9 @@ class DataServiceImplTest {
 
   @Test
   void reduce_closeAllButtons() {
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 2, 100));
-    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.PRESS_BUTTON, 0, 101));
-    Game gameSt4 = dataService.reduce(gameSt3, getSingleMessage(Action.PRESS_BUTTON, 1, 102));
+    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 2, 100L));
+    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.PRESS_BUTTON, 0, 101L));
+    Game gameSt4 = dataService.reduce(gameSt3, getSingleMessage(Action.PRESS_BUTTON, 1, 102L));
 
     Game gameSt5 = dataService.reduce(gameSt4, getSingleMessage(Action.CLOSE_BUTTON, -1, null));
 
@@ -233,9 +233,9 @@ class DataServiceImplTest {
     assertTeam(gameSt5, 1, Team::isQuickest, false);
     assertTeam(gameSt5, 2, Team::isQuickest, false);
 
-    assertTeam(gameSt5, 0, Team::getTimePressed, 0);
-    assertTeam(gameSt5, 1, Team::getTimePressed, 0);
-    assertTeam(gameSt5, 2, Team::getTimePressed, 0);
+    assertTeam(gameSt5, 0, Team::getTimePressed, 0L);
+    assertTeam(gameSt5, 1, Team::getTimePressed, 0L);
+    assertTeam(gameSt5, 2, Team::getTimePressed, 0L);
   }
 
   @Test

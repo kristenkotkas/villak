@@ -16,9 +16,9 @@ import java.io.Serializable;
 public class Message implements Serializable{
   private Action action;
   private long id;
-  private Integer payload;
+  private Long payload;
 
-  public Message(String action, long id, Integer payload) {
+  public Message(String action, long id, Long payload) {
     this.action = Action.valueOf(action);
     this.id = id;
     this.payload = payload;
