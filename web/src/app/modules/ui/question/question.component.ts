@@ -22,11 +22,8 @@ export class QuestionComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.game.rounds.forEach((round: Round) => {
-      if (round.active) {
-        this.activeRound = round;
-      }
-    });
+    this.activeRound = this.game.rounds
+      .find((round: Round) => round.active);
   }
 
   showName(category: Category): void {

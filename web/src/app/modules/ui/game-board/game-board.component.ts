@@ -21,19 +21,13 @@ export class GameBoardComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.game.rounds.forEach((round: Round) => {
-      if (round.active) {
-        this.activeRound = round;
-      }
-    });
+    this.activeRound = this.game.rounds
+      .find((round: Round) => round.active);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.game.rounds.forEach((round: Round) => {
-      if (round.active) {
-        this.activeRound = round;
-      }
-    });
+    this.activeRound = this.game.rounds
+      .find((round: Round) => round.active);
   }
 
   isStateClosed(question: Question): boolean {

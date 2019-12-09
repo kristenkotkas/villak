@@ -51,13 +51,18 @@ export class TeamComponent implements OnInit, OnChanges {
   }
 
   minus(team: Team): void {
-    this.ws.send([{
-      action: Action.SCORE,
-      id: team.id,
-      payload: -(this.currentAmount)
-    }]);
+    this.ws.send([
+      {
+        action: Action.SCORE,
+        id: team.id,
+        payload: -(this.currentAmount)
+      },
+      {
+        action: Action.RESET_BUTTON,
+        id: -1
+      }
+    ]);
     this.currentAmount = 0;
-    this.resetButton();
   }
 
   getPlayer(player: string): HTMLElement {
