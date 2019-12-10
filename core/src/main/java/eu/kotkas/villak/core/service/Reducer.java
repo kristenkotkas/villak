@@ -62,6 +62,16 @@ public enum Reducer {
   }),
   TOGGLE_WINNER((game, message) -> getTeamNextStage(game, message, t -> t.setWinner(!t.isWinner()))),
   GET_CURRENT((game, message) -> game),
+  SET_ADMIN_DEVICE_ID((game, message) -> {
+    Game clone = SerializationUtils.clone(game);
+    clone.getSettings().setAdminDeviceId(message.getPayload());
+    return clone;
+  }),
+  SET_CLIENT_DEVICE_ID((game, message) -> {
+    Game clone = SerializationUtils.clone(game);
+    clone.getSettings().setGameDeviceId(message.getPayload());
+    return clone;
+  })
   ;
 
   private final BiFunction<Game, Message, Game> reducer;

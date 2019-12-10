@@ -1,16 +1,13 @@
 package eu.kotkas.villak.core.service;
 
-import eu.kotkas.villak.core.dao.DataDao;
+import eu.kotkas.villak.core.dao.GameDao;
 import eu.kotkas.villak.core.model.*;
-import eu.kotkas.villak.core.model.dto.*;
 import eu.kotkas.villak.core.model.enums.Action;
 import eu.kotkas.villak.core.model.enums.NameState;
 import eu.kotkas.villak.core.model.enums.QuestionState;
-import eu.kotkas.villak.core.model.mapper.*;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 import static eu.kotkas.villak.core.service.TestHelper.*;
 
@@ -20,7 +17,7 @@ import static eu.kotkas.villak.core.service.TestHelper.*;
 class DataServiceImplTest {
 
   private final DataService dataService = new DataServiceImpl(
-    new DataDao()
+    new GameDao()
   );
 
   private Game game;
@@ -263,50 +260,18 @@ class DataServiceImplTest {
   }
 
   @Test
-  void mapper_Team() {
-    TeamDto teamDto = getTeamDto();
-    Team team = TeamMapper.MAPPER.invert(teamDto);
-    assertTeam(team);
+  void reducer_adminDeviceId() {
+    Assert.assertNotNull(game.getSettings());
+    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.SET_ADMIN_DEVICE_ID, -1, 123L));
+
+    Assert.assertEquals(123L, gameSt2.getSettings().getAdminDeviceId().longValue());
   }
 
   @Test
-  void mapper_Question() {
-    QuestionDto questionDto = getQuestionDto();
-    Question question = QuestionMapper.MAPPER.invert(questionDto);
-    assertQuestion(question);
+  void reducer_clientDeviceId() {
+    Assert.assertNotNull(game.getSettings());
+    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.SET_CLIENT_DEVICE_ID, -1, 123L));
+
+    Assert.assertEquals(123L, gameSt2.getSettings().getGameDeviceId().longValue());
   }
-
-  @Test
-  void mapper_Category() {
-    CategoryDto categoryDto = getCategoryDto();
-    Category category = CategoryMapper.MAPPER.invert(categoryDto);
-    assertCategory(category);
-  }
-
-  @Test
-  void mapper_Round() {
-    RoundDto roundDto = getRoundDto();
-    Round round = RoundMapper.MAPPER.invert(roundDto);
-    assertRound(round);
-  }
-
-  @Test
-  void mapper_Game() {
-    GameDto gameDto = GameDto.builder()
-      .teams(Arrays.asList(
-        getTeamDto(),
-        getTeamDto()
-      ))
-      .rounds(Arrays.asList(
-        getRoundDto(),
-        getRoundDto()
-      ))
-      .build();
-
-    Game game = GameMapper.MAPPER.invert(gameDto);
-
-    game.getTeams().forEach(TestHelper::assertTeam);
-    game.getRounds().forEach(TestHelper::assertRound);
-  }
-
 }

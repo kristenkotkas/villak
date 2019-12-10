@@ -1,3 +1,11 @@
-<button routerLink="/admin">Admin</button>
-<button routerLink="/client">Game</button>
-<button routerLink="/button">Button</button>
+<button *ngIf="isShowAdminBtn()" (click)="setMode(gameMode.ADMIN)">Admin</button>
+<button *ngIf="isShowClientBtn()" (click)="setMode(gameMode.CLIENT)">Client</button>
+<button *ngIf="isShowButtonBtn()" (click)="setMode(gameMode.BUTTON)">Button</button>
+<app-admin *ngIf="isAdmin"
+           [game]="game"></app-admin>
+<app-client *ngIf="isClient"
+            [game]="game"></app-client>
+<app-button *ngIf="isButton"></app-button>
+<audio *ngFor="let question of audioQuestions"
+       id="player_sound_{{question.id}}"
+       src="{{question.soundUri}}"></audio>

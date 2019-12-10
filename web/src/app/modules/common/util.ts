@@ -5,9 +5,12 @@ export class Util {
 
   public static getApiUrl(): string {
     const url = window.location.origin;
-    console.log(url);
     const localUrl = `http://localhost:8085`;
     return url.indexOf('localhost:4200') !== -1 ? localUrl : url;
+  }
+
+  public static getDeviceId(): number {
+    return Math.floor(Math.random() * 99999) + 1;
   }
 
 }

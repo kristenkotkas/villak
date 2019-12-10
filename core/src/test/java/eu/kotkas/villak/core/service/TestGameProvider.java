@@ -53,7 +53,8 @@ class TestGameProvider {
             Question.builder().id(14).amount(0).question("Quest 9").answer("Answer 9").build()
           )).build()
         )).build()
-      )).build();
+      ))
+      .build();
   }
 
 }

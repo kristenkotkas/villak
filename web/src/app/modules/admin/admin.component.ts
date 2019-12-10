@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {DataService} from '../common/data.service';
+import {Component, Input, OnInit} from '@angular/core';
 import {Game} from '../game-data/model/game';
-import {Question} from "../game-data/model/question";
-import {Round} from "../game-data/model/round";
-import {Category} from "../game-data/model/category";
+import {WebsocketService} from "../common/websocket.service";
+import {Action} from "../game-data/model/action";
+import {Util} from "../common/util";
+import {LocalStorageUtil} from "../common/local-storage-util";
 
 @Component({
   selector: 'app-admin',
@@ -12,30 +12,17 @@ import {Category} from "../game-data/model/category";
 })
 export class AdminComponent implements OnInit {
 
-  game: Game;
-  audioQuestions: Question[] = [];
+  @Input() game: Game;
+  private deviceId: number = Util.getDeviceId();
 
-  constructor(private dataService: DataService) {
+  constructor(private ws: WebsocketService) {
   }
 
   ngOnInit(): void {
-    this.dataService.currentData.subscribe(data => {
-      this.game = data;
-      if (this.audioQuestions.length === 0) {
-        this.initAudio(data);
-      }
-    });
+    if (this.game.settings.adminDeviceId === null) {
+      this.ws.send([{action: Action.SET_ADMIN_DEVICE_ID, id: -1, payload: this.deviceId}]);
+      LocalStorageUtil.write('adminDeviceId', this.deviceId.toString());
+    }
   }
 
-  initAudio(game: Game): void {
-    game.rounds.forEach((round: Round) => {
-      round.categories.forEach((category: Category) => {
-        category.questions.forEach((question: Question) => {
-          if (!!question.soundUri) {
-            this.audioQuestions.push(question);
-          }
-        });
-      });
-    });
-  }
 }

@@ -1,6 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {DataService} from '../common/data.service';
+import {Component, Input, OnInit} from '@angular/core';
 import {Game} from '../game-data/model/game';
+import {WebsocketService} from "../common/websocket.service";
+import {Util} from "../common/util";
+import {Action} from "../game-data/model/action";
+import {LocalStorageUtil} from "../common/local-storage-util";
 
 @Component({
   selector: 'app-client',
@@ -9,13 +12,17 @@ import {Game} from '../game-data/model/game';
 })
 export class ClientComponent implements OnInit {
 
-  game: Game;
+  @Input() game: Game;
+  private deviceId: number = Util.getDeviceId();
 
-  constructor(private dataService: DataService) {
+  constructor(private ws: WebsocketService) {
   }
 
   ngOnInit(): void {
-    this.dataService.currentData.subscribe(data => this.game = data);
+    if (this.game.settings.gameDeviceId === null) {
+      this.ws.send([{action: Action.SET_CLIENT_DEVICE_ID, id: -1, payload: this.deviceId}]);
+      LocalStorageUtil.write('gameDeviceId', this.deviceId.toString());
+    }
   }
 
 }

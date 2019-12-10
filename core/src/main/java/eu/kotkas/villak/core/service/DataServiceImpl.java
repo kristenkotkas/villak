@@ -1,11 +1,12 @@
 package eu.kotkas.villak.core.service;
 
-import eu.kotkas.villak.core.dao.DataDao;
+import eu.kotkas.villak.core.dao.GameDao;
 import eu.kotkas.villak.core.model.Game;
 import eu.kotkas.villak.core.model.Message;
 import eu.kotkas.villak.core.model.enums.Action;
 import eu.kotkas.villak.core.model.mapper.GameMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -17,9 +18,10 @@ import java.util.Map;
  */
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class DataServiceImpl implements DataService {
 
-  private final DataDao dataDao;
+  private final GameDao gameDao;
   private static Game currentState;
   private static final Map<Action, Reducer> REDUCERS = new HashMap<>();
 
@@ -38,13 +40,16 @@ public class DataServiceImpl implements DataService {
     REDUCERS.put(Action.CLOSE_BUTTON, Reducer.CLOSE_BUTTON);
     REDUCERS.put(Action.TOGGLE_WINNER, Reducer.TOGGLE_WINNER);
     REDUCERS.put(Action.GET_CURRENT, Reducer.GET_CURRENT);
+    REDUCERS.put(Action.SET_ADMIN_DEVICE_ID, Reducer.SET_ADMIN_DEVICE_ID);
+    REDUCERS.put(Action.SET_CLIENT_DEVICE_ID, Reducer.SET_CLIENT_DEVICE_ID);
   }
 
   @Override
   public Game getNextState(List<Message> messages) {
     Game nextState;
     if (currentState == null) {
-      nextState = GameMapper.MAPPER.invert(dataDao.getInitialGame());
+      nextState = GameMapper.MAPPER.invert(gameDao.getInitialGame());
+      log.info(nextState);
     } else {
       nextState = reduce(currentState, messages);
     }
