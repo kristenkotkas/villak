@@ -42,6 +42,8 @@ public class DataServiceImpl implements DataService {
     REDUCERS.put(Action.GET_CURRENT, Reducer.GET_CURRENT);
     REDUCERS.put(Action.SET_ADMIN_DEVICE_ID, Reducer.SET_ADMIN_DEVICE_ID);
     REDUCERS.put(Action.SET_CLIENT_DEVICE_ID, Reducer.SET_CLIENT_DEVICE_ID);
+    REDUCERS.put(Action.SYNC_BUTTON, Reducer.SYNC_BUTTON);
+    REDUCERS.put(Action.SET_TEAM_DEVICE_ID, Reducer.SET_TEAM_DEVICE_ID);
   }
 
   @Override

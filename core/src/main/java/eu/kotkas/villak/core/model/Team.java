@@ -25,6 +25,9 @@ public class Team implements Serializable {
   private boolean havePressed;
   @Builder.Default
   private Long timePressed = 0L;
+  @Builder.Default
+  private Long timeSynced = 0L;
+  private Long deviceId;
   private boolean quickest;
   private boolean winner;
 

@@ -6,6 +6,7 @@ import {Round} from "../game-data/model/round";
 import {Category} from "../game-data/model/category";
 import {GameMode} from "../common/game-mode";
 import {LocalStorageUtil} from "../common/local-storage-util";
+import {Util} from "../common/util";
 
 @Component({
   selector: 'app-main',
@@ -31,6 +32,14 @@ export class MainComponent implements OnInit {
         this.initAudio(data);
       }
     });
+    this.setDeviceId();
+  }
+
+  private setDeviceId(): void {
+    let deviceIdFromMemory: string = LocalStorageUtil.read(LocalStorageUtil.KEY_DEVICE_ID);
+    if (deviceIdFromMemory === null) {
+      LocalStorageUtil.write(LocalStorageUtil.KEY_DEVICE_ID, Util.getDeviceId().toString());
+    }
   }
 
   initAudio(game: Game): void {
@@ -48,13 +57,13 @@ export class MainComponent implements OnInit {
   isShowAdminBtn(): boolean {
     return !this.isModeSelected() &&
       (!!this.game && !!this.game.settings && (this.game.settings.adminDeviceId === null ||
-        this.game.settings.adminDeviceId.toString() === LocalStorageUtil.read('adminDeviceId')));
+        this.game.settings.adminDeviceId.toString() === LocalStorageUtil.read(LocalStorageUtil.KEY_DEVICE_ID)));
   }
 
   isShowClientBtn(): boolean {
     return !this.isModeSelected() &&
       (!!this.game && !!this.game.settings && (this.game.settings.gameDeviceId === null ||
-        this.game.settings.gameDeviceId.toString() === LocalStorageUtil.read('gameDeviceId')));
+        this.game.settings.gameDeviceId.toString() === LocalStorageUtil.read(LocalStorageUtil.KEY_DEVICE_ID)));
   }
 
   isShowButtonBtn(): boolean {

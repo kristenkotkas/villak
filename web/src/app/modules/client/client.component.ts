@@ -13,15 +13,17 @@ import {LocalStorageUtil} from "../common/local-storage-util";
 export class ClientComponent implements OnInit {
 
   @Input() game: Game;
-  private deviceId: number = Util.getDeviceId();
 
   constructor(private ws: WebsocketService) {
   }
 
   ngOnInit(): void {
     if (this.game.settings.gameDeviceId === null) {
-      this.ws.send([{action: Action.SET_CLIENT_DEVICE_ID, id: -1, payload: this.deviceId}]);
-      LocalStorageUtil.write('gameDeviceId', this.deviceId.toString());
+      this.ws.send([{
+        action: Action.SET_CLIENT_DEVICE_ID,
+        id: -1,
+        payload: parseInt(LocalStorageUtil.read(LocalStorageUtil.KEY_DEVICE_ID), 10)
+      }]);
     }
   }
 

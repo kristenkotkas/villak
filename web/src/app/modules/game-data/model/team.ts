@@ -4,6 +4,8 @@ export class Team {
   score: number;
   havePressed: boolean;
   timePressed: number;
+  timeSynced: number;
+  deviceId: number;
   quickest: boolean;
   winner: boolean;
 

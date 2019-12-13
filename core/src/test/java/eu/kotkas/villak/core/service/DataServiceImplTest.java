@@ -262,6 +262,8 @@ class DataServiceImplTest {
   @Test
   void reducer_adminDeviceId() {
     Assert.assertNotNull(game.getSettings());
+    Assert.assertNull(game.getSettings().getAdminDeviceId());
+
     Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.SET_ADMIN_DEVICE_ID, -1, 123L));
 
     Assert.assertEquals(123L, gameSt2.getSettings().getAdminDeviceId().longValue());
@@ -270,8 +272,30 @@ class DataServiceImplTest {
   @Test
   void reducer_clientDeviceId() {
     Assert.assertNotNull(game.getSettings());
+    Assert.assertNull(game.getSettings().getGameDeviceId());
+
     Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.SET_CLIENT_DEVICE_ID, -1, 123L));
 
     Assert.assertEquals(123L, gameSt2.getSettings().getGameDeviceId().longValue());
+  }
+
+  @Test
+  void reducer_teamDeviceId() {
+    assertTeam(game, 0, Team::getDeviceId, null);
+    assertTeam(game, 1, Team::getDeviceId, null);
+
+    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.SET_TEAM_DEVICE_ID, 1, 123L));
+
+    assertTeam(gameSt2, 1, Team::getDeviceId, 123L);
+  }
+
+  @Test
+  void reducer_syncButton() {
+    assertTeam(game, 0, Team::getTimeSynced, 0L);
+    assertTeam(game, 1, Team::getTimeSynced, 0L);
+
+    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.SYNC_BUTTON, 1, 123L));
+
+    assertTeam(gameSt2, 1, Team::getTimeSynced, 123L);
   }
 }

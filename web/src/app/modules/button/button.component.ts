@@ -4,6 +4,7 @@ import {WebsocketService} from '../common/websocket.service';
 import {Action} from '../game-data/model/action';
 import {Game} from '../game-data/model/game';
 import {Team} from '../game-data/model/team';
+import {LocalStorageUtil} from "../common/local-storage-util";
 
 @Component({
   selector: 'app-button',
@@ -13,9 +14,8 @@ import {Team} from '../game-data/model/team';
 export class ButtonComponent implements OnInit {
 
   selectedTeam: Team = undefined;
+  candidateTeam: Team = undefined;
   teams: Team[];
-  selectClicked: boolean = false;
-  selectedTeamId: number = undefined;
   syncTime: number = undefined;
 
   constructor(private dataService: DataService,
@@ -25,23 +25,37 @@ export class ButtonComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.currentData.subscribe((data: Game) => {
       this.teams = data.teams;
-      if (this.isTeamSelected()) {
-        this.selectedTeam = data.teams.find((team: Team) => team.id === this.selectedTeamId);
+      let found: Team = this.teams.find((team: Team) =>
+        team.deviceId === parseInt(LocalStorageUtil.read(LocalStorageUtil.KEY_DEVICE_ID), 10));
+      if (found !== undefined) {
+        this.selectedTeam = found;
+        this.syncTime = found.timeSynced;
       }
     });
   }
 
-  isTeamSelected(): boolean {
-    return this.selectedTeamId !== undefined;
+  getUnselectedTeams(): Team[] {
+    return this.teams.filter((team: Team) => team.deviceId === null);
+  }
+
+  isShowSyncButton(): boolean {
+    return !this.isSynced();
   }
 
   isSynced(): boolean {
     return this.syncTime !== undefined;
   }
 
-  selectTeam(team: Team): void {
-    this.selectedTeamId = team.id;
-    this.selectedTeam = team;
+  isTeamSelected(): boolean {
+    return !!this.selectedTeam;
+  }
+
+  selectCandidateTeam(team: Team): void {
+    this.candidateTeam = team;
+  }
+
+  isCandidateSelected(): boolean {
+    return !!this.candidateTeam;
   }
 
   sync(): void {
@@ -49,11 +63,22 @@ export class ButtonComponent implements OnInit {
   }
 
   isShowButton(): boolean {
-    return this.selectClicked && this.isTeamSelected();
+    return this.isTeamSelected();
   }
 
-  onValiClicked(): void {
-    this.selectClicked = true;
+  selectTeam(): void {
+    this.ws.send([
+      {
+        action: Action.SET_TEAM_DEVICE_ID,
+        id: this.candidateTeam.id,
+        payload: parseInt(LocalStorageUtil.read(LocalStorageUtil.KEY_DEVICE_ID), 10)
+      },
+      {
+        action: Action.SYNC_BUTTON,
+        id: this.candidateTeam.id,
+        payload: this.syncTime
+      }
+    ]);
   }
 
   answer(): void {
@@ -61,7 +86,7 @@ export class ButtonComponent implements OnInit {
       this.ws.send([{
         action: Action.PRESS_BUTTON,
         id: this.selectedTeam.id,
-        payload: Date.now() - this.syncTime
+        payload: Date.now()
       }]);
     }
   }

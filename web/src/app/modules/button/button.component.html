@@ -1,4 +1,4 @@
-<div *ngIf="!isSynced()">
+<div *ngIf="isShowSyncButton()">
   <span class="card game-button category-title sync-buttons click" (click)="sync()">
     <span>Sync buttons</span>
     <br/>
@@ -9,15 +9,18 @@
 <div *ngIf="isSynced() && !isShowButton()">
   <div class="row">
     <div class="col">
+
       <div class="card category-title click"
-           *ngFor="let team of teams"
-           (click)="selectTeam(team)"
-           [ngClass]="{selected: isTeamSelected() && team.id === selectedTeam.id}"
+           *ngFor="let team of getUnselectedTeams()"
+           (click)="selectCandidateTeam(team)"
+           [ngClass]="{selected: isCandidateSelected() && team.id === candidateTeam.id}"
       >{{team.name}}</div>
+
       <div class="card category-title select-team click"
-           (click)="onValiClicked()">
+           (click)="selectTeam()">
         Select
       </div>
+
     </div>
   </div>
 </div>

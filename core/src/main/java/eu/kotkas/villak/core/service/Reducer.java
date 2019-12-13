@@ -11,10 +11,7 @@ import org.apache.commons.lang3.SerializationUtils;
 import java.util.Comparator;
 import java.util.function.BiFunction;
 
-import static eu.kotkas.villak.core.service.ReducerHelper.getCategoryNextStage;
-import static eu.kotkas.villak.core.service.ReducerHelper.getQuestionNextStage;
-import static eu.kotkas.villak.core.service.ReducerHelper.getRoundNextStage;
-import static eu.kotkas.villak.core.service.ReducerHelper.getTeamNextStage;
+import static eu.kotkas.villak.core.service.ReducerHelper.*;
 
 /**
  * @author Kristen Kotkas
@@ -32,7 +29,10 @@ public enum Reducer {
   ROUND_ACTIVE((game, message) -> getRoundNextStage(game, message, r -> r.setActive(r.getId() == message.getId()))),
   PRESS_BUTTON((game, message) -> getTeamNextStage(game, message, t -> {
     t.setHavePressed(true);
-    t.setTimePressed(message.getPayload());
+    game.getTeams().stream()
+      .filter(team -> team.getId() == message.getId())
+      .findFirst()
+      .ifPresent(team -> t.setTimePressed(message.getPayload() - team.getTimeSynced()));
   })),
   SHOW_QUICKEST((game, message) -> {
     Game clone = SerializationUtils.clone(game);
@@ -71,7 +71,9 @@ public enum Reducer {
     Game clone = SerializationUtils.clone(game);
     clone.getSettings().setGameDeviceId(message.getPayload());
     return clone;
-  })
+  }),
+  SYNC_BUTTON((game, message) -> getTeamNextStage(game, message, team -> team.setTimeSynced(message.getPayload()))),
+  SET_TEAM_DEVICE_ID((game, message) -> getTeamNextStage(game, message, team -> team.setDeviceId(message.getPayload()))),
   ;
 
   private final BiFunction<Game, Message, Game> reducer;
