@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author Kristen Kotkas
  */
-public interface DataService {
+public interface GameService {
 
   Game getNextState(List<Message> messages);
 

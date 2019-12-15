@@ -31,19 +31,19 @@ export class GameBoardComponent implements OnInit, OnChanges {
   }
 
   isStateClosed(question: Question): boolean {
-    return question.state === Action.CLOSE;
+    return question.state === Action.QUESTION_CLOSE;
   }
 
   isStateOpen(question: Question): boolean {
-    return question.state === Action.OPEN;
+    return question.state === Action.QUESTION_OPEN;
   }
 
   isStateAnswered(question: Question): boolean {
-    return question.state === Action.ANSWERED;
+    return question.state === Action.QUESTION_ANSWERED;
   }
 
   isStateSilver(question: Question): boolean {
-    return question.state === Action.SILVER;
+    return question.state === Action.QUESTION_SILVER;
   }
 
   isWithPicture(question: Question): boolean {
@@ -53,7 +53,7 @@ export class GameBoardComponent implements OnInit, OnChanges {
   show(question: Question): void {
     this.ws.send([
       {
-        action: Action.OPEN,
+        action: Action.QUESTION_OPEN,
         id: question.id
       },
       {
@@ -65,7 +65,7 @@ export class GameBoardComponent implements OnInit, OnChanges {
 
   showSilver(question: Question): void {
     this.ws.send([{
-      action: Action.SILVER,
+      action: Action.QUESTION_SILVER,
       id: question.id
     }]);
   }
@@ -73,7 +73,7 @@ export class GameBoardComponent implements OnInit, OnChanges {
   setAnswered(question: Question): void {
     this.ws.send([
       {
-        action: Action.ANSWERED,
+        action: Action.QUESTION_ANSWERED,
         id: question.id
       },
       {
@@ -85,7 +85,7 @@ export class GameBoardComponent implements OnInit, OnChanges {
 
   reset(question: Question): void {
     this.ws.send([{
-      action: Action.CLOSE,
+      action: Action.QUESTION_CLOSE,
       id: question.id
     }]);
   }

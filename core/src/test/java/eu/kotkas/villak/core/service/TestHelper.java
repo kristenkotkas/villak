@@ -41,7 +41,7 @@ public class TestHelper {
     assertTrue(question.isSilver());
     assertEquals(question.getQuestion(), TEST_STRING);
     assertEquals(question.getAnswer(), TEST_STRING);
-    assertEquals(question.getState(), QuestionState.CLOSE);
+    assertEquals(question.getState(), QuestionState.QUESTION_CLOSE);
     assertEquals(question.getPictureUri(), TEST_STRING);
     assertEquals(question.getSoundUri(), TEST_STRING);
   }

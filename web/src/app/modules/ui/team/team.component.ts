@@ -31,7 +31,7 @@ export class TeamComponent implements OnInit, OnChanges {
     this.game.rounds.forEach((round: Round) => {
       round.categories.forEach((cat: Category) => {
         cat.questions.filter((que: Question) => {
-          if (que.state === Action.OPEN) {
+          if (que.state === Action.QUESTION_OPEN) {
             result = que.amount;
           }
         });
@@ -43,7 +43,7 @@ export class TeamComponent implements OnInit, OnChanges {
 
   plus(team: Team): void {
     this.ws.send([{
-      action: Action.SCORE,
+      action: Action.TEAM_SCORE,
       id: team.id,
       payload: this.currentAmount
     }]);
@@ -53,7 +53,7 @@ export class TeamComponent implements OnInit, OnChanges {
   minus(team: Team): void {
     this.ws.send([
       {
-        action: Action.SCORE,
+        action: Action.TEAM_SCORE,
         id: team.id,
         payload: -(this.currentAmount)
       },

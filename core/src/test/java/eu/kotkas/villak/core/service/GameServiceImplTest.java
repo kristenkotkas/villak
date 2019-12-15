@@ -14,9 +14,9 @@ import static eu.kotkas.villak.core.service.TestHelper.*;
 /**
  * @author Kristen Kotkas
  */
-class DataServiceImplTest {
+class GameServiceImplTest {
 
-  private final DataService dataService = new DataServiceImpl(
+  private final GameService gameService = new GameServiceImpl(
     new GameDao()
   );
 
@@ -29,33 +29,33 @@ class DataServiceImplTest {
 
   @Test
   void reduce_questionActions() {
-    assertQuestions(game, 1L, Question::getState, QuestionState.CLOSE);
-    assertQuestions(game, 2L, Question::getState, QuestionState.CLOSE);
-    assertQuestions(game, 3L, Question::getState, QuestionState.CLOSE);
+    assertQuestions(game, 1L, Question::getState, QuestionState.QUESTION_CLOSE);
+    assertQuestions(game, 2L, Question::getState, QuestionState.QUESTION_CLOSE);
+    assertQuestions(game, 3L, Question::getState, QuestionState.QUESTION_CLOSE);
 
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.OPEN, 1L, null));
+    Game gameSt2 = gameService.reduce(game, getSingleMessage(Action.QUESTION_OPEN, 1L, null));
 
-    assertQuestions(gameSt2, 1L, Question::getState, QuestionState.OPEN);
-    assertQuestions(gameSt2, 2L, Question::getState, QuestionState.CLOSE);
-    assertQuestions(gameSt2, 3L, Question::getState, QuestionState.CLOSE);
+    assertQuestions(gameSt2, 1L, Question::getState, QuestionState.QUESTION_OPEN);
+    assertQuestions(gameSt2, 2L, Question::getState, QuestionState.QUESTION_CLOSE);
+    assertQuestions(gameSt2, 3L, Question::getState, QuestionState.QUESTION_CLOSE);
 
-    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.CLOSE, 1L, null));
+    Game gameSt3 = gameService.reduce(gameSt2, getSingleMessage(Action.QUESTION_CLOSE, 1L, null));
 
-    assertQuestions(gameSt3, 1L, Question::getState, QuestionState.CLOSE);
-    assertQuestions(gameSt3, 2L, Question::getState, QuestionState.CLOSE);
-    assertQuestions(gameSt3, 3L, Question::getState, QuestionState.CLOSE);
+    assertQuestions(gameSt3, 1L, Question::getState, QuestionState.QUESTION_CLOSE);
+    assertQuestions(gameSt3, 2L, Question::getState, QuestionState.QUESTION_CLOSE);
+    assertQuestions(gameSt3, 3L, Question::getState, QuestionState.QUESTION_CLOSE);
 
-    Game gameSt4 = dataService.reduce(gameSt3, getSingleMessage(Action.ANSWERED, 2L, null));
+    Game gameSt4 = gameService.reduce(gameSt3, getSingleMessage(Action.QUESTION_ANSWERED, 2L, null));
 
-    assertQuestions(gameSt4, 1L, Question::getState, QuestionState.CLOSE);
-    assertQuestions(gameSt4, 2L, Question::getState, QuestionState.ANSWERED);
-    assertQuestions(gameSt4, 3L, Question::getState, QuestionState.CLOSE);
+    assertQuestions(gameSt4, 1L, Question::getState, QuestionState.QUESTION_CLOSE);
+    assertQuestions(gameSt4, 2L, Question::getState, QuestionState.QUESTION_ANSWERED);
+    assertQuestions(gameSt4, 3L, Question::getState, QuestionState.QUESTION_CLOSE);
 
-    Game gameSt5 = dataService.reduce(gameSt4, getSingleMessage(Action.SILVER, 3L, null));
+    Game gameSt5 = gameService.reduce(gameSt4, getSingleMessage(Action.QUESTION_SILVER, 3L, null));
 
-    assertQuestions(gameSt5, 1L, Question::getState, QuestionState.CLOSE);
-    assertQuestions(gameSt5, 2L, Question::getState, QuestionState.ANSWERED);
-    assertQuestions(gameSt5, 3L, Question::getState, QuestionState.SILVER);
+    assertQuestions(gameSt5, 1L, Question::getState, QuestionState.QUESTION_CLOSE);
+    assertQuestions(gameSt5, 2L, Question::getState, QuestionState.QUESTION_ANSWERED);
+    assertQuestions(gameSt5, 3L, Question::getState, QuestionState.QUESTION_SILVER);
   }
 
   @Test
@@ -66,13 +66,13 @@ class DataServiceImplTest {
     assertTeam(game, 2, Team::getScore, 0);
 
     // score is increased
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.SCORE, 0, 100L));
+    Game gameSt2 = gameService.reduce(game, getSingleMessage(Action.TEAM_SCORE, 0, 100L));
     assertTeam(gameSt2, 0, Team::getScore, 100);
     assertTeam(gameSt2, 1, Team::getScore, 0);
     assertTeam(gameSt2, 2, Team::getScore, 0);
 
     // score is reduced
-    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.SCORE, 1, -150L));
+    Game gameSt3 = gameService.reduce(gameSt2, getSingleMessage(Action.TEAM_SCORE, 1, -150L));
     assertTeam(gameSt3, 0, Team::getScore, 100);
     assertTeam(gameSt3, 1, Team::getScore, -150);
     assertTeam(gameSt3, 2, Team::getScore, 0);
@@ -85,12 +85,12 @@ class DataServiceImplTest {
     assertCategory(game, 1, Category::getNameState, NameState.CATEGORY_HIDE);
 
     // show category
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.CATEGORY_SHOW, 1, null));
+    Game gameSt2 = gameService.reduce(game, getSingleMessage(Action.CATEGORY_SHOW, 1, null));
     assertCategory(gameSt2, 0, Category::getNameState, NameState.CATEGORY_HIDE);
     assertCategory(gameSt2, 1, Category::getNameState, NameState.CATEGORY_SHOW);
 
     // hide category
-    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.CATEGORY_HIDE, 1, null));
+    Game gameSt3 = gameService.reduce(gameSt2, getSingleMessage(Action.CATEGORY_HIDE, 1, null));
     assertCategory(gameSt3, 0, Category::getNameState, NameState.CATEGORY_HIDE);
     assertCategory(gameSt3, 1, Category::getNameState, NameState.CATEGORY_HIDE);
   }
@@ -103,19 +103,19 @@ class DataServiceImplTest {
     assertRound(game, 2, Round::isActive, false);
 
     // first round to active
-    Game gameSt1 = dataService.reduce(game, getSingleMessage(Action.ACTIVE_ROUND, 0, null));
+    Game gameSt1 = gameService.reduce(game, getSingleMessage(Action.ROUND_ACTIVE, 0, null));
     assertRound(gameSt1, 0, Round::isActive, true);
     assertRound(gameSt1, 1, Round::isActive, false);
     assertRound(gameSt1, 2, Round::isActive, false);
 
     // second round to active
-    Game gameSt2 = dataService.reduce(gameSt1, getSingleMessage(Action.ACTIVE_ROUND, 1, null));
+    Game gameSt2 = gameService.reduce(gameSt1, getSingleMessage(Action.ROUND_ACTIVE, 1, null));
     assertRound(gameSt2, 0, Round::isActive, false);
     assertRound(gameSt2, 1, Round::isActive, true);
     assertRound(gameSt2, 2, Round::isActive, false);
 
     // second round to active
-    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.ACTIVE_ROUND, 2, null));
+    Game gameSt3 = gameService.reduce(gameSt2, getSingleMessage(Action.ROUND_ACTIVE, 2, null));
     assertRound(gameSt3, 0, Round::isActive, false);
     assertRound(gameSt3, 1, Round::isActive, false);
     assertRound(gameSt3, 2, Round::isActive, true);
@@ -142,7 +142,7 @@ class DataServiceImplTest {
   @Test
   void reduce_team_pressButton_Reset() {
     // first pressed
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 0, 123L));
+    Game gameSt2 = gameService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 0, 123L));
     assertTeam(gameSt2, 0, Team::isHavePressed, true);
     assertTeam(gameSt2, 1, Team::isHavePressed, false);
     assertTeam(gameSt2, 2, Team::isHavePressed, false);
@@ -152,7 +152,7 @@ class DataServiceImplTest {
     assertTeam(gameSt2, 2, Team::getTimePressed, 0L);
 
     // second pressed
-    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.PRESS_BUTTON, 2, 64L));
+    Game gameSt3 = gameService.reduce(gameSt2, getSingleMessage(Action.PRESS_BUTTON, 2, 64L));
     assertTeam(gameSt3, 0, Team::isHavePressed, true);
     assertTeam(gameSt3, 1, Team::isHavePressed, false);
     assertTeam(gameSt3, 2, Team::isHavePressed, true);
@@ -162,7 +162,7 @@ class DataServiceImplTest {
     assertTeam(gameSt3, 2, Team::getTimePressed, 64L);
 
     // reset button
-    Game gameSt4 = dataService.reduce(gameSt3, getSingleMessage(Action.RESET_BUTTON, -1, null));
+    Game gameSt4 = gameService.reduce(gameSt3, getSingleMessage(Action.RESET_BUTTON, -1, null));
     assertTeam(gameSt4, 0, Team::isHavePressed, false);
     assertTeam(gameSt4, 1, Team::isHavePressed, false);
     assertTeam(gameSt4, 2, Team::isHavePressed, false);
@@ -178,7 +178,7 @@ class DataServiceImplTest {
 
   @Test
   void reduce_showQuickest_allZero() {
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.SHOW_QUICKEST, -1, null));
+    Game gameSt2 = gameService.reduce(game, getSingleMessage(Action.SHOW_QUICKEST, -1, null));
 
     assertTeam(gameSt2, 0, Team::isQuickest, false);
     assertTeam(gameSt2, 1, Team::isQuickest, false);
@@ -187,8 +187,8 @@ class DataServiceImplTest {
 
   @Test
   void reduce_showQuickest_onePressedOthersZero() {
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 1, 123L));
-    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.SHOW_QUICKEST, -1, null));
+    Game gameSt2 = gameService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 1, 123L));
+    Game gameSt3 = gameService.reduce(gameSt2, getSingleMessage(Action.SHOW_QUICKEST, -1, null));
 
     assertTeam(gameSt3, 0, Team::isQuickest, false);
     assertTeam(gameSt3, 1, Team::isQuickest, true);
@@ -197,17 +197,17 @@ class DataServiceImplTest {
 
   @Test
   void reduce_showQuickest_quickestUniqueAllPressed() {
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 2, 100L));
-    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.PRESS_BUTTON, 0, 101L));
-    Game gameSt4 = dataService.reduce(gameSt3, getSingleMessage(Action.PRESS_BUTTON, 1, 102L));
-    Game gameSt5 = dataService.reduce(gameSt4, getSingleMessage(Action.SHOW_QUICKEST, -1, null));
+    Game gameSt2 = gameService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 2, 100L));
+    Game gameSt3 = gameService.reduce(gameSt2, getSingleMessage(Action.PRESS_BUTTON, 0, 101L));
+    Game gameSt4 = gameService.reduce(gameSt3, getSingleMessage(Action.PRESS_BUTTON, 1, 102L));
+    Game gameSt5 = gameService.reduce(gameSt4, getSingleMessage(Action.SHOW_QUICKEST, -1, null));
 
     assertTeam(gameSt5, 0, Team::isQuickest, false);
     assertTeam(gameSt5, 1, Team::isQuickest, false);
     assertTeam(gameSt5, 2, Team::isQuickest, true);
 
     // reset button
-    Game gameSt6 = dataService.reduce(gameSt5, getSingleMessage(Action.RESET_BUTTON, -1, null));
+    Game gameSt6 = gameService.reduce(gameSt5, getSingleMessage(Action.RESET_BUTTON, -1, null));
 
     assertTeam(gameSt6, 0, Team::isQuickest, false);
     assertTeam(gameSt6, 1, Team::isQuickest, false);
@@ -216,11 +216,11 @@ class DataServiceImplTest {
 
   @Test
   void reduce_closeAllButtons() {
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 2, 100L));
-    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.PRESS_BUTTON, 0, 101L));
-    Game gameSt4 = dataService.reduce(gameSt3, getSingleMessage(Action.PRESS_BUTTON, 1, 102L));
+    Game gameSt2 = gameService.reduce(game, getSingleMessage(Action.PRESS_BUTTON, 2, 100L));
+    Game gameSt3 = gameService.reduce(gameSt2, getSingleMessage(Action.PRESS_BUTTON, 0, 101L));
+    Game gameSt4 = gameService.reduce(gameSt3, getSingleMessage(Action.PRESS_BUTTON, 1, 102L));
 
-    Game gameSt5 = dataService.reduce(gameSt4, getSingleMessage(Action.CLOSE_BUTTON, -1, null));
+    Game gameSt5 = gameService.reduce(gameSt4, getSingleMessage(Action.CLOSE_BUTTON, -1, null));
 
     assertTeam(gameSt5, 0, Team::isHavePressed, true);
     assertTeam(gameSt5, 1, Team::isHavePressed, true);
@@ -242,17 +242,17 @@ class DataServiceImplTest {
     assertTeam(game, 1, Team::isWinner, false);
     assertTeam(game, 2, Team::isWinner, false);
 
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.TOGGLE_WINNER, 1, null));
+    Game gameSt2 = gameService.reduce(game, getSingleMessage(Action.TOGGLE_WINNER, 1, null));
     assertTeam(gameSt2, 0, Team::isWinner, false);
     assertTeam(gameSt2, 1, Team::isWinner, true);
     assertTeam(gameSt2, 2, Team::isWinner, false);
 
-    Game gameSt3 = dataService.reduce(gameSt2, getSingleMessage(Action.TOGGLE_WINNER, 2, null));
+    Game gameSt3 = gameService.reduce(gameSt2, getSingleMessage(Action.TOGGLE_WINNER, 2, null));
     assertTeam(gameSt3, 0, Team::isWinner, false);
     assertTeam(gameSt3, 1, Team::isWinner, true);
     assertTeam(gameSt3, 2, Team::isWinner, true);
 
-    Game gameSt4 = dataService.reduce(gameSt3, getSingleMessage(Action.TOGGLE_WINNER, 2, null));
+    Game gameSt4 = gameService.reduce(gameSt3, getSingleMessage(Action.TOGGLE_WINNER, 2, null));
     assertTeam(gameSt4, 0, Team::isWinner, false);
     assertTeam(gameSt4, 1, Team::isWinner, true);
     assertTeam(gameSt4, 2, Team::isWinner, false);
@@ -264,7 +264,7 @@ class DataServiceImplTest {
     Assert.assertNotNull(game.getSettings());
     Assert.assertNull(game.getSettings().getAdminDeviceId());
 
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.SET_ADMIN_DEVICE_ID, -1, 123L));
+    Game gameSt2 = gameService.reduce(game, getSingleMessage(Action.SET_ADMIN_DEVICE_ID, -1, 123L));
 
     Assert.assertEquals(123L, gameSt2.getSettings().getAdminDeviceId().longValue());
   }
@@ -274,7 +274,7 @@ class DataServiceImplTest {
     Assert.assertNotNull(game.getSettings());
     Assert.assertNull(game.getSettings().getGameDeviceId());
 
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.SET_CLIENT_DEVICE_ID, -1, 123L));
+    Game gameSt2 = gameService.reduce(game, getSingleMessage(Action.SET_CLIENT_DEVICE_ID, -1, 123L));
 
     Assert.assertEquals(123L, gameSt2.getSettings().getGameDeviceId().longValue());
   }
@@ -284,7 +284,7 @@ class DataServiceImplTest {
     assertTeam(game, 0, Team::getDeviceId, null);
     assertTeam(game, 1, Team::getDeviceId, null);
 
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.SET_TEAM_DEVICE_ID, 1, 123L));
+    Game gameSt2 = gameService.reduce(game, getSingleMessage(Action.SET_TEAM_DEVICE_ID, 1, 123L));
 
     assertTeam(gameSt2, 1, Team::getDeviceId, 123L);
   }
@@ -294,7 +294,7 @@ class DataServiceImplTest {
     assertTeam(game, 0, Team::getTimeSynced, 0L);
     assertTeam(game, 1, Team::getTimeSynced, 0L);
 
-    Game gameSt2 = dataService.reduce(game, getSingleMessage(Action.SYNC_BUTTON, 1, 123L));
+    Game gameSt2 = gameService.reduce(game, getSingleMessage(Action.SYNC_BUTTON, 1, 123L));
 
     assertTeam(gameSt2, 1, Team::getTimeSynced, 123L);
   }

@@ -19,10 +19,10 @@ import static eu.kotkas.villak.core.service.ReducerHelper.*;
 @RequiredArgsConstructor
 public enum Reducer {
 
-  QUESTION_OPEN((game, message) -> getQuestionNextStage(game, message, q -> q.setState(QuestionState.OPEN))),
-  QUESTION_CLOSE((game, message) -> getQuestionNextStage(game, message, q -> q.setState(QuestionState.CLOSE))),
-  QUESTION_ANSWERED((game, message) -> getQuestionNextStage(game, message, q -> q.setState(QuestionState.ANSWERED))),
-  QUESTION_SILVER((game, message) -> getQuestionNextStage(game, message, q -> q.setState(QuestionState.SILVER))),
+  QUESTION_OPEN((game, message) -> getQuestionNextStage(game, message, q -> q.setState(QuestionState.QUESTION_OPEN))),
+  QUESTION_CLOSE((game, message) -> getQuestionNextStage(game, message, q -> q.setState(QuestionState.QUESTION_CLOSE))),
+  QUESTION_ANSWERED((game, message) -> getQuestionNextStage(game, message, q -> q.setState(QuestionState.QUESTION_ANSWERED))),
+  QUESTION_SILVER((game, message) -> getQuestionNextStage(game, message, q -> q.setState(QuestionState.QUESTION_SILVER))),
   TEAM_SCORE((game, message) -> getTeamNextStage(game, message, t -> t.setScore(t.getScore() + message.getPayload().intValue()))),
   CATEGORY_SHOW((game, message) -> getCategoryNextStage(game, message, c -> c.setNameState(NameState.CATEGORY_SHOW))),
   CATEGORY_HIDE((game, message) -> getCategoryNextStage(game, message, c -> c.setNameState(NameState.CATEGORY_HIDE))),

@@ -5,9 +5,9 @@ package eu.kotkas.villak.core.model.enums;
  */
 public enum QuestionState {
 
-  CLOSE,
-  OPEN,
-  ANSWERED,
-  SILVER
+  QUESTION_CLOSE,
+  QUESTION_OPEN,
+  QUESTION_ANSWERED,
+  QUESTION_SILVER
 
 }

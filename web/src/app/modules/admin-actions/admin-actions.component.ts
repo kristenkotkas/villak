@@ -22,7 +22,7 @@ export class AdminActionsComponent implements OnInit {
 
   setActiveRound(roundId: number): void {
     this.ws.send([{
-      action: Action.ACTIVE_ROUND,
+      action: Action.ROUND_ACTIVE,
       id: roundId
     }]);
   }

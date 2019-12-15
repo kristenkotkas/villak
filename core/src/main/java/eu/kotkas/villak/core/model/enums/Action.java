@@ -5,14 +5,14 @@ package eu.kotkas.villak.core.model.enums;
  */
 public enum Action {
 
-  CLOSE,
-  OPEN,
-  ANSWERED,
-  SILVER,
-  SCORE,
+  QUESTION_CLOSE,
+  QUESTION_OPEN,
+  QUESTION_ANSWERED,
+  QUESTION_SILVER,
+  TEAM_SCORE,
   CATEGORY_SHOW,
   CATEGORY_HIDE,
-  ACTIVE_ROUND,
+  ROUND_ACTIVE,
   PRESS_BUTTON,
   RESET_BUTTON,
   SHOW_QUICKEST,

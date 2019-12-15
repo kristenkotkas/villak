@@ -22,7 +22,7 @@ export class Question {
     this.silver = isSilver;
     this.question = question;
     this.answer = answer;
-    this.state = Action.CLOSE;
+    this.state = Action.QUESTION_CLOSE;
     this.pictureUri = pictureUri;
     this.soundUri = sound;
   }

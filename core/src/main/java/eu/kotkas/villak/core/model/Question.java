@@ -25,7 +25,7 @@ public class Question implements Serializable {
   private String question;
   private String answer;
   @Builder.Default
-  private QuestionState state = QuestionState.CLOSE;
+  private QuestionState state = QuestionState.QUESTION_CLOSE;
   private String pictureUri;
   private String soundUri;
 
