@@ -51,4 +51,11 @@ export class AdminActionsComponent implements OnInit {
     return Util.getPlayer(player);
   }
 
+  restartGame(): void {
+    this.ws.send([{
+      action: Action.RESTART_GAME,
+      id: -1
+    }]);
+  }
+
 }

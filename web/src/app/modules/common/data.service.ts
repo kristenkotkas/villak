@@ -14,6 +14,9 @@ export class DataService {
   constructor(private ws: WebsocketService) {
     ws.listen((game: Game) => {
       this.data.next(game);
+      if (game.settings.shouldRefresh) {
+        window.location.reload();
+      }
     });
   }
 }

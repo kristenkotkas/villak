@@ -20,6 +20,7 @@
           <button class="admin-stop" (click)="stop('think', '../../../assets/sounds/think.mp3')">■</button>
         </div>
         <div>
+          <button (click)="restartGame()">Restart game</button>
           <button (click)="getPlayer('plus').play();">♫ ✓</button>
           <button (click)="getPlayer('minus').play();">♫ x</button>
           <button (click)="resetButton()">Reset buttons</button>

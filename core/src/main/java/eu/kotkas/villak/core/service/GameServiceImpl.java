@@ -3,6 +3,7 @@ package eu.kotkas.villak.core.service;
 import eu.kotkas.villak.core.dao.GameDao;
 import eu.kotkas.villak.core.model.Game;
 import eu.kotkas.villak.core.model.Message;
+import eu.kotkas.villak.core.model.enums.Action;
 import eu.kotkas.villak.core.model.mapper.GameMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,12 +25,15 @@ public class GameServiceImpl implements GameService {
   @Override
   public Game getNextState(List<Message> messages) {
     Game nextState;
-    if (currentState == null) {
+    if (currentState == null ) {
       nextState = GameMapper.MAPPER.invert(gameDao.getInitialGame());
-      //log.info(nextState);
+    } else if (messages.size() == 1 && messages.get(0).getAction().equals(Action.RESTART_GAME)) {
+      nextState = reduce(GameMapper.MAPPER.invert(gameDao.getInitialGame()), messages);
     } else {
+      messages.add(new Message(Action.RESET_SHOULD_REFRESH.name(), -1, -1L));
       nextState = reduce(currentState, messages);
     }
+    log.info(nextState);
     currentState = nextState;
     return nextState;
   }

@@ -15,5 +15,6 @@ public class Settings implements Serializable {
 
   private Long adminDeviceId;
   private Long gameDeviceId;
+  private Boolean shouldRefresh;
 
 }

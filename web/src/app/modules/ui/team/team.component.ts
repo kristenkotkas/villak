@@ -37,10 +37,7 @@ export class TeamComponent implements OnInit, OnChanges {
         });
       });
     });
-    if (changes['game']['currentValue']
-      && changes['game']['previousValue']
-      && this.getPressedCount(changes['game']['currentValue'].teams) === 1
-      && this.getPressedCount(changes['game']['previousValue'].teams) === 0) {
+    if (this.shouldDetectQuickest(changes)) {
       setTimeout(() => {
         // @ts-ignore
         this.getPlayer('ding').play();
@@ -48,6 +45,14 @@ export class TeamComponent implements OnInit, OnChanges {
       }, 1000);
     }
     this.currentAmount = result;
+  }
+
+  private shouldDetectQuickest(changes: SimpleChanges): boolean {
+    return this.admin
+      && changes['game']['currentValue']
+      && changes['game']['previousValue']
+      && this.getPressedCount(changes['game']['currentValue'].teams) === 1
+      && this.getPressedCount(changes['game']['previousValue'].teams) === 0;
   }
 
   private getPressedCount(teams: Team[]): number {

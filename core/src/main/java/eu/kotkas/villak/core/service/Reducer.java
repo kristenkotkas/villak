@@ -60,6 +60,16 @@ public enum Reducer {
     });
     return clone;
   }),
+  RESTART_GAME((game, message) -> {
+      Game clone = SerializationUtils.clone(game);
+      clone.getSettings().setShouldRefresh(true);
+      return clone;
+  }),
+  RESET_SHOULD_REFRESH((game, message) -> {
+      Game clone = SerializationUtils.clone(game);
+      clone.getSettings().setShouldRefresh(false);
+      return clone;
+  }),
   TOGGLE_WINNER((game, message) -> getTeamNextStage(game, message, t -> t.setWinner(!t.isWinner()))),
   GET_CURRENT((game, message) -> game),
   SET_ADMIN_DEVICE_ID((game, message) -> {
@@ -73,7 +83,7 @@ public enum Reducer {
     return clone;
   }),
   SYNC_BUTTON((game, message) -> getTeamNextStage(game, message, team -> team.setTimeSynced(message.getPayload()))),
-  SET_TEAM_DEVICE_ID((game, message) -> getTeamNextStage(game, message, team -> team.setDeviceId(message.getPayload()))),
+  SET_TEAM_DEVICE_ID((game, message) -> getTeamNextStage(game, message, team -> team.setDeviceId(message.getPayload())))
   ;
 
   private final BiFunction<Game, Message, Game> reducer;
