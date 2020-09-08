@@ -26,7 +26,7 @@ public class GameServiceImpl implements GameService {
     Game nextState;
     if (currentState == null) {
       nextState = GameMapper.MAPPER.invert(gameDao.getInitialGame());
-      log.info(nextState);
+      //log.info(nextState);
     } else {
       nextState = reduce(currentState, messages);
     }
