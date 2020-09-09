@@ -94,6 +94,16 @@ export class GameBoardComponent implements OnInit, OnChanges {
     return Util.getPlayer(player);
   }
 
+  play(player: string): void {
+    // @ts-ignore
+    this.getPlayer(player).play();
+  }
+
+  pause(player: string): void {
+    // @ts-ignore
+    this.getPlayer(player).pause();
+  }
+
   isWithSound(question: Question): boolean {
     return !!question.soundUri;
   }

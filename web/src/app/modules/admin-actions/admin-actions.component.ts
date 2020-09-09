@@ -51,6 +51,11 @@ export class AdminActionsComponent implements OnInit {
     return Util.getPlayer(player);
   }
 
+  play(player: string): void {
+    // @ts-ignore
+    this.getPlayer(player).play();
+  }
+
   restartGame(): void {
     this.ws.send([{
       action: Action.RESTART_GAME,

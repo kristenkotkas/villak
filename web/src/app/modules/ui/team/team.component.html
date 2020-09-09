@@ -27,8 +27,8 @@
       </div>
       <div>
         <input type="number" [(ngModel)]="currentAmount">
-        <button class="admin-play" (click)="getPlayer('plus').play(); plus(team)">Right</button>
-        <button class="admin-stop" (click)="getPlayer('minus').play(); minus(team)">Wrong</button>
+        <button class="admin-play" (click)="play('plus'); plus(team)">Right</button>
+        <button class="admin-stop" (click)="play('minus'); minus(team)">Wrong</button>
         <button class="admin-winner" (click)="toggleWinner(team)">Winner</button>
       </div>
     </div>

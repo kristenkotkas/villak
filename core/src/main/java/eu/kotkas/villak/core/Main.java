@@ -20,6 +20,8 @@ public class Main {
     if (args.length == 2) {
       port = args[0];
       staticFolderPath = args[1];
+      log.info("Running on port: {}", port);
+      log.info("Reading game folder from: {}", staticFolderPath);
     } else {
       log.error("Provide application port and/or data folder absolute path");
       System.exit(-1);

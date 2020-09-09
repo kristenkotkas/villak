@@ -14,17 +14,17 @@
     <div class="col">
       <div class="card">
         <div>
-          <button class="admin-play" (click)="getPlayer('intro').play()">♫ Intro ►</button>
+          <button class="admin-play" (click)="play('intro')">♫ Intro ►</button>
           <button class="admin-stop" (click)="stop('intro', '../../../assets/sounds/Jeopardy Intro.mp3')">■</button>
-          <button class="admin-play" (click)="getPlayer('think').play()">♫ Thinking ►</button>
+          <button class="admin-play" (click)="play('think')">♫ Thinking ►</button>
           <button class="admin-stop" (click)="stop('think', '../../../assets/sounds/think.mp3')">■</button>
         </div>
         <div>
           <button (click)="restartGame()">Restart game</button>
-          <button (click)="getPlayer('plus').play();">♫ ✓</button>
-          <button (click)="getPlayer('minus').play();">♫ x</button>
+          <button (click)="play('plus');">♫ ✓</button>
+          <button (click)="play('minus');">♫ x</button>
           <button (click)="resetButton()">Reset buttons</button>
-          <button (click)="getPlayer('ding').play(); showQuickest()">Show quickest</button>
+          <button (click)="play('ding'); showQuickest()">Show quickest</button>
         </div>
       </div>
     </div>

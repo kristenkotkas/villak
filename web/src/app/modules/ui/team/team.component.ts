@@ -94,6 +94,11 @@ export class TeamComponent implements OnInit, OnChanges {
     return Util.getPlayer(player);
   }
 
+  play(player: string): void {
+    // @ts-ignore
+    this.getPlayer(player).play();
+  }
+
   resetButton(): void {
     this.ws.send([{
       action: Action.RESET_BUTTON,
