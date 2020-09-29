@@ -3,31 +3,23 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
-import {AdminActionsComponent} from './modules/admin-actions/admin-actions.component';
-import {AdminComponent} from './modules/admin/admin.component';
-import {ButtonComponent} from './modules/button/button.component';
-import {ClientComponent} from './modules/client/client.component';
-import {GameBoardComponent} from './modules/ui/game-board/game-board.component';
-import {QuestionComponent} from './modules/ui/question/question.component';
-import {TeamComponent} from './modules/ui/team/team.component';
-import {MainComponent} from './modules/main/main.component';
+import {AppRoutingModule} from "./app-routing.module";
+import {RouterModule} from '@angular/router';
+import {VillakModule} from "./modules/villak/villak.module";
+import {RoosidModule} from "./modules/roosid/roosid.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AdminComponent,
-    ClientComponent,
-    GameBoardComponent,
-    TeamComponent,
-    QuestionComponent,
-    ButtonComponent,
-    AdminActionsComponent,
-    MainComponent
-  ],
   imports: [
+    VillakModule,
+    RoosidModule,
     BrowserModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    RouterModule,
+    AppRoutingModule // must be last in the array
+  ],
+  declarations: [
+    AppComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

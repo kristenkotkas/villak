@@ -4,14 +4,12 @@
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'GPS', sans-serif;
 }
 
 html, body {
   height: 100%;
   width: 100%;
-  font-family: Roboto, serif;
-  background: #2E4662;
+  background: #98ca45;
 }
 
 .col-content {

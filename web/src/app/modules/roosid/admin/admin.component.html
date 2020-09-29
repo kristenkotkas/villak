@@ -1,0 +1,79 @@
+<div>
+  <h2>Questions</h2>
+  <table>
+    <tbody>
+    <tr>
+      <th>Question</th>
+      <th>X</th>
+      <th></th>
+    </tr>
+    <tr [ngClass]="{inactive: !round.active}" *ngFor="let round of getRounds(game)">
+      <td>{{round.question}}</td>
+      <td>{{round.multiplayer}} x</td>
+      <td>
+        <button *ngIf="!round.active" (click)="setActive(round.id)">Set active</button>
+        <button *ngIf="round.active" (click)="setInActive(round.id)">Set inactive</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div>
+  <h2>Teams</h2>
+  <table>
+    <tbody>
+    <tr>
+      <th>Name</th>
+      <th colspan="2">Score</th>
+      <th colspan="2">Crosses</th>
+    </tr>
+    <tr *ngFor="let team of game.teams">
+      <td>{{team.name}}</td>
+      <td>{{team.score}}</td>
+      <td>
+        <button *ngIf="activeRound" (click)="addCurrentToScore(team.id)">Add {{activeRound.score}} to score</button>
+        <button (click)="resetScore(team.id)">Reset</button>
+      </td>
+      <td>
+        <span>{{getCrosses(team.crossCount)}}</span>
+      </td>
+      <td>
+        <button (click)="addCross(team.id)">Add</button>
+        <button (click)="resetCross(team.id)">Reset</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="activeRound">
+  <h2>Current question</h2>
+  <table>
+    <tbody>
+    <tr>
+      <th>Number</th>
+      <th>Answer</th>
+      <th>Amount</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let answer of activeRound.answers"
+        [ngClass]="{inactive: isAnswerClosed(answer)}">
+      <td>{{answer.displayNumber}}</td>
+      <td>{{answer.answer}}</td>
+      <td>{{answer.amount}}</td>
+      <td>
+        <button (click)="toggleAnswer(answer.id)" *ngIf="isAnswerClosed(answer)">Show</button>
+        <button (click)="toggleAnswer(answer.id)" *ngIf="isAnswerOpen(answer)">Hide</button>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>{{activeRound.score}}</td>
+      <td></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

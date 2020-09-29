@@ -1,0 +1,29 @@
+.retro-card {
+  background: #98ca45;
+  flex: auto;
+}
+
+.retro-card-1 {
+  background: #0b9444;
+  margin: 0.5em;
+}
+
+.retro-card-2 {
+  background: #98ca45;
+  margin: 0.5em;
+}
+
+.retro-card-3 {
+  background: #3ab54a;
+  margin: 0.5em;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-text {
+  font-size: 4em;
+  font-weight: 300;
+  color: #ffffff;
+}

@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col">
+    <app-cross-card [currentCross]="1" [totalCrosses]="getTeamCrossesCount(0)"></app-cross-card>
+  </div>
+  <div class="col">
+    <app-cross-card [currentCross]="2" [totalCrosses]="getTeamCrossesCount(0)"></app-cross-card>
+  </div>
+  <div class="col">
+    <app-cross-card [currentCross]="3" [totalCrosses]="getTeamCrossesCount(0)"></app-cross-card>
+  </div>
+  <div class="col" style="flex: 2">
+    <app-card [value]="getMultiplayerString(game)"></app-card>
+  </div>
+  <div class="col">
+    <app-cross-card [currentCross]="1" [totalCrosses]="getTeamCrossesCount(1)"></app-cross-card>
+  </div>
+  <div class="col">
+    <app-cross-card [currentCross]="2" [totalCrosses]="getTeamCrossesCount(1)"></app-cross-card>
+  </div>
+  <div class="col">
+    <app-cross-card [currentCross]="3" [totalCrosses]="getTeamCrossesCount(1)"></app-cross-card>
+  </div>
+</div>
