@@ -1,17 +1,17 @@
 <div class="row">
   <div class="col">
-    <app-card [value]="leftScore !== undefined? leftScore.toString() : ''"></app-card>
+    <app-card [value]="leftScore ? leftScore.toString() : ''"></app-card>
+  </div>
+  <div class="col" style="flex: 2">
+    <app-card [value]="leftTeamName"></app-card>
   </div>
   <div class="col">
-    <app-card></app-card>
+    <app-card [value]="currentRoundScore ? currentRoundScore.toString() : ''"></app-card>
+  </div>
+  <div class="col" style="flex: 2">
+    <app-card [value]="rightTeamName"></app-card>
   </div>
   <div class="col">
-    <app-card [value]="currentRoundScore !== undefined ? currentRoundScore.toString() : ''"></app-card>
-  </div>
-  <div class="col">
-    <app-card></app-card>
-  </div>
-  <div class="col">
-    <app-card [value]="rightScore !== undefined ? rightScore.toString() : ''"></app-card>
+    <app-card [value]="rightScore ? rightScore.toString() : ''"></app-card>
   </div>
 </div>

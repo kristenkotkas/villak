@@ -1,6 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Game} from "../model/game";
-import {Round} from "../model/round";
 import {Util} from "../util/util";
 
 @Component({
@@ -14,6 +13,8 @@ export class ScoresComponent implements OnInit, OnChanges {
   leftScore: number;
   rightScore: number;
   currentRoundScore: number;
+  leftTeamName: string;
+  rightTeamName: string;
 
   constructor() {
   }
@@ -25,9 +26,11 @@ export class ScoresComponent implements OnInit, OnChanges {
     if (this.game && this.game.teams) {
       if (this.game.teams[0]) {
         this.leftScore = this.game.teams[0].score;
+        this.leftTeamName = this.game.teams[0].name;
       }
       if (this.game.teams[1]) {
         this.rightScore = this.game.teams[1].score;
+        this.rightTeamName = this.game.teams[1].name;
       }
       const activeRound = Util.getActiveRound(this.game);
       if (activeRound) {
