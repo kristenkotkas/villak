@@ -58,7 +58,11 @@ public enum Reducer {
     }),
     RESET_CROSS((game, message) -> {
         return ReducerHelper.getTeamNextStage(game, message, t -> t.setCrossCount(0));
-    })
+    }),
+    PLAY_SHORT_THEME((game, message) -> game),
+    STOP_SHORT_THEME((game, message) -> game),
+    PLAY_INTRO((game, message) -> game),
+    STOP_INTRO((game, message) -> game),
     ;
 
 

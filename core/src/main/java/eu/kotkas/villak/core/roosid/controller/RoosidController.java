@@ -22,7 +22,9 @@ public class RoosidController {
     @SendTo("/roosid_response")
     public Game message(List<Message> messages) {
         log.info(messages);
-        return roosidService.getNextState(messages);
+        Game nextState = roosidService.getNextState(messages);
+        nextState.setLatestMessages(messages);
+        return nextState;
     }
 
 }

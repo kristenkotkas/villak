@@ -6,7 +6,12 @@
       </app-card>
     </div>
     <div class="flip-box-back">
-      <app-card [value]="answer.answer"></app-card>
+      <app-card>
+        <div class="row answer-block">
+          <div class="col answer" style="flex: 3">{{answer.answer}}</div>
+          <div class="col amount">{{answer.amount}}</div>
+        </div>
+      </app-card>
     </div>
   </div>
 </div>

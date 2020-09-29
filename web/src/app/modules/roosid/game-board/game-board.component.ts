@@ -11,9 +11,7 @@ import {Answer} from "../model/answer";
 export class GameBoardComponent implements OnInit, OnChanges {
 
   @Input() game: Game;
-  slotsPerColumn: number;
-  firstColumnAnswers: Answer[] = [];
-  secondColumnAnswers: Answer[] = [];
+  columnAnswers: Answer[] = [];
 
   constructor() {
   }
@@ -24,21 +22,14 @@ export class GameBoardComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     const activeRound = Util.getActiveRound(this.game);
     if (activeRound) {
-      this.slotsPerColumn = activeRound.answers.length / 2;
-      this.firstColumnAnswers = activeRound.answers.slice(0, this.slotsPerColumn);
-      this.secondColumnAnswers = activeRound.answers.slice(this.slotsPerColumn, activeRound.answers.length);
+      this.columnAnswers = [...activeRound.answers];
+      while (this.columnAnswers.length < 6) {
+        this.columnAnswers.push(new Answer());
+      }
     } else {
-      this.firstColumnAnswers = [
-        new Answer(), new Answer(), new Answer()
-      ];
-      this.secondColumnAnswers = [
-        new Answer(), new Answer(), new Answer()
+      this.columnAnswers = [
+        new Answer(), new Answer(), new Answer(), new Answer(), new Answer(), new Answer()
       ];
     }
   }
-
-  isAnswersPresent(): boolean {
-    return this.firstColumnAnswers.length === 0 && this.secondColumnAnswers.length === 0;
-  }
-
 }

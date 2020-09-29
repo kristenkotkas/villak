@@ -2,23 +2,18 @@
   <div class="col">
     <app-card></app-card>
   </div>
-  <ng-container *ngIf="!isAnswersPresent() else emptyAnswer">
+  <ng-container>
     <div class="col" style="flex: 3">
-      <app-answer-card [answer]="firstColumnAnswers[0]"></app-answer-card>
-      <app-answer-card [answer]="firstColumnAnswers[1]"></app-answer-card>
-      <app-answer-card [answer]="firstColumnAnswers[2]"></app-answer-card>
+      <app-answer-card [answer]="columnAnswers[0]"></app-answer-card>
+      <app-answer-card [answer]="columnAnswers[1]"></app-answer-card>
+      <app-answer-card [answer]="columnAnswers[2]"></app-answer-card>
     </div>
     <div class="col" style="flex: 3">
-      <app-answer-card [answer]="secondColumnAnswers[0]"></app-answer-card>
-      <app-answer-card [answer]="secondColumnAnswers[1]"></app-answer-card>
-      <app-answer-card [answer]="secondColumnAnswers[2]"></app-answer-card>
+      <app-answer-card [answer]="columnAnswers[3]"></app-answer-card>
+      <app-answer-card [answer]="columnAnswers[4]"></app-answer-card>
+      <app-answer-card [answer]="columnAnswers[5]"></app-answer-card>
     </div>
   </ng-container>
-  <ng-template #emptyAnswer>
-    <div class="col" style="flex: 6">
-      <app-card></app-card>
-    </div>
-  </ng-template>
   <div class="col">
     <app-card></app-card>
   </div>

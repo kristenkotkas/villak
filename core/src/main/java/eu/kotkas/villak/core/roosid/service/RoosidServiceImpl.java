@@ -44,7 +44,7 @@ public class RoosidServiceImpl implements RoosidService {
                 Round.builder().id(0).question("Nimeta midagi hääd").multiplayer(1).slots(6).score(0).active(false)
                     .answers(List.of(
                         Answer.builder().id(0).displayNumber(1).state(AnswerState.CLOSED).answer("Pizza").amount(25).build(),
-                        Answer.builder().id(1).displayNumber(2).state(AnswerState.CLOSED).answer("Komm").amount(13).build(),
+                        Answer.builder().id(1).displayNumber(2).state(AnswerState.CLOSED).answer("Nati pikem vastus").amount(13).build(),
                         Answer.builder().id(2).displayNumber(3).state(AnswerState.CLOSED).answer("Sushi").amount(8).build(),
                         Answer.builder().id(3).displayNumber(4).state(AnswerState.CLOSED).answer("Bugi").amount(7).build(),
                         Answer.builder().id(4).displayNumber(5).state(AnswerState.CLOSED).answer("Vaba päev").amount(3).build(),

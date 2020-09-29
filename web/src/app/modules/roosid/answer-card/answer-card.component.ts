@@ -17,7 +17,6 @@ export class AnswerCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('inited answer', this.answer);
   }
 
   isOpened(): boolean {

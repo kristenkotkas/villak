@@ -8,5 +8,9 @@ public enum Action {
     ADD_CURRENT_SCORE_TO_TEAM,
     RESET_SCORE,
     ADD_CROSS,
-    RESET_CROSS
-}
+    RESET_CROSS,
+    PLAY_SHORT_THEME,
+    STOP_SHORT_THEME,
+    PLAY_INTRO,
+    STOP_INTRO
+    }

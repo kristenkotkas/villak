@@ -6,7 +6,7 @@ import {Game} from "../model/game";
 @Injectable()
 export class DataService {
 
-  private data: BehaviorSubject<Game> = new BehaviorSubject(new Game([], []));
+  private data: BehaviorSubject<Game> = new BehaviorSubject(new Game([], [], []));
   currentData = this.data.asObservable();
 
   constructor(private ws: WebsocketService) {

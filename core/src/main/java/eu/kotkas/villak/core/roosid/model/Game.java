@@ -15,4 +15,5 @@ import java.util.List;
 public class Game implements Serializable {
     private List<Team> teams;
     private List<Round> rounds;
+    private List<Message> latestMessages;
 }

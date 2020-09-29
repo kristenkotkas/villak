@@ -5,7 +5,9 @@ import {Action} from "../model/action";
 import {Answer} from "../model/answer";
 import {AnswerState} from "../model/answer-state";
 import {Game} from "../model/game";
+import {Message} from "../model/message";
 import {Round} from "../model/round";
+import {Team} from "../model/team";
 import {Util} from "../util/util";
 
 @Component({
@@ -53,10 +55,12 @@ export class AdminComponent implements OnInit {
   }
 
   toggleAnswer(answerId: number): void {
-    this.ws.send([{
-      action: Action.TOGGLE_ANSWER,
-      id: answerId
-    }]);
+    let messages: Message[] = [{
+        action: Action.TOGGLE_ANSWER,
+        id: answerId
+      }];
+    this.addThreeCrossesMessage(messages);
+    this.ws.send(messages);
   }
 
   isAnswerClosed(answer: Answer): boolean {
@@ -86,10 +90,12 @@ export class AdminComponent implements OnInit {
   }
 
   addCross(teamId: number): void {
-    this.ws.send([{
+    let messages: Message[] = [{
       action: Action.ADD_CROSS,
       id: teamId
-    }]);
+    }];
+    this.addThreeCrossesMessage(messages);
+    this.ws.send(messages);
   }
 
   resetCross(teamId: number): void {
@@ -99,4 +105,37 @@ export class AdminComponent implements OnInit {
     }]);
   }
 
+  isThreeCrosses(game: Game): boolean {
+    return game.teams.filter((team: Team) => team.crossCount === 3).length > 0;
+  }
+
+  private addThreeCrossesMessage(messages: Message[]): void {
+    if (this.isThreeCrosses(this.game)) {
+      messages.push({
+        action: Action.PLAY_SHORT_THEME,
+        id: -1
+      });
+    }
+  }
+
+  stopShortPlayer(): void {
+    this.ws.send([{
+      action: Action.STOP_SHORT_THEME,
+      id: -1
+    }]);
+  }
+
+  playIntro(): void {
+    this.ws.send([{
+      action: Action.PLAY_INTRO,
+      id: -1
+    }]);
+  }
+
+  stopIntro(): void {
+    this.ws.send([{
+      action: Action.STOP_INTRO,
+      id: -1
+    }]);
+  }
 }
