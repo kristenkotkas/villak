@@ -1,0 +1,12 @@
+<div class="flip-box">
+  <div class="flip-box-inner" [ngClass]="{'flip-box-inner-rotate': isOpened()}">
+    <div class="flip-box-front">
+      <app-card>
+        <div *ngIf="answer.displayNumber" class="number">{{answer.displayNumber}}</div>
+      </app-card>
+    </div>
+    <div class="flip-box-back">
+      <app-card [value]="answer.answer"></app-card>
+    </div>
+  </div>
+</div>

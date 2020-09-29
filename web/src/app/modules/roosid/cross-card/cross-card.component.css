@@ -1,0 +1,41 @@
+.flip-box {
+  width: 100%;
+  height: 100%;
+  perspective: 1000px;
+  transform: scale(0.92);
+}
+
+.flip-box-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s;
+  transform-style: preserve-3d;
+}
+
+.flip-box-inner-rotate {
+  transform: rotateX(-90deg);
+}
+
+.flip-box-front,
+.flip-box-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(5em);
+}
+
+.flip-box-back {
+  transform: rotateX(90deg) translateZ(5em);
+}
+
+.cross {
+  font-size: 5rem;
+  font-weight: bolder;
+  color: white;
+  background: darkred;
+  width: 100%;
+  height: 100%;
+}

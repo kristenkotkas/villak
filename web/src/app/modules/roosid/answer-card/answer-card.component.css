@@ -1,0 +1,42 @@
+.flip-box {
+  width: 100%;
+  height: 100%;
+  perspective: 1500px;
+  transform: scale(0.92);
+}
+
+.flip-box-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s;
+  transform-style: preserve-3d;
+}
+
+.flip-box-inner-rotate {
+  transform: rotateX(-90deg);
+}
+
+.flip-box-front,
+.flip-box-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(7em);
+}
+
+.flip-box-back {
+  transform: rotateX(90deg) translateZ(7em);
+}
+
+.number {
+  font-size: 5em;
+  font-weight: bolder;
+  color: #50B750;
+  background: #056839;
+  padding: 0.2em 0.4em;
+  border-radius: 10em;
+  width: 0.8em;
+}

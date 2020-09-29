@@ -1,0 +1,24 @@
+* {
+  font-family: 'Quicksand', sans-serif;
+}
+
+html, body {
+  background: #50B750;
+}
+
+td, th {
+  text-align: center;
+  padding: 0.25em 0.5em;
+  height: 2.5em;
+  border-radius: 0.5em;
+  background: #d6f5d6;
+}
+
+.inactive {
+  opacity: 0.3;
+}
+
+h2 {
+  margin: 0.25em;
+  color: white;
+}
