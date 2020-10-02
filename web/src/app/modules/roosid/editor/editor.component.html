@@ -1,0 +1,90 @@
+<h1>Game editor
+  <button class="admin-play" (click)="saveGame()">Save game</button>
+</h1>
+<ng-container *ngIf="game">
+  <div>
+    <h2>Teams</h2>
+    <table>
+      <tbody>
+      <tr>
+        <th>
+        </th>
+        <th>Id</th>
+        <th>Team name</th>
+      </tr>
+      <tr *ngFor="let team of game.teams">
+        <td>
+          <button class="admin-stop" (click)="deleteTeam(team.id)">X</button>
+        </td>
+        <td>
+          {{team.id}}
+        </td>
+        <td>
+          <input [(ngModel)]="team.name" type="text">
+        </td>
+      </tr>
+      <tr *ngIf="!isTeamsFull()">
+        <td>
+          <button class="admin-play" (click)="addEmptyTeam()">Add</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h2>Rounds</h2>
+    <table>
+      <tbody>
+      <tr>
+        <th>
+        </th>
+        <th>Id</th>
+        <th>Question</th>
+        <th>Multiplayer</th>
+        <th>Answers</th>
+      </tr>
+      <tr *ngFor="let round of game.rounds">
+        <td>
+          <button class="admin-stop" (click)="deleteRound(round.id)">X</button>
+        </td>
+        <td>{{round.id}}</td>
+        <td><input class="long-field" type="text" [(ngModel)]="round.question"></td>
+        <td><input class="short-field" type="number" [(ngModel)]="round.multiplayer"></td>
+        <td>
+          <table>
+            <tbody>
+            <tr>
+              <th>
+              </th>
+              <th>Id</th>
+              <th>Number</th>
+              <th>Answer</th>
+              <th>Amount</th>
+            </tr>
+            <tr *ngFor="let answer of round.answers">
+              <td>
+                <button class="admin-stop" (click)="deleteAnswer(round.id, answer.id)">X</button>
+              </td>
+              <td>{{answer.id}}</td>
+              <td><input class="short-field" [(ngModel)]="answer.displayNumber" type="number"></td>
+              <td><input [(ngModel)]="answer.answer" type="text"></td>
+              <td><input class="short-field" [(ngModel)]="answer.amount" type="number"></td>
+            </tr>
+            <tr *ngIf="!isAnswersFull(round.id)">
+              <td>
+                <button class="admin-play" (click)="addEmptyAnswer(round.id)">Add</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="admin-play" (click)="addEmptyRound()">Add</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>

@@ -27,10 +27,14 @@ export class ScoresComponent implements OnInit, OnChanges {
       if (this.game.teams[0]) {
         this.leftScore = this.game.teams[0].score;
         this.leftTeamName = this.game.teams[0].name;
+      } else {
+        this.leftTeamName = undefined;
       }
       if (this.game.teams[1]) {
         this.rightScore = this.game.teams[1].score;
         this.rightTeamName = this.game.teams[1].name;
+      } else {
+        this.rightTeamName = undefined;
       }
       const activeRound = Util.getActiveRound(this.game);
       if (activeRound) {

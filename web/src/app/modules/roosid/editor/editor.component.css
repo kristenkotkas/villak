@@ -1,0 +1,20 @@
+* {
+  font-family: 'Quicksand', sans-serif;
+}
+
+td, th {
+  text-align: center;
+  padding: 0.25em 0.5em;
+  height: 2.5em;
+  border-radius: 0.5em;
+  background: #d6f5d6;
+  border: #98ca45 solid 1px;
+}
+
+.short-field {
+  width: 3em;
+}
+
+.long-field {
+  width: 30em;
+}

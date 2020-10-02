@@ -3,13 +3,13 @@
     <app-card [value]="leftScore ? leftScore.toString() : ''"></app-card>
   </div>
   <div class="col" style="flex: 2">
-    <app-card [value]="leftTeamName"></app-card>
+    <app-team-card [teamName]="leftTeamName"></app-team-card>
   </div>
   <div class="col">
     <app-card [value]="currentRoundScore ? currentRoundScore.toString() : ''"></app-card>
   </div>
   <div class="col" style="flex: 2">
-    <app-card [value]="rightTeamName"></app-card>
+    <app-team-card [teamName]="rightTeamName"></app-team-card>
   </div>
   <div class="col">
     <app-card [value]="rightScore ? rightScore.toString() : ''"></app-card>

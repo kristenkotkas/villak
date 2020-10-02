@@ -1,0 +1,10 @@
+<div class="flip-box">
+  <div class="flip-box-inner" [ngClass]="{'flip-box-inner-rotate': teamName}">
+    <div class="flip-box-front">
+      <app-card></app-card>
+    </div>
+    <div class="flip-box-back">
+      <app-card [value]="teamName"></app-card>
+    </div>
+  </div>
+</div>

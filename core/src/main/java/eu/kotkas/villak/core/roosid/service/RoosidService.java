@@ -7,6 +7,10 @@ import java.util.List;
 
 public interface RoosidService {
 
+    Game getInitialGame();
+
+    void createGame(Game game);
+
     Game getNextState(List<Message> messages);
 
     Game reduce(Game game, List<Message> messages);

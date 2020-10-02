@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Game implements Serializable {
+    private static final long serialVersionUID = 5911818142075747766L;
     private List<Team> teams;
     private List<Round> rounds;
     private List<Message> latestMessages;

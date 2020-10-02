@@ -9,6 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Message implements Serializable {
+    private static final long serialVersionUID = 4379535559179277332L;
     private Action action;
     private long id;
     private Long payload;

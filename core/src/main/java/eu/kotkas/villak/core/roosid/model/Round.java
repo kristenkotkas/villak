@@ -13,11 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Round implements Serializable {
+    private static final long serialVersionUID = 2320362160409094472L;
     private long id;
     private String question;
     private List<Answer> answers;
     private long multiplayer;
     private long score;
-    private long slots;
     private boolean active;
 }

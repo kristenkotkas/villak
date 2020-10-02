@@ -6,6 +6,5 @@ export class Round {
   answers: Answer[] = undefined;
   multiplayer: number = undefined;
   score: number = undefined;
-  slots: number = undefined;
   active: boolean = undefined;
 }
