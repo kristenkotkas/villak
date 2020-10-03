@@ -13,16 +13,26 @@
       <th colspan="2"></th>
     </tr>
     <tr>
-      <td>BufferSize</td>
+      <td>Buffer size</td>
       <td>
         {{game.settings.bufferSize}}
       </td>
       <td>
-        <button (click)="changeBuffer(1)">▲</button>
+        <button (click)="changeBuffer(-1)">▲</button>
       </td>
       <td>
-        <button (click)="changeBuffer(-1)">▼</button>
+        <button (click)="changeBuffer(1)">▼</button>
       </td>
+    </tr>
+    <tr>
+      <td>Board zoom</td>
+      <td>
+        {{game.settings.boardZoom}}%
+      </td>
+      <td>
+        <button (click)="changeZoom(5)">▲</button></td>
+      <td>
+        <button (click)="changeZoom(-5)">▼</button></td>
     </tr>
     </tbody>
   </table>
@@ -41,8 +51,10 @@
       <td>{{round.question}}</td>
       <td>{{round.multiplayer}} x</td>
       <td>
-        <button *ngIf="!round.active" (click)="setActive(round.id)">Set active</button>
-        <button *ngIf="round.active" (click)="setInActive(round.id)">Set inactive</button>
+        <ng-container *ngIf="isActiveRoundButtonVisible(round.id)">
+          <button *ngIf="!round.active" (click)="setActive(round.id)">Set active</button>
+          <button *ngIf="round.active" (click)="setInActive(round.id)">Set inactive</button>
+        </ng-container>
       </td>
       <td>{{getTeamByTeamId(round.winnerTeamId)?.name}}</td>
     </tr>
@@ -104,7 +116,6 @@
       <td></td>
       <td>{{activeRound.score}}</td>
       <td>
-        <button (click)="setScoreToWin()">Set as score to win</button>
       </td>
     </tr>
     </tbody>

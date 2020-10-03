@@ -9,6 +9,7 @@ export class CardComponent implements OnInit {
 
   @Input() value: string;
   @Input() colored: boolean = false;
+  @Input() red: boolean = false;
 
   @HostBinding('class') class = 'col retro-card';
 

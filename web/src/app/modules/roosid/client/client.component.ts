@@ -28,6 +28,7 @@ export class ClientComponent implements OnInit {
       this.game = game;
       console.log(this.game);
       this.calculateHeights();
+      this.setZoom();
       this.game.latestMessages.forEach((message: Message) => this.handleSoundEvent(message));
     });
   }
@@ -42,6 +43,12 @@ export class ClientComponent implements OnInit {
     this.blockHeights.bottom = 0.15 * fullHeight;
     this.blockHeights.board = 100 - (this.blockHeights.buffer + this.blockHeights.score + this.blockHeights.bottom);
     console.log(this.blockHeights);
+  }
+
+  private setZoom(): void {
+    if (this.game && this.game.settings && this.game.settings.boardZoom) {
+      document.body.style.zoom = `${this.game.settings.boardZoom}%`;
+    }
   }
 
   private handleSoundEvent(message: Message): void {

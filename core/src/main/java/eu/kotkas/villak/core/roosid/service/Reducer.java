@@ -81,6 +81,13 @@ public enum Reducer {
             clone.getSettings().setBufferSize(clone.getSettings().getBufferSize() + message.getPayload());
         }
         return clone;
+    }),
+    CHANGE_ZOOM((game, message) -> {
+        Game clone = SerializationUtils.clone(game);
+        if (clone.getSettings() != null) {
+            clone.getSettings().setBoardZoom(clone.getSettings().getBoardZoom() + message.getPayload());
+        }
+        return clone;
     })
     ;
 

@@ -17,5 +17,6 @@ public enum Action {
     RESET_CROSS_ALL,
     SET_ROUND_WINNER,
     RESTART_GAME,
-    CHANGE_BUFFER
-    }
+    CHANGE_BUFFER,
+    CHANGE_ZOOM
+}

@@ -14,4 +14,5 @@ public class Settings implements Serializable {
     private static final long serialVersionUID = -9005124588894323286L;
 
     private long bufferSize;
+    private long boardZoom = 100;
 }
