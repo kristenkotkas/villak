@@ -22,3 +22,7 @@ h2 {
   margin: 0.25em;
   color: white;
 }
+
+.winner-team {
+  background: greenyellow;
+}

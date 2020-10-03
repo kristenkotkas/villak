@@ -9,7 +9,8 @@ export class TeamCardComponent implements OnInit {
 
   @HostBinding('class') hostClasses = 'col';
 
-  @Input() teamName: string;
+  @Input() value: string;
+  @Input() colored: boolean = false;
 
   constructor() {
   }

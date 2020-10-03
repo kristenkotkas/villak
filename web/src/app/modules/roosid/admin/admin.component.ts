@@ -51,15 +51,20 @@ export class AdminComponent implements OnInit {
     this.ws.send([{
       action: Action.SET_INACTIVE_ROUND,
       id: roundId
-    }]);
+    }, {
+      action: Action.RESET_CROSS_ALL,
+      id: -1
+    }
+    ]);
   }
 
   toggleAnswer(answerId: number): void {
     let messages: Message[] = [{
-        action: Action.TOGGLE_ANSWER,
-        id: answerId
-      }];
+      action: Action.TOGGLE_ANSWER,
+      id: answerId
+    }];
     this.addThreeCrossesMessage(messages);
+    this.addRoundWinnerForCorrectAnswer(messages);
     this.ws.send(messages);
   }
 
@@ -92,9 +97,11 @@ export class AdminComponent implements OnInit {
   addCross(teamId: number): void {
     let messages: Message[] = [{
       action: Action.ADD_CROSS,
-      id: teamId
+      id: teamId,
+      payload: 1
     }];
     this.addThreeCrossesMessage(messages);
+    this.addRoundWinnerForCrosses(teamId, messages);
     this.ws.send(messages);
   }
 
@@ -112,9 +119,13 @@ export class AdminComponent implements OnInit {
   private addThreeCrossesMessage(messages: Message[]): void {
     if (this.isThreeCrosses(this.game)) {
       messages.push({
-        action: Action.PLAY_SHORT_THEME,
-        id: -1
-      });
+          action: Action.PLAY_SHORT_THEME,
+          id: -1
+        }, {
+          action: Action.SET_SCORE_TO_WIN,
+          id: -1
+        }
+      );
     }
   }
 
@@ -136,6 +147,76 @@ export class AdminComponent implements OnInit {
     this.ws.send([{
       action: Action.STOP_INTRO,
       id: -1
+    }]);
+  }
+
+  setScoreToWin(): void {
+    this.ws.send([{
+      action: Action.SET_SCORE_TO_WIN,
+      id: -1
+    }]);
+  }
+
+  private addRoundWinnerForCorrectAnswer(messages: Message[]): void {
+    if (!this.isWinnerPresent() && this.isThreeCrosses(this.game)) {
+      const winnerTeamId = this.game.teams.filter((t: Team) => t.crossCount === 0)[0].id;
+      messages.push({
+          action: Action.SET_ROUND_WINNER,
+          id: winnerTeamId
+        },
+        {
+          action: Action.ADD_CURRENT_SCORE_TO_TEAM,
+          id: winnerTeamId
+        });
+    }
+  }
+
+  private addRoundWinnerForCrosses(teamIdWhoCrossed: number, messages: Message[]): void {
+    if (!this.isWinnerPresent() && this.isThreeCrosses(this.game)) {
+      const winnerTeamId = this.game.teams.filter((t: Team) => t.id !== teamIdWhoCrossed)[0].id;
+      messages.push({
+          action: Action.SET_ROUND_WINNER,
+          id: winnerTeamId
+        },
+        {
+          action: Action.ADD_CURRENT_SCORE_TO_TEAM,
+          id: winnerTeamId
+        },
+        {
+          action: Action.ADD_CROSS,
+          id: teamIdWhoCrossed,
+          payload: 2
+        }
+      );
+    }
+  }
+
+  private isWinnerPresent(): boolean {
+    return this.activeRound && this.activeRound.winnerTeamId !== null && this.activeRound.winnerTeamId !== undefined;
+  }
+
+  isTeamWinner(teamId: number): boolean {
+    return this.activeRound && this.activeRound.winnerTeamId === teamId;
+  }
+
+  getTeamByTeamId(teamId: number): Team {
+    if (teamId !== null && teamId !== undefined) {
+      return this.game.teams.filter((t: Team) => t.id === teamId)[0];
+    }
+  }
+
+  restartGame(): void {
+    this.ws.send([{
+      action: Action.RESTART_GAME,
+      id: -1
+    }]);
+  }
+
+  changeBuffer(value: number): void {
+    this.ws.send([{
+      action: Action.CHANGE_BUFFER,
+      id: -1,
+      payload: value
     }]);
   }
 }

@@ -31,9 +31,9 @@ export class ClientComponent implements OnInit {
     } else if (message.action === Action.ADD_CROSS) {
       this.playSound('roosid_wrong');
     } else if (message.action === Action.PLAY_SHORT_THEME) {
-      this.playSound('roosid_short_theme');
+      this.playSound('roosid_round_winner');
     } else if (message.action === Action.STOP_SHORT_THEME) {
-      this.stopSound('roosid_short_theme');
+      this.stopSound('roosid_round_winner');
     } else if (message.action === Action.PLAY_INTRO) {
       this.playSound('roosid_theme');
     } else if (message.action === Action.STOP_INTRO) {

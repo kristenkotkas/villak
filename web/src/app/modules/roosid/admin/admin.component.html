@@ -1,7 +1,7 @@
 <div>
   <button class="admin-play" (click)="playIntro()">♫ Intro ►</button>
   <button class="admin-stop" (click)="stopIntro()">♫ Intro ■</button>
-  <button class="admin-stop" (click)="stopShortPlayer()">♫ Short ■</button>
+  <button class="admin-stop" (click)="restartGame()">Restart game</button>
 </div>
 <div>
   <h2>Questions</h2>
@@ -11,6 +11,7 @@
       <th>Question</th>
       <th>X</th>
       <th></th>
+      <th>Winner</th>
     </tr>
     <tr [ngClass]="{inactive: !round.active}" *ngFor="let round of getRounds(game)">
       <td>{{round.question}}</td>
@@ -19,6 +20,7 @@
         <button *ngIf="!round.active" (click)="setActive(round.id)">Set active</button>
         <button *ngIf="round.active" (click)="setInActive(round.id)">Set inactive</button>
       </td>
+      <td>{{getTeamByTeamId(round.winnerTeamId)?.name}}</td>
     </tr>
     </tbody>
   </table>
@@ -34,10 +36,11 @@
       <th colspan="2">Crosses</th>
     </tr>
     <tr *ngFor="let team of game.teams">
-      <td>{{team.name}}</td>
+      <td [ngClass]="{'winner-team': isTeamWinner(team.id)}">{{team.name}}</td>
       <td>{{team.score}}</td>
       <td>
-        <button *ngIf="activeRound" (click)="addCurrentToScore(team.id)">Add {{activeRound.score}} to score</button>
+        <button *ngIf="activeRound" (click)="addCurrentToScore(team.id)">Add {{activeRound.scoreToWin}} to score
+        </button>
         <button (click)="resetScore(team.id)">Reset</button>
       </td>
       <td>
@@ -76,7 +79,9 @@
       <td></td>
       <td></td>
       <td>{{activeRound.score}}</td>
-      <td></td>
+      <td>
+        <button (click)="setScoreToWin()">Set as score to win</button>
+      </td>
     </tr>
     </tbody>
   </table>

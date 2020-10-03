@@ -33,6 +33,8 @@ public class RoosidServiceImpl implements RoosidService {
         Game nextState;
         if (currentState == null) {
             nextState = getInitialGame();
+        } else if (messages.size() == 1 && messages.get(0).getAction().equals(Action.RESTART_GAME)) {
+            nextState = reduce(getInitialGame(), messages);
         } else {
             nextState = reduce(currentState, messages);
         }

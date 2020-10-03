@@ -30,3 +30,9 @@
 .flip-box-back {
   transform: rotateX(90deg) translateZ(5em);
 }
+
+.score-panel-box {
+  font-size: 3.5em;
+  color: #ffffff;
+  justify-content: center;
+}

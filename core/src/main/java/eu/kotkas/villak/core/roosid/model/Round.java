@@ -19,5 +19,7 @@ public class Round implements Serializable {
     private List<Answer> answers;
     private long multiplayer;
     private long score;
+    private long scoreToWin;
+    private Long winnerTeamId;
     private boolean active;
 }

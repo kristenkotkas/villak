@@ -8,6 +8,7 @@ import {Component, Input, OnInit, HostBinding} from '@angular/core';
 export class CardComponent implements OnInit {
 
   @Input() value: string;
+  @Input() colored: boolean = false;
 
   @HostBinding('class') class = 'col retro-card';
 

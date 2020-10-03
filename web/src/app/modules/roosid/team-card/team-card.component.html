@@ -1,10 +1,12 @@
 <div class="flip-box">
-  <div class="flip-box-inner" [ngClass]="{'flip-box-inner-rotate': teamName}">
+  <div class="flip-box-inner" [ngClass]="{'flip-box-inner-rotate': value}">
     <div class="flip-box-front">
       <app-card></app-card>
     </div>
     <div class="flip-box-back">
-      <app-card [value]="teamName"></app-card>
+      <app-card [colored]="colored">
+        <div class="score-panel-box">{{value}}</div>
+      </app-card>
     </div>
   </div>
 </div>

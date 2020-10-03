@@ -10,10 +10,18 @@ import org.apache.commons.lang3.SerializationUtils;
 
 public class ReducerHelper {
 
-    static Game getRoundNextStage(Game game, Message message, Consumer<Round> activeRoundMutator) {
+    static Game getRoundNextStage(Game game, Message message, Consumer<Round> roundMutator) {
         Game clone = SerializationUtils.clone(game);
         clone.getRounds().stream()
             .filter(round -> round.getId() == message.getId())
+            .forEach(roundMutator);
+        return clone;
+    }
+
+    static Game getActiveRoundNextStage(Game game, Message message, Consumer<Round> activeRoundMutator) {
+        Game clone = SerializationUtils.clone(game);
+        clone.getRounds().stream()
+            .filter(Round::isActive)
             .forEach(activeRoundMutator);
         return clone;
     }

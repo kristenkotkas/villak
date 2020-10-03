@@ -1,5 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Game} from "../model/game";
+import {Round} from "../model/round";
+import {Team} from "../model/team";
 import {Util} from "../util/util";
 
 @Component({
@@ -13,8 +15,9 @@ export class ScoresComponent implements OnInit, OnChanges {
   leftScore: number;
   rightScore: number;
   currentRoundScore: number;
-  leftTeamName: string;
-  rightTeamName: string;
+  leftTeam: Team;
+  rightTeam: Team;
+  activeRound: Round;
 
   constructor() {
   }
@@ -26,23 +29,28 @@ export class ScoresComponent implements OnInit, OnChanges {
     if (this.game && this.game.teams) {
       if (this.game.teams[0]) {
         this.leftScore = this.game.teams[0].score;
-        this.leftTeamName = this.game.teams[0].name;
+        this.leftTeam = this.game.teams[0];
       } else {
-        this.leftTeamName = undefined;
+        this.leftTeam = undefined;
       }
       if (this.game.teams[1]) {
         this.rightScore = this.game.teams[1].score;
-        this.rightTeamName = this.game.teams[1].name;
+        this.rightTeam = this.game.teams[1];
       } else {
-        this.rightTeamName = undefined;
+        this.rightTeam = undefined;
       }
       const activeRound = Util.getActiveRound(this.game);
       if (activeRound) {
         this.currentRoundScore = activeRound.score;
       } else {
-        this.currentRoundScore = 0;
+        this.currentRoundScore = undefined;
       }
+      this.activeRound = Util.getActiveRound(this.game);
     }
+  }
+
+  isTeamWinner(team: Team): boolean {
+    return this.activeRound && team && this.activeRound.winnerTeamId === team.id;
   }
 
 }

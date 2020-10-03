@@ -1,17 +1,23 @@
 <div class="row">
   <div class="col">
-    <app-card [value]="leftScore ? leftScore.toString() : ''"></app-card>
+    <app-team-card [value]="leftScore?.toString()"
+                   [colored]="isTeamWinner(leftTeam)"
+    ></app-team-card>
   </div>
   <div class="col" style="flex: 2">
-    <app-team-card [teamName]="leftTeamName"></app-team-card>
+    <app-team-card [value]="leftTeam?.name"
+                   [colored]="isTeamWinner(leftTeam)"
+    ></app-team-card>
   </div>
   <div class="col">
-    <app-card [value]="currentRoundScore ? currentRoundScore.toString() : ''"></app-card>
+    <app-team-card [value]="currentRoundScore?.toString()"></app-team-card>
   </div>
   <div class="col" style="flex: 2">
-    <app-team-card [teamName]="rightTeamName"></app-team-card>
+    <app-team-card [value]="rightTeam?.name"
+                   [colored]="isTeamWinner(rightTeam)"></app-team-card>
   </div>
   <div class="col">
-    <app-card [value]="rightScore ? rightScore.toString() : ''"></app-card>
+    <app-team-card [value]="rightScore?.toString()"
+                   [colored]="isTeamWinner(rightTeam)"></app-team-card>
   </div>
 </div>
