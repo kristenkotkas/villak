@@ -13,6 +13,12 @@ import {Message} from "../model/message";
 export class ClientComponent implements OnInit {
 
   game: Game;
+  blockHeights: BlockSizes = {
+    buffer: 0,
+    score: 15,
+    board: 70,
+    bottom: 15
+  };
 
   constructor(private dataService: DataService) {
   }
@@ -21,8 +27,21 @@ export class ClientComponent implements OnInit {
     this.dataService.currentData.subscribe((game: Game) => {
       this.game = game;
       console.log(this.game);
+      this.calculateHeights();
       this.game.latestMessages.forEach((message: Message) => this.handleSoundEvent(message));
     });
+  }
+
+  calculateHeights(): void {
+    let fullHeight = 100;
+    if (this.game.settings) {
+      this.blockHeights.buffer = this.game.settings.bufferSize;
+      fullHeight -= this.game.settings.bufferSize;
+    }
+    this.blockHeights.score = 0.15 * fullHeight;
+    this.blockHeights.bottom = 0.15 * fullHeight;
+    this.blockHeights.board = 100 - (this.blockHeights.buffer + this.blockHeights.score + this.blockHeights.bottom);
+    console.log(this.blockHeights);
   }
 
   private handleSoundEvent(message: Message): void {
@@ -52,4 +71,11 @@ export class ClientComponent implements OnInit {
     player.setAttribute('src', `../../../../assets/sounds/roosid/${sound}.mp3`);
   }
 
+}
+
+interface BlockSizes {
+  buffer: number;
+  score: number;
+  board: number;
+  bottom: number;
 }

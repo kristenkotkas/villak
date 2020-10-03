@@ -1,6 +1,19 @@
-<app-scores style="height: 15%; display: flex" [game]="game"></app-scores>
-<app-game-board style="height: 70%; display: flex" [game]="game"></app-game-board>
-<app-bottom style="height: 15%; display: flex" [game]="game"></app-bottom>
+<div [ngStyle]="{
+height: blockHeights.buffer + '%',
+display: 'flex'
+}" ></div>
+<app-scores [ngStyle]="{
+height: blockHeights.score + '%',
+display: 'flex'
+}" [game]="game"></app-scores>
+<app-game-board [ngStyle]="{
+height: blockHeights.board + '%',
+display: 'flex'
+}"  [game]="game"></app-game-board>
+<app-bottom [ngStyle]="{
+height: blockHeights.bottom + '%',
+display: 'flex'
+}"  [game]="game"></app-bottom>
 
 <audio muted="muted" id="player_roosid_theme" src="../../../../assets/sounds/roosid/roosid_theme.mp3"></audio>
 <audio muted="muted" id="player_roosid_correct" src="../../../../assets/sounds/roosid/roosid_correct.mp3"></audio>

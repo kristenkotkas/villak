@@ -6,6 +6,7 @@ import {Answer} from "../model/answer";
 import {AnswerState} from "../model/answer-state";
 import {Game} from "../model/game";
 import {Round} from "../model/round";
+import {Settings} from "../model/settings";
 import {Team} from "../model/team";
 
 @Component({
@@ -55,7 +56,7 @@ export class EditorComponent implements OnInit {
   private getGame(): void {
     this.gameRepo.getGame().then((game: Game) => {
       console.log(game);
-      this.game = game || new Game([], [], []);
+      this.game = game || new Game([], [], [], new Settings());
       this.evalIdGenerator(game);
     });
   }
