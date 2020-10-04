@@ -44,17 +44,25 @@
     <tr>
       <th>Question</th>
       <th>X</th>
-      <th></th>
+      <th>Answering</th>
       <th>Winner</th>
     </tr>
     <tr [ngClass]="{inactive: !round.active}" *ngFor="let round of getRounds(game)">
-      <td>{{round.question}}</td>
+      <td>
+        <ng-container *ngIf="isActiveRoundButtonVisible(round.id) else question">
+          <button *ngIf="!round.active" (click)="setActive(round.id)">{{round.question}}</button>
+          <button *ngIf="round.active" (click)="setInActive(round.id)">{{round.question}}</button>
+        </ng-container>
+        <ng-template #question>
+          {{round.question}}
+        </ng-template>
+      </td>
       <td>{{round.multiplayer}} x</td>
       <td>
-        <ng-container *ngIf="isActiveRoundButtonVisible(round.id)">
-          <button *ngIf="!round.active" (click)="setActive(round.id)">Set active</button>
-          <button *ngIf="round.active" (click)="setInActive(round.id)">Set inactive</button>
-        </ng-container>
+        <button *ngFor="let team of game.teams"
+                (click)="setTeamAnswering(team.id)"
+                [ngClass]="{'answering': isTeamAnswering(round, team.id)}"
+        >{{team.name}}</button>
       </td>
       <td>{{getTeamByTeamId(round.winnerTeamId)?.name}}</td>
     </tr>

@@ -88,7 +88,8 @@ public enum Reducer {
             clone.getSettings().setBoardZoom(clone.getSettings().getBoardZoom() + message.getPayload());
         }
         return clone;
-    })
+    }),
+    SET_ANSWERING_FOR_ROUND((game, message) -> ReducerHelper.getActiveRoundNextStage(game, message, r -> r.setAnsweringTeamId(message.getId())))
     ;
 
     private final BiFunction<Game, Message, Game> reducer;

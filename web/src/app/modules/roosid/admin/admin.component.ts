@@ -77,10 +77,16 @@ export class AdminComponent implements OnInit {
   }
 
   addCurrentToScore(teamId: number): void {
-    this.ws.send([{
-      action: Action.ADD_CURRENT_SCORE_TO_TEAM,
-      id: teamId
-    }]);
+    this.ws.send([
+      {
+        action: Action.SET_ROUND_WINNER,
+        id: teamId
+      },
+      {
+        action: Action.ADD_CURRENT_SCORE_TO_TEAM,
+        id: teamId
+      }
+    ]);
   }
 
   resetScore(teamId: number): void {
@@ -117,7 +123,7 @@ export class AdminComponent implements OnInit {
   }
 
   private addThreeCrossesMessage(messages: Message[]): void {
-    if (this.isThreeCrosses(this.game)) {
+    if (this.isThreeCrosses(this.game) && !this.activeRound.scoreToWin) {
       messages.push({
           action: Action.PLAY_SHORT_THEME,
           id: -1
@@ -223,6 +229,26 @@ export class AdminComponent implements OnInit {
       id: -1,
       payload: value
     }]);
+  }
+
+  setTeamAnswering(teamId: number): void {
+    if (this.activeRound) {
+      if (this.isTeamAnswering(this.activeRound, teamId)) {
+        this.ws.send([{
+          action: Action.SET_ANSWERING_FOR_ROUND,
+          id: undefined,
+        }]);
+      } else {
+        this.ws.send([{
+          action: Action.SET_ANSWERING_FOR_ROUND,
+          id: teamId,
+        }]);
+      }
+    }
+  }
+
+  isTeamAnswering(round: Round, teamId: number): boolean {
+    return round.answeringTeamId === teamId;
   }
 
 }

@@ -26,3 +26,8 @@ h2 {
 .winner-team {
   background: greenyellow;
 }
+
+.answering {
+  background: #056839;
+  color: #ffffff;
+}

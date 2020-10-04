@@ -18,5 +18,6 @@ public enum Action {
     SET_ROUND_WINNER,
     RESTART_GAME,
     CHANGE_BUFFER,
-    CHANGE_ZOOM
+    CHANGE_ZOOM,
+    SET_ANSWERING_FOR_ROUND
 }

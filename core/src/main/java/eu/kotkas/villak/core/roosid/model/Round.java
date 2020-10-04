@@ -21,5 +21,6 @@ public class Round implements Serializable {
     private long score;
     private long scoreToWin;
     private Long winnerTeamId;
+    private Long answeringTeamId;
     private boolean active;
 }

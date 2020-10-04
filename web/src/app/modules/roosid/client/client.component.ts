@@ -42,7 +42,6 @@ export class ClientComponent implements OnInit {
     this.blockHeights.score = 0.15 * fullHeight;
     this.blockHeights.bottom = 0.15 * fullHeight;
     this.blockHeights.board = 100 - (this.blockHeights.buffer + this.blockHeights.score + this.blockHeights.bottom);
-    console.log(this.blockHeights);
   }
 
   private setZoom(): void {
