@@ -7,7 +7,7 @@ import {Component, HostBinding, OnInit, Input} from '@angular/core';
 })
 export class CrossCardComponent implements OnInit {
 
-  @HostBinding('class') hostClasses = 'col';
+  @HostBinding('class') hostClasses = 'col cross-card';
   @Input() currentCross: number;
   @Input() totalCrosses: number;
 

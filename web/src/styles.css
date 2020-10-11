@@ -9,7 +9,7 @@
 html, body {
   height: 100%;
   width: 100%;
-  background: #98ca45;
+  background: #181818;
 }
 
 .col-content {
@@ -111,3 +111,14 @@ button {
   text-align: center;
 }
 
+.answer-card {
+  margin: 0.4em 0.8em;
+}
+
+.cross-card {
+  margin: 0.1em 0.4em;
+}
+
+.score-card {
+  margin: 0.1em 0.4em;
+}

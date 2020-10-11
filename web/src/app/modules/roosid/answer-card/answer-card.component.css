@@ -2,33 +2,39 @@
   width: 100%;
   height: 100%;
   perspective: 2500px;
-  transform: scale(0.95);
+  /*transform: scale(0.98);*/
 }
 
 .flip-box-inner {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.5s;
+  transition: transform 0.55s;
   transform-style: preserve-3d;
 }
 
 .flip-box-inner-rotate {
-  transform: rotateX(-90deg);
+  transform: rotateX(-180deg);
 }
 
 .flip-box-front,
-.flip-box-back {
+.flip-box-back,
+.flip-box-side {
   position: absolute;
   width: 100%;
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  transform: translateZ(8em);
+  transform: translateZ(3em);
 }
 
 .flip-box-back {
-  transform: rotateX(90deg) translateZ(8em);
+  transform: rotateX(180deg) translateZ(3em);
+}
+
+.flip-box-side {
+  transform: rotateX(90deg) translateZ(3em);
+  height: 6em;
 }
 
 .number {

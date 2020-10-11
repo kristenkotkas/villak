@@ -7,7 +7,7 @@ import {Component, HostBinding, Input, OnInit} from '@angular/core';
 })
 export class TeamCardComponent implements OnInit {
 
-  @HostBinding('class') hostClasses = 'col';
+  @HostBinding('class') hostClasses = 'col score-card';
 
   @Input() value: string;
   @Input() colored: boolean = false;

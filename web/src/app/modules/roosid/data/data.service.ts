@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
+import {Settings} from "../model/settings";
 import {WebsocketService} from './websocket.service';
 import {Game} from "../model/game";
 
 @Injectable()
 export class DataService {
 
-  private data: BehaviorSubject<Game> = new BehaviorSubject(new Game([], [], []));
+  private data: BehaviorSubject<Game> = new BehaviorSubject(new Game([], [], [], new Settings()));
   currentData = this.data.asObservable();
 
   constructor(private ws: WebsocketService) {

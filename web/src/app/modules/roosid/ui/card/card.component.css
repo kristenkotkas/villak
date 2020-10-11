@@ -1,16 +1,19 @@
 .retro-card {
   background: #98ca45;
   flex: auto;
+  border-radius: 1em;
 }
 
 .retro-card-1 {
   background: #0b9444;
   margin: 0.5em;
+  border-radius: 1em;
 }
 
 .retro-card-2 {
   background: #98ca45;
   margin: 0.5em;
+  border-radius: 1em;
 }
 
 .retro-card-3 {
@@ -20,6 +23,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  border-radius: 1em;
 }
 
 .card-text {

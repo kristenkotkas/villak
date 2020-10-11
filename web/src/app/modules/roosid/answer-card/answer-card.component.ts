@@ -11,7 +11,7 @@ export class AnswerCardComponent implements OnInit {
 
   @Input() answer: Answer;
 
-  @HostBinding('class') hostClasses = 'col';
+  @HostBinding('class') hostClasses = 'col answer-card';
 
   constructor() {
   }
