@@ -12,9 +12,9 @@ public class Message implements Serializable {
     private static final long serialVersionUID = 4379535559179277332L;
     private Action action;
     private long id;
-    private Long payload;
+    private Object payload;
 
-    public Message(String action, long id, Long payload) {
+    public Message(String action, long id, Object payload) {
         this.action = Action.valueOf(action);
         this.id = id;
         this.payload = payload;

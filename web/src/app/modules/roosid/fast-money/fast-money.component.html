@@ -1,0 +1,39 @@
+<div [ngStyle]="{
+height: blockHeights.buffer + '%',
+display: 'flex'}"></div>
+
+<div [ngStyle]="{
+height: blockHeights.score + '%',
+display: 'flex'}"></div>
+
+<div [ngStyle]="{
+height: blockHeights.board + '%',
+display: 'flex'}">
+  <div class="row">
+    <ng-container>
+      <div class="col" style="flex: 1"></div>
+      <div class="col" style="flex: 15">
+        <app-fast-money-answer [response]="getQuestion(0)?.firstPlayer"></app-fast-money-answer>
+        <app-fast-money-answer [response]="getQuestion(1)?.firstPlayer"></app-fast-money-answer>
+        <app-fast-money-answer [response]="getQuestion(2)?.firstPlayer"></app-fast-money-answer>
+        <app-fast-money-answer [response]="getQuestion(3)?.firstPlayer"></app-fast-money-answer>
+        <app-fast-money-answer [response]="getQuestion(4)?.firstPlayer"></app-fast-money-answer>
+        <app-fast-money-answer [hidden]="true"></app-fast-money-answer>
+      </div>
+      <div class="col" style="flex: 15">
+        <app-fast-money-answer [response]="getQuestion(0)?.secondPlayer"></app-fast-money-answer>
+        <app-fast-money-answer [response]="getQuestion(1)?.secondPlayer"></app-fast-money-answer>
+        <app-fast-money-answer [response]="getQuestion(2)?.secondPlayer"></app-fast-money-answer>
+        <app-fast-money-answer [response]="getQuestion(3)?.secondPlayer"></app-fast-money-answer>
+        <app-fast-money-answer [response]="getQuestion(4)?.secondPlayer"></app-fast-money-answer>
+        <app-fast-money-answer [response]="getTotalResponse()"></app-fast-money-answer>
+      </div>
+      <div class="col" style="flex: 1"></div>
+    </ng-container>
+  </div>
+</div>
+
+<div [ngStyle]="{
+height: blockHeights.bottom + '%',
+display: 'flex'}">
+</div>

@@ -1,0 +1,10 @@
+<div class="row container">
+  <ng-container *ngIf="!hidden">
+    <div class="col answer">
+      <ng-container *ngIf="response?.questionVisible">{{visibleAnswer}}</ng-container>
+    </div>
+    <div class="col score" [ngClass]="{'blink': shouldBeBlinking()}">
+      <ng-container>{{response?.score}}</ng-container>
+    </div>
+  </ng-container>
+</div>

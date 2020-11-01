@@ -3,7 +3,7 @@ import {Action} from "./action";
 export class Message {
   action: Action = undefined;
   id: number = undefined;
-  payload?: number = undefined;
+  payload?: any = undefined;
 
   constructor(input: any) {
     const json = JSON.parse(input.body);

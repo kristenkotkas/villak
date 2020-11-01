@@ -1,11 +1,25 @@
 package eu.kotkas.villak.core.roosid.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.kotkas.villak.core.roosid.model.Answer;
 import eu.kotkas.villak.core.roosid.model.AnswerState;
+import eu.kotkas.villak.core.roosid.model.FastMoneyAnswerPayload;
+import eu.kotkas.villak.core.roosid.model.FastMoneyPlayerResponse;
 import eu.kotkas.villak.core.roosid.model.Game;
 import eu.kotkas.villak.core.roosid.model.Message;
 import eu.kotkas.villak.core.roosid.model.Round;
+import eu.kotkas.villak.core.util.IdUtil;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.SerializationUtils;
 
@@ -13,15 +27,17 @@ import org.apache.commons.lang3.SerializationUtils;
 public enum Reducer {
 
     GET_CURRENT((game, message) -> game),
-    SET_ACTIVE_ROUND((game, message) -> {
+    SET_ACTIVE_ROUND((game, message) -> ReducerHelper.getRoundNextStage(game, message, r -> r.setActive(true))),
+    SET_INACTIVE_ROUND((game, message) -> ReducerHelper.getRoundNextStage(game, message, r -> r.setActive(false))),
+    SET_FAST_MONEY_ACTIVE((game, message) -> {
         Game clone = SerializationUtils.clone(game);
-        clone.getRounds().forEach(round -> {
-            round.setActive(round.getId() == message.getId());
-        });
+        clone.getFastMoney().setActive(true);
         return clone;
     }),
-    SET_INACTIVE_ROUND((game, message) -> {
-        return ReducerHelper.getRoundNextStage(game, message, r -> r.setActive(false));
+    SET_FAST_MONEY_INACTIVE((game, message) -> {
+        Game clone = SerializationUtils.clone(game);
+        clone.getFastMoney().setActive(false);
+        return clone;
     }),
     TOGGLE_ANSWER((game, message) -> {
         Game clone = ReducerHelper.getAnswerNextStage(game, message, a -> {
@@ -56,7 +72,7 @@ public enum Reducer {
         return ReducerHelper.getTeamNextStage(game, message, t -> t.setScore(0));
     }),
     ADD_CROSS((game, message) -> {
-        return ReducerHelper.getTeamNextStage(game, message, t -> t.setCrossCount(t.getCrossCount() + message.getPayload()));
+        return ReducerHelper.getTeamNextStage(game, message, t -> t.setCrossCount(t.getCrossCount() + ((Integer) message.getPayload())));
     }),
     RESET_CROSS((game, message) -> {
         return ReducerHelper.getTeamNextStage(game, message, t -> t.setCrossCount(0));
@@ -78,18 +94,66 @@ public enum Reducer {
     CHANGE_BUFFER((game, message) -> {
         Game clone = SerializationUtils.clone(game);
         if (clone.getSettings() != null) {
-            clone.getSettings().setBufferSize(clone.getSettings().getBufferSize() + message.getPayload());
+            clone.getSettings().setBufferSize(clone.getSettings().getBufferSize() + ((Integer) message.getPayload()));
         }
         return clone;
     }),
     CHANGE_ZOOM((game, message) -> {
         Game clone = SerializationUtils.clone(game);
         if (clone.getSettings() != null) {
-            clone.getSettings().setBoardZoom(clone.getSettings().getBoardZoom() + message.getPayload());
+            clone.getSettings().setBoardZoom(clone.getSettings().getBoardZoom() + ((Integer) message.getPayload()));
         }
         return clone;
     }),
-    SET_ANSWERING_FOR_ROUND((game, message) -> ReducerHelper.getActiveRoundNextStage(game, message, r -> r.setAnsweringTeamId(message.getId())))
+    SET_ANSWERING_FOR_ROUND((game, message) -> ReducerHelper.getActiveRoundNextStage(game, message, r -> r.setAnsweringTeamId(message.getId()))),
+    SAVE_PLAYER_ANSWERS((game, message) -> {
+        Game clone = SerializationUtils.clone(game);
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<FastMoneyAnswerPayload> payload = objectMapper
+                .readValue(objectMapper.writeValueAsString(message.getPayload()), new TypeReference<List<FastMoneyAnswerPayload>>(){});
+
+            clone.getFastMoney().getQuestions().forEach(q -> {
+                Optional<FastMoneyAnswerPayload> data = payload.stream()
+                    .filter(fastMoneyAnswerPayload -> fastMoneyAnswerPayload.getQuestionId().equals(q.getId()))
+                    .findFirst();
+                if (data.isPresent()) {
+                    q.getFirstPlayer().setId(IdUtil.getId());
+                    q.getFirstPlayer().setAnswer(data.get().getFirstPlayerAnswer());
+                    q.getFirstPlayer().setScore(data.get().getFirstPlayerScore());
+                    q.getSecondPlayer().setId(IdUtil.getId());
+                    q.getSecondPlayer().setAnswer(data.get().getSecondPlayerAnswer());
+                    q.getSecondPlayer().setScore(data.get().getSecondPlayerScore());
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        long currentScore = clone.getFastMoney().getQuestions().stream()
+            .flatMap(q -> Stream.of(q.getFirstPlayer(), q.getSecondPlayer()))
+            .map(FastMoneyPlayerResponse::getScore)
+            .filter(Objects::nonNull)
+            .mapToLong(Long::longValue)
+            .sum();
+
+        clone.getFastMoney().setCurrentScore(currentScore);
+
+        return clone;
+    }),
+    TOGGLE_FAST_MONEY_ANSWER((game, message) -> {
+        Game clone = SerializationUtils.clone(game);
+        clone.getFastMoney().getQuestions().forEach(q -> {
+            if (q.getFirstPlayer().getId() == message.getId()) {
+                q.getFirstPlayer().setQuestionVisible(!q.getFirstPlayer().isQuestionVisible());
+            }
+            if (q.getSecondPlayer().getId() == message.getId()) {
+                q.getSecondPlayer().setQuestionVisible(!q.getSecondPlayer().isQuestionVisible());
+            }
+        });
+        return clone;
+    })
     ;
 
     private final BiFunction<Game, Message, Game> reducer;

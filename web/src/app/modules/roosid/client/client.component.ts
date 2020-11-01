@@ -26,7 +26,6 @@ export class ClientComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.currentData.subscribe((game: Game) => {
       this.game = game;
-      console.log(this.game);
       this.calculateHeights();
       this.setZoom();
       this.game.latestMessages.forEach((message: Message) => this.handleSoundEvent(message));
@@ -63,6 +62,8 @@ export class ClientComponent implements OnInit {
       this.playSound('roosid_theme');
     } else if (message.action === Action.STOP_INTRO) {
       this.stopSound('roosid_theme');
+    } else if (message.action === Action.TOGGLE_FAST_MONEY_ANSWER) {
+      this.playSound('roosid_fast_money_answer_reveal');
     }
   }
 
@@ -77,9 +78,13 @@ export class ClientComponent implements OnInit {
     player.setAttribute('src', `../../../../assets/sounds/roosid/${sound}.mp3`);
   }
 
+  isFastMoneyActive(): boolean {
+    return this.game && this.game.fastMoney && this.game.fastMoney.active;
+  }
+
 }
 
-interface BlockSizes {
+export interface BlockSizes {
   buffer: number;
   score: number;
   board: number;

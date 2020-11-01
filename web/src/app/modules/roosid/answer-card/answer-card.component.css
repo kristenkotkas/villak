@@ -52,14 +52,19 @@
   font-weight: bold;
   color: #ffffff;
   justify-content: center;
+  background: #056839;
+  border-bottom-left-radius: 0.25em;
+  border-top-left-radius: 0.25em;
 }
 
 .amount {
-  background: #056839;
+  background: #05321c;
   font-size: 4em;
   font-weight: normal;
   color: #50B750;
   justify-content: center;
+  border-bottom-right-radius: 0.25em;
+  border-top-right-radius: 0.25em;
 }
 
 .answer-block {

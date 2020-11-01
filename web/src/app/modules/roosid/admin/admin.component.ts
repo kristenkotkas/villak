@@ -4,6 +4,7 @@ import {WebsocketService} from "../data/websocket.service";
 import {Action} from "../model/action";
 import {Answer} from "../model/answer";
 import {AnswerState} from "../model/answer-state";
+import {FastMoneyQuestion} from "../model/fast-money-question";
 import {Game} from "../model/game";
 import {Message} from "../model/message";
 import {Round} from "../model/round";
@@ -28,7 +29,6 @@ export class AdminComponent implements OnInit {
     this.dataService.currentData.subscribe((game: Game) => {
       this.game = game;
       this.activeRound = this.getActiveRound(this.game);
-      console.log(this.game);
     });
   }
 
@@ -44,6 +44,20 @@ export class AdminComponent implements OnInit {
     this.ws.send([{
       action: Action.SET_ACTIVE_ROUND,
       id: roundId
+    }]);
+  }
+
+  setFastMoneyActive(): void {
+    this.ws.send([{
+      action: Action.SET_FAST_MONEY_ACTIVE,
+      id: -1
+    }]);
+  }
+
+  setFastMoneyInActive(): void {
+    this.ws.send([{
+      action: Action.SET_FAST_MONEY_INACTIVE,
+      id: -1
     }]);
   }
 
@@ -223,6 +237,10 @@ export class AdminComponent implements OnInit {
     return this.activeRound ? this.activeRound.id === roundId : true;
   }
 
+  isFastMoneyActive(): boolean {
+    return this.game.fastMoney.active;
+  }
+
   changeZoom(value: number): void {
     this.ws.send([{
       action: Action.CHANGE_ZOOM,
@@ -251,4 +269,40 @@ export class AdminComponent implements OnInit {
     return round.answeringTeamId === teamId;
   }
 
+  savePlayerAnswers(): void {
+    let payload: FastMoneyAnswerPayload[] = [];
+    this.game.fastMoney.questions.forEach((q: FastMoneyQuestion) => {
+      payload.push({
+        questionId: q.id,
+        firstPlayerAnswer: q.firstPlayer.answer,
+        firstPlayerScore: q.firstPlayer.score == -1 ? undefined : q.firstPlayer.score,
+        secondPlayerAnswer: q.secondPlayer.answer,
+        secondPlayerScore: q.secondPlayer.score == -1 ? undefined : q.secondPlayer.score
+      });
+    });
+    this.ws.send([{
+      action: Action.SAVE_PLAYER_ANSWERS,
+      id: -1,
+      payload: payload
+    }]);
+  }
+
+  toggleFastMoneyAnswer(playerId: number): void {
+    this.ws.send([{
+      action: Action.TOGGLE_FAST_MONEY_ANSWER,
+      id: playerId,
+    }]);
+  }
+
+  answerOnChange($event: Event): void {
+    console.log($event);
+  }
+}
+
+interface FastMoneyAnswerPayload {
+  questionId: number;
+  firstPlayerAnswer: string;
+  secondPlayerAnswer: string;
+  firstPlayerScore: number;
+  secondPlayerScore: number;
 }

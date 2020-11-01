@@ -17,6 +17,8 @@ import {ScoresComponent} from './scores/scores.component';
 import {CardComponent} from './ui/card/card.component';
 import { EditorComponent } from './editor/editor.component';
 import { TeamCardComponent } from './team-card/team-card.component';
+import { FastMoneyComponent } from './fast-money/fast-money.component';
+import { FastMoneyAnswerComponent } from './fast-money-answer/fast-money-answer.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { TeamCardComponent } from './team-card/team-card.component';
     AnswerCardComponent,
     CrossCardComponent,
     EditorComponent,
-    TeamCardComponent
+    TeamCardComponent,
+    FastMoneyComponent,
+    FastMoneyAnswerComponent
   ],
   imports: [
     BrowserModule,

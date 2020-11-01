@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
+import {FastMoney} from "../model/fast-money";
 import {Settings} from "../model/settings";
 import {WebsocketService} from './websocket.service';
 import {Game} from "../model/game";
@@ -7,7 +8,7 @@ import {Game} from "../model/game";
 @Injectable()
 export class DataService {
 
-  private data: BehaviorSubject<Game> = new BehaviorSubject(new Game([], [], [], new Settings()));
+  private data: BehaviorSubject<Game> = new BehaviorSubject(new Game([], [], new FastMoney(), [], new Settings()));
   currentData = this.data.asObservable();
 
   constructor(private ws: WebsocketService) {

@@ -18,7 +18,9 @@ td, th {
   opacity: 0.3;
 }
 
-h2 {
+h3,
+h2,
+h1{
   margin: 0.25em;
   color: white;
 }

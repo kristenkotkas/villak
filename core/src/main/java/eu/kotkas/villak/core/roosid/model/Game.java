@@ -18,4 +18,5 @@ public class Game implements Serializable {
     private List<Round> rounds;
     private List<Message> latestMessages;
     private Settings settings;
+    private FastMoney fastMoney;
 }
