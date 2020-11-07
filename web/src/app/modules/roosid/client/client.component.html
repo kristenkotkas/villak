@@ -1,3 +1,17 @@
+<div class="cross-container" [ngClass]="crossClassName">
+  <div [ngStyle]="{
+height: blockHeights.buffer + '%'
+}"></div>
+  <span>
+    <span class="helper"
+    [ngStyle]="{
+    height: (blockHeights.board + blockHeights.score + blockHeights.bottom) + '%'
+    }"
+
+    ></span>
+    <img class="cross" src="../../../../assets/img/cross.svg">
+  </span>
+</div>
 <ng-container *ngIf="isFastMoneyActive() else regularRound">
   <app-fast-money [game]="game"
                   [blockHeights]="blockHeights"></app-fast-money>
@@ -19,15 +33,18 @@ display: 'flex'
 height: blockHeights.bottom + '%',
 display: 'flex'
 }" [game]="game"></app-bottom>
-
 </ng-template>
+
 
 <audio muted="muted" id="player_roosid_theme" src="../../../../assets/sounds/roosid/roosid_theme.mp3"></audio>
 <audio muted="muted" id="player_roosid_correct" src="../../../../assets/sounds/roosid/roosid_correct.mp3"></audio>
 <audio muted="muted" id="player_roosid_wrong" src="../../../../assets/sounds/roosid/roosid_wrong.wav"></audio>
-<audio muted="muted" id="player_roosid_fast_money_answer_reveal" src="../../../../assets/sounds/roosid/roosid_fast_money_answer_reveal.mp3"></audio>
-<audio muted="muted" id="player_roosid_fast_money_points" src="../../../../assets/sounds/roosid/roosid_fast_money_points.mp3"></audio>
-<audio muted="muted" id="player_roosid_fast_money_zero" src="../../../../assets/sounds/roosid/roosid_fast_money_zero.mp3"></audio>
+<audio muted="muted" id="player_roosid_fast_money_answer_reveal"
+       src="../../../../assets/sounds/roosid/roosid_fast_money_answer_reveal.mp3"></audio>
+<audio muted="muted" id="player_roosid_fast_money_points"
+       src="../../../../assets/sounds/roosid/roosid_fast_money_points.mp3"></audio>
+<audio muted="muted" id="player_roosid_fast_money_zero"
+       src="../../../../assets/sounds/roosid/roosid_fast_money_zero.mp3"></audio>
 <audio muted="muted" id="player_roosid_answer_reveal"
        src="../../../../assets/sounds/roosid/roosid_answer_reveal.mp3"></audio>
 <audio muted="muted" id="player_roosid_try_again" src="../../../../assets/sounds/roosid/roosid_try_again.mp3"></audio>

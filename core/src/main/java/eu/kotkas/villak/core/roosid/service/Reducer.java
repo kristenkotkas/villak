@@ -2,6 +2,7 @@ package eu.kotkas.villak.core.roosid.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import eu.kotkas.villak.core.roosid.model.Action;
 import eu.kotkas.villak.core.roosid.model.Answer;
 import eu.kotkas.villak.core.roosid.model.AnswerState;
 import eu.kotkas.villak.core.roosid.model.FastMoneyAnswerPayload;
@@ -131,7 +132,9 @@ public enum Reducer {
         }
         return clone;
     }),
-    SET_ANSWERING_FOR_ROUND((game, message) -> ReducerHelper.getActiveRoundNextStage(game, message, r -> r.setAnsweringTeamId(message.getId()))),
+    SET_ANSWERING_FOR_ROUND((game, message) -> ReducerHelper.getActiveRoundNextStage(game, message, r -> {
+        r.setAnsweringTeamId(message.getId() == -1 ? null : message.getId());
+    })),
     SAVE_PLAYER_ANSWERS((game, message) -> {
         Game clone = SerializationUtils.clone(game);
 

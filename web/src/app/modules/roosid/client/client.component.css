@@ -2,3 +2,33 @@
   font-family: 'Quicksand', sans-serif;
   overflow: hidden;
 }
+
+.cross-container {
+  text-align: center;
+  z-index: 10;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+  display: inline-block;
+  transition: all .2s ease-in-out;
+}
+
+.helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.cross {
+  height: 80%;
+  vertical-align: middle;
+}
+
+.show-cross {
+  transform: scale(1);
+}
+
+.hide-cross {
+  transform: scale(0);
+}

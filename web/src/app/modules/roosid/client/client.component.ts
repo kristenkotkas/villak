@@ -19,6 +19,7 @@ export class ClientComponent implements OnInit {
     board: 70,
     bottom: 15
   };
+  crossClassName: string = 'hide-cross';
 
   constructor(private dataService: DataService) {
   }
@@ -28,7 +29,9 @@ export class ClientComponent implements OnInit {
       this.game = game;
       this.calculateHeights();
       this.setZoom();
-      this.game.latestMessages.forEach((message: Message) => this.handleSoundEvent(message));
+      this.game.latestMessages.forEach((message: Message) => {
+        this.handleEvent(message);
+      });
     });
   }
 
@@ -65,6 +68,16 @@ export class ClientComponent implements OnInit {
     } else if (message.action === Action.TOGGLE_FAST_MONEY_ANSWER) {
       this.playSound('roosid_fast_money_answer_reveal');
     }
+  }
+
+  private handleEvent(message: Message): void {
+    this.handleSoundEvent(message);
+    if (message.action === Action.SHOW_GLOBAL_CROSS) {
+      console.log('global cross');
+      this.crossClassName = 'show-cross';
+      setTimeout(() => this.crossClassName = 'hide-cross', 810);
+    }
+
   }
 
   private playSound(sound: string): void {

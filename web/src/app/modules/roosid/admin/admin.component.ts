@@ -182,17 +182,10 @@ export class AdminComponent implements OnInit {
 
   setTeamAnswering(teamId: number): void {
     if (this.activeRound) {
-      if (this.isTeamAnswering(this.activeRound, teamId)) {
-        this.ws.send([{
-          action: Action.SET_ANSWERING_FOR_ROUND,
-          id: undefined,
-        }]);
-      } else {
-        this.ws.send([{
-          action: Action.SET_ANSWERING_FOR_ROUND,
-          id: teamId,
-        }]);
-      }
+      this.ws.send([{
+        action: Action.SET_ANSWERING_FOR_ROUND,
+        id: teamId,
+      }]);
     }
   }
 
