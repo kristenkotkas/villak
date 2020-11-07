@@ -33,3 +33,13 @@ h1{
   background: #056839;
   color: #ffffff;
 }
+
+.top-bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  font-size: x-large;
+  font-weight: bold;
+  z-index: 1;
+  border: none;
+}

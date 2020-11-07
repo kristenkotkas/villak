@@ -11,14 +11,10 @@ import eu.kotkas.villak.core.roosid.model.Message;
 import eu.kotkas.villak.core.roosid.model.Round;
 import eu.kotkas.villak.core.util.IdUtil;
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.SerializationUtils;
@@ -56,7 +52,7 @@ public enum Reducer {
                     round.setScore(roundScore);
                 }
             });
-        return clone;
+        return ReducerHelper.detectWinner(clone, message);
     }),
     ADD_CURRENT_SCORE_TO_TEAM((game, message) -> {
         Game clone = SerializationUtils.clone(game);
@@ -72,7 +68,38 @@ public enum Reducer {
         return ReducerHelper.getTeamNextStage(game, message, t -> t.setScore(0));
     }),
     ADD_CROSS((game, message) -> {
-        return ReducerHelper.getTeamNextStage(game, message, t -> t.setCrossCount(t.getCrossCount() + ((Integer) message.getPayload())));
+        /**
+         * kui aktiivset tiimi pole, siis üldine rist
+         * kui on olemas aktiivne tiim:
+         *  kui aktiivsel tiimil on 0, 1, 2 risti, siis pannakse aktiivsele tiimile üks juurde
+         *  kui aktiivsel tiimil on 3 risti, siis mitte aktiivne saab kolm risi ja on kaotanud
+         */
+        Game clone = SerializationUtils.clone(game);
+
+        ReducerHelper.getActiveRound(clone)
+            .ifPresent(activeRound -> {
+                ReducerHelper.getCurrentTeam(clone, activeRound.getAnsweringTeamId())
+                    .ifPresent(answeringTeam -> {
+                        if (answeringTeam.getCrossCount() < 3) {
+                            answeringTeam.setCrossCount(answeringTeam.getCrossCount() + 1);
+                        } else {
+                            ReducerHelper.getOppositeTeam(clone, answeringTeam.getId())
+                                .ifPresent(oppositeTeam -> oppositeTeam.setCrossCount(3));
+                        }
+                    });
+                if (activeRound.getWinnerTeamId() == null) {
+                    clone.getLatestMessages().add(new Message(Action.SHOW_GLOBAL_CROSS.name(), -1, null));
+                }
+            });
+/*
+        boolean existsAnsweringTeam = clone.getRounds().stream()
+            .map(Round::getAnsweringTeamId)
+            .anyMatch(Objects::nonNull);
+        if (!existsAnsweringTeam) {
+            clone.getLatestMessages().add(new Message(Action.SHOW_GLOBAL_CROSS.name(), -1, null));
+        }*/
+
+        return ReducerHelper.detectWinner(clone, message);
     }),
     RESET_CROSS((game, message) -> {
         return ReducerHelper.getTeamNextStage(game, message, t -> t.setCrossCount(0));
@@ -90,7 +117,6 @@ public enum Reducer {
     SET_SCORE_TO_WIN((game, message) -> {
         return ReducerHelper.getActiveRoundNextStage(game, message, r -> r.setScoreToWin(r.getScore()));
     }),
-    SET_ROUND_WINNER((game, message) -> ReducerHelper.getActiveRoundNextStage(game, message, r -> r.setWinnerTeamId(message.getId()))),
     CHANGE_BUFFER((game, message) -> {
         Game clone = SerializationUtils.clone(game);
         if (clone.getSettings() != null) {
@@ -112,7 +138,8 @@ public enum Reducer {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             List<FastMoneyAnswerPayload> payload = objectMapper
-                .readValue(objectMapper.writeValueAsString(message.getPayload()), new TypeReference<List<FastMoneyAnswerPayload>>(){});
+                .readValue(objectMapper.writeValueAsString(message.getPayload()), new TypeReference<List<FastMoneyAnswerPayload>>() {
+                });
 
             clone.getFastMoney().getQuestions().forEach(q -> {
                 Optional<FastMoneyAnswerPayload> data = payload.stream()
@@ -153,8 +180,7 @@ public enum Reducer {
             }
         });
         return clone;
-    })
-    ;
+    });
 
     private final BiFunction<Game, Message, Game> reducer;
 

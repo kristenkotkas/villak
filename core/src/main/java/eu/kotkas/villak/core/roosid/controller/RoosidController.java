@@ -5,6 +5,7 @@ import eu.kotkas.villak.core.roosid.model.Message;
 import eu.kotkas.villak.core.roosid.service.RoosidService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -23,8 +24,11 @@ public class RoosidController {
     public Game message(List<Message> messages) {
         log.info(messages);
         Game nextState = roosidService.getNextState(messages);
-        nextState.setLatestMessages(messages);
-        return nextState;
+
+        Game clone = SerializationUtils.clone(nextState);
+        messages.forEach(message -> clone.getLatestMessages().add(message));
+
+        return clone;
     }
 
 }

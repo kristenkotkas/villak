@@ -15,7 +15,6 @@ public enum Action {
     STOP_INTRO,
     SET_SCORE_TO_WIN,
     RESET_CROSS_ALL,
-    SET_ROUND_WINNER,
     RESTART_GAME,
     CHANGE_BUFFER,
     CHANGE_ZOOM,

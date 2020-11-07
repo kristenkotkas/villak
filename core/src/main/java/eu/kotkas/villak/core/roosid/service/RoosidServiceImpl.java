@@ -2,6 +2,7 @@ package eu.kotkas.villak.core.roosid.service;
 
 import eu.kotkas.villak.core.roosid.dao.RoosidDao;
 import eu.kotkas.villak.core.roosid.model.*;
+import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,7 @@ public class RoosidServiceImpl implements RoosidService {
         } else if (messages.size() == 1 && messages.get(0).getAction().equals(Action.RESTART_GAME)) {
             nextState = reduce(getInitialGame(), messages);
         } else {
+            currentState.setLatestMessages(new ArrayList<>());
             nextState = reduce(currentState, messages);
         }
         currentState = nextState;

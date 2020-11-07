@@ -3,6 +3,7 @@
   <button class="admin-stop" (click)="stopIntro()">♫ Intro ■</button>
   <button class="admin-stop" (click)="restartGame()">Restart game</button>
 </div>
+<button class="admin-stop top-bar" (click)="addCross()">X</button>
 <div>
   <h2>Settings</h2>
   <table *ngIf="game.settings">
@@ -61,10 +62,12 @@
       </td>
       <td>{{round.multiplayer}} x</td>
       <td>
-        <button *ngFor="let team of game.teams"
-                (click)="setTeamAnswering(team.id)"
-                [ngClass]="{'answering': isTeamAnswering(round, team.id)}"
-        >{{team.name}}</button>
+        <select (ngModelChange)="setTeamAnswering($event)" name="answering"
+                [(ngModel)]="round.answeringTeamId">
+          <option [value]="-1"></option>
+          <option *ngFor="let team of game.teams"
+                  value="{{team.id}}">{{team.name}}</option>
+        </select>
       </td>
       <td>{{getTeamByTeamId(round.winnerTeamId)?.name}}</td>
     </tr>
@@ -90,22 +93,16 @@
     <tbody>
     <tr>
       <th>Name</th>
-      <th colspan="2">Score</th>
-      <th colspan="2">Crosses</th>
+      <th>Score</th>
+      <th>Crosses</th>
     </tr>
     <tr *ngFor="let team of game.teams">
       <td [ngClass]="{'winner-team': isTeamWinner(team.id)}">{{team.name}}</td>
       <td>{{team.score}}</td>
       <td>
-        <button *ngIf="activeRound" (click)="addCurrentToScore(team.id)">Add {{activeRound.scoreToWin}} to score
-        </button>
-        <button (click)="resetScore(team.id)">Reset</button>
-      </td>
-      <td>
         <span>{{getCrosses(team.crossCount)}}</span>
       </td>
       <td>
-        <button (click)="addCross(team.id)">Add</button>
         <button (click)="resetCross(team.id)">Reset</button>
       </td>
     </tr>
@@ -122,7 +119,6 @@
       <th>Number</th>
       <th>Answer</th>
       <th>Amount</th>
-      <th></th>
     </tr>
     <tr *ngFor="let answer of activeRound.answers"
         [ngClass]="{inactive: isAnswerClosed(answer)}">
