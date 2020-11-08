@@ -189,10 +189,6 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  isTeamAnswering(round: Round, teamId: number): boolean {
-    return round.answeringTeamId === teamId;
-  }
-
   savePlayerAnswers(): void {
     let payload: FastMoneyAnswerPayload[] = [];
     this.game.fastMoney.questions.forEach((q: FastMoneyQuestion) => {
@@ -218,9 +214,13 @@ export class AdminComponent implements OnInit {
     }]);
   }
 
-  answerOnChange($event: Event): void {
-    console.log($event);
+  toggleFirstPlayerVisible(): void {
+    this.ws.send([{
+      action: Action.TOGGLE_FIRST_PLAYER_VISIBLE,
+      id: -1,
+    }]);
   }
+
 }
 
 interface FastMoneyAnswerPayload {

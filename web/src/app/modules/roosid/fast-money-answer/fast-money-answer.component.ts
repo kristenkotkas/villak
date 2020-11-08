@@ -11,6 +11,7 @@ export class FastMoneyAnswerComponent implements OnInit, OnChanges {
 
   @Input() response: FastMoneyPlayerResponse;
   @Input() hidden: boolean;
+  @Input() valuesHidden: boolean;
   visibleAnswer: string = '';
 
   @HostBinding('class') hostClasses = 'col';

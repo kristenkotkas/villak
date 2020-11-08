@@ -4,4 +4,5 @@ export class FastMoney {
   questions: FastMoneyQuestion[] = undefined;
   currentScore: number = undefined;
   active: boolean = undefined;
+  hideFirstPlayerScore: boolean = undefined;
 }

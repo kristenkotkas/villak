@@ -142,7 +142,11 @@
 </div>
 
 <div *ngIf="isFastMoneyActive()">
-  <h2>Fast money</h2>
+  <h2>Fast money
+    <button (click)="toggleFirstPlayerVisible()">{{
+      game?.fastMoney?.hideFirstPlayerScore ? 'Show first player answers' : 'Hide first player answers'
+      }}</button>
+  </h2>
   <table>
     <tbody>
     <tr>

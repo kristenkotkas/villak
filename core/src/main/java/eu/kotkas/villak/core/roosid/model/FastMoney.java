@@ -16,4 +16,5 @@ public class FastMoney implements Serializable {
     private List<FastMoneyQuestion> questions;
     private long currentScore;
     private boolean active;
+    private boolean hideFirstPlayerScore;
 }

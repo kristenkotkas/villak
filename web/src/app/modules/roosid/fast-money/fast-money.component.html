@@ -13,11 +13,11 @@ display: 'flex'}">
     <ng-container>
       <div class="col" style="flex: 1"></div>
       <div class="col" style="flex: 15">
-        <app-fast-money-answer [response]="getQuestion(0)?.firstPlayer"></app-fast-money-answer>
-        <app-fast-money-answer [response]="getQuestion(1)?.firstPlayer"></app-fast-money-answer>
-        <app-fast-money-answer [response]="getQuestion(2)?.firstPlayer"></app-fast-money-answer>
-        <app-fast-money-answer [response]="getQuestion(3)?.firstPlayer"></app-fast-money-answer>
-        <app-fast-money-answer [response]="getQuestion(4)?.firstPlayer"></app-fast-money-answer>
+        <app-fast-money-answer [valuesHidden]="game?.fastMoney?.hideFirstPlayerScore" [response]="getQuestion(0)?.firstPlayer"></app-fast-money-answer>
+        <app-fast-money-answer [valuesHidden]="game?.fastMoney?.hideFirstPlayerScore" [response]="getQuestion(1)?.firstPlayer"></app-fast-money-answer>
+        <app-fast-money-answer [valuesHidden]="game?.fastMoney?.hideFirstPlayerScore" [response]="getQuestion(2)?.firstPlayer"></app-fast-money-answer>
+        <app-fast-money-answer [valuesHidden]="game?.fastMoney?.hideFirstPlayerScore" [response]="getQuestion(3)?.firstPlayer"></app-fast-money-answer>
+        <app-fast-money-answer [valuesHidden]="game?.fastMoney?.hideFirstPlayerScore" [response]="getQuestion(4)?.firstPlayer"></app-fast-money-answer>
         <app-fast-money-answer [hidden]="true"></app-fast-money-answer>
       </div>
       <div class="col" style="flex: 15">

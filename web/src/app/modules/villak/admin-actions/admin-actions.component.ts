@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DataService} from '../common/data.service';
 import {Util} from '../../common/util';
 import {WebsocketService} from '../common/websocket.service';
 import {Action} from '../game-data/model/action';
