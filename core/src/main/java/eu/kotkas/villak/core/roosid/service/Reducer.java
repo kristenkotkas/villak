@@ -69,37 +69,27 @@ public enum Reducer {
         return ReducerHelper.getTeamNextStage(game, message, t -> t.setScore(0));
     }),
     ADD_CROSS((game, message) -> {
-        /**
-         * kui aktiivset tiimi pole, siis üldine rist
-         * kui on olemas aktiivne tiim:
-         *  kui aktiivsel tiimil on 0, 1, 2 risti, siis pannakse aktiivsele tiimile üks juurde
-         *  kui aktiivsel tiimil on 3 risti, siis mitte aktiivne saab kolm risi ja on kaotanud
-         */
         Game clone = SerializationUtils.clone(game);
 
-        ReducerHelper.getActiveRound(clone)
-            .ifPresent(activeRound -> {
-                ReducerHelper.getCurrentTeam(clone, activeRound.getAnsweringTeamId())
-                    .ifPresent(answeringTeam -> {
-                        if (answeringTeam.getCrossCount() < 3) {
-                            answeringTeam.setCrossCount(answeringTeam.getCrossCount() + 1);
-                        } else {
-                            ReducerHelper.getOppositeTeam(clone, answeringTeam.getId())
-                                .ifPresent(oppositeTeam -> oppositeTeam.setCrossCount(3));
-                        }
-                    });
-                if (activeRound.getWinnerTeamId() == null) {
-                    clone.getLatestMessages().add(new Message(Action.SHOW_GLOBAL_CROSS.name(), -1, null));
-                }
-            });
-/*
-        boolean existsAnsweringTeam = clone.getRounds().stream()
-            .map(Round::getAnsweringTeamId)
-            .anyMatch(Objects::nonNull);
-        if (!existsAnsweringTeam) {
-            clone.getLatestMessages().add(new Message(Action.SHOW_GLOBAL_CROSS.name(), -1, null));
-        }*/
+        Optional<Round> activeRoundOptional = ReducerHelper.getActiveRound(clone);
 
+        if (activeRoundOptional.isPresent()) {
+            Round activeRound = activeRoundOptional.get();
+            ReducerHelper.getCurrentTeam(clone, activeRound.getAnsweringTeamId())
+                .ifPresent(answeringTeam -> {
+                    if (answeringTeam.getCrossCount() < 3) {
+                        answeringTeam.setCrossCount(answeringTeam.getCrossCount() + 1);
+                    } else {
+                        ReducerHelper.getOppositeTeam(clone, answeringTeam.getId())
+                            .ifPresent(oppositeTeam -> oppositeTeam.setCrossCount(3));
+                    }
+                });
+            if (activeRound.getWinnerTeamId() == null) {
+                clone.getLatestMessages().add(new Message(Action.SHOW_GLOBAL_CROSS.name(), -1, null));
+            }
+        } else {
+            clone.getLatestMessages().add(new Message(Action.SHOW_GLOBAL_CROSS.name(), -1, null));
+        }
         return ReducerHelper.detectWinner(clone, message);
     }),
     RESET_CROSS((game, message) -> {

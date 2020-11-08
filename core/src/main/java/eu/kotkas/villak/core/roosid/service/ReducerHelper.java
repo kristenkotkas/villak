@@ -58,18 +58,14 @@ public class ReducerHelper {
                             boolean existsUnOpenedAnswers = round.getAnswers().stream()
                                 .anyMatch(answer -> answer.getState().equals(AnswerState.CLOSED));
                             if (!existsUnOpenedAnswers) {
-                                round.setWinnerTeamId(answeringTeam.getId());
-                                round.setScoreToWin(round.getScore());
-                                addWinnerScore(clone);
+                                updateWinner(clone, round, answeringTeam);
                             }
                         } else {
                             clone.getTeams().stream()
                                 .filter(team -> team.getId() != round.getAnsweringTeamId())
                                 .findFirst()
                                 .ifPresent(nonAnsweringTeam -> {
-                                    round.setWinnerTeamId(nonAnsweringTeam.getId());
-                                    round.setScoreToWin(round.getScore());
-                                    addWinnerScore(clone);
+                                    updateWinner(clone, round, nonAnsweringTeam);
                                 });
                         }
                     }
@@ -77,14 +73,18 @@ public class ReducerHelper {
                         getOppositeTeam(clone, answeringTeam.getId())
                             .ifPresent(oppositeTeam -> {
                                 if (oppositeTeam.getCrossCount() == 3) {
-                                    round.setWinnerTeamId(answeringTeam.getId());
-                                    round.setScoreToWin(round.getScore());
-                                    addWinnerScore(clone);
+                                    updateWinner(clone, round, answeringTeam);
                                 }
                             });
                     }
                 }));
         return clone;
+    }
+
+    private static void updateWinner(Game clone, Round round, Team answeringTeam) {
+        round.setWinnerTeamId(answeringTeam.getId());
+        round.setScoreToWin(round.getScore());
+        addWinnerScore(clone);
     }
 
     private static void addWinnerScore(Game clone) {

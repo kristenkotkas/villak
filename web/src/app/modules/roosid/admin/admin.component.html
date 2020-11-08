@@ -150,8 +150,6 @@
       </th>
       <th>First
       </th>
-      <th>Second
-      </th>
     </tr>
     <tr *ngFor="let question of game.fastMoney.questions">
       <td>{{question.question}}</td>
@@ -168,6 +166,12 @@
           {{question.firstPlayer.questionVisible ? 'Hide' : 'Show'}}
         </button>
       </td>
+    </tr>
+    <tr>
+      <td colspan="2">II player</td>
+    </tr>
+    <tr *ngFor="let question of game.fastMoney.questions">
+      <td>{{question.question}}</td>
       <td [ngClass]="{hidden: !question.secondPlayer.questionVisible}">
         <input (change)="savePlayerAnswers()" type="text" [(ngModel)]="question.secondPlayer.answer">
         <select (change)="savePlayerAnswers()" name="answers" [(ngModel)]="question.secondPlayer.score">
