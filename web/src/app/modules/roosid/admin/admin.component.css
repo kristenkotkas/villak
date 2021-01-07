@@ -20,7 +20,7 @@ td, th {
 
 h3,
 h2,
-h1{
+h1 {
   margin: 0.25em;
   color: white;
 }
@@ -36,12 +36,17 @@ h1{
 
 .top-bar {
   position: fixed;
-  top: 0;
+  bottom: 0;
   right: 0;
+  left: 0;
   font-size: x-large;
   font-weight: bold;
   z-index: 1;
   border: none;
+  background: #ffffffaa;
+  text-align: center;
+  padding: 0.2em 0;
+  backdrop-filter: blur(10px);
 }
 
 .editor {

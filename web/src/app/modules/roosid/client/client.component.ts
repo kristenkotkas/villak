@@ -64,7 +64,8 @@ export class ClientComponent implements OnInit {
     } else if (message.action === Action.PLAY_INTRO) {
       this.playSound('roosid_theme');
     } else if (message.action === Action.STOP_INTRO) {
-      this.stopSound('roosid_theme');
+      this.playSound('roosid_stop_outro');
+      setTimeout(() => this.stopSound('roosid_theme'), 500);
     } else if (message.action === Action.TOGGLE_FAST_MONEY_ANSWER) {
       this.playSound('roosid_fast_money_answer_reveal');
     }

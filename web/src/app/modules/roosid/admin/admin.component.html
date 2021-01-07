@@ -2,9 +2,8 @@
   <button (click)="toggleEditor()">Edit</button>
   <button class="admin-play" (click)="playIntro()">♫ Intro ►</button>
   <button class="admin-stop" (click)="stopIntro()">♫ Intro ■</button>
-  <button class="admin-stop" (click)="restartGame()">Restart game</button>
+  <button class="admin-stop cross-btn" (click)="addCross()">X</button>
 </div>
-<button class="admin-stop top-bar" (click)="addCross()">X</button>
 <div>
   <h2>Settings</h2>
   <table *ngIf="game.settings">
@@ -193,4 +192,10 @@
     </tr>
     </tbody>
   </table>
+</div>
+<div style="height: 10em">
+
+</div>
+<div *ngIf="editorVisible" class="editor">
+  <button class="admin-stop" (click)="restartGame()">☠</button>
 </div>
