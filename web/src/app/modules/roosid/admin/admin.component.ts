@@ -20,6 +20,8 @@ export class AdminComponent implements OnInit {
 
   game: Game;
   activeRound: Round;
+  // todo: kristen - muuta vääraks
+  editorVisible: boolean = false;
 
   constructor(private dataService: DataService,
               private ws: WebsocketService) {
@@ -221,6 +223,9 @@ export class AdminComponent implements OnInit {
     }]);
   }
 
+  toggleEditor(): void {
+    this.editorVisible = !this.editorVisible;
+  }
 }
 
 interface FastMoneyAnswerPayload {
