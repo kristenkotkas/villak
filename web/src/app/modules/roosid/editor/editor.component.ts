@@ -69,12 +69,8 @@ export class EditorComponent implements OnInit {
         boardZoom: 100
       };
     }
-    if (!this.game.fastMoney) {
-      this.game.fastMoney = {
-        questions: [],
-        currentScore: 0,
-        active: false
-      };
+    if (!this.game.fastMoney.questions) {
+      this.game.fastMoney.questions = [];
     }
     this.gameRepo.createGame(this.game).then(() => {
       this.getGame();
@@ -160,7 +156,9 @@ export class EditorComponent implements OnInit {
     question.answers = [];
     question.firstPlayer = new FastMoneyPlayerResponse();
     question.secondPlayer = new FastMoneyPlayerResponse();
-    this.game.fastMoney.questions.push(question);
+    if (this.game.fastMoney.questions) {
+      this.game.fastMoney.questions.push(question);
+    }
   }
 
   deleteFastQuestion(fastQuestionId: number): void {

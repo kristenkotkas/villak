@@ -159,6 +159,10 @@ public enum Reducer {
             .sum();
 
         clone.getFastMoney().setCurrentScore(currentScore);
+        if (game.getFastMoney() != null && game.getFastMoney().getCurrentScore() < 200
+            && clone.getFastMoney() != null && clone.getFastMoney().getCurrentScore() >= 200) {
+            clone.getLatestMessages().add(new Message(Action.PLAY_SHORT_THEME.name(), -1, null));
+        }
 
         return clone;
     }),
@@ -172,6 +176,11 @@ public enum Reducer {
                 q.getSecondPlayer().setQuestionVisible(!q.getSecondPlayer().isQuestionVisible());
             }
         });
+        return clone;
+    }),
+    TOGGLE_FIRST_PLAYER_VISIBLE((game, message) -> {
+        Game clone = SerializationUtils.clone(game);
+        clone.getFastMoney().setHideFirstPlayerScore(!clone.getFastMoney().isHideFirstPlayerScore());
         return clone;
     });
 
