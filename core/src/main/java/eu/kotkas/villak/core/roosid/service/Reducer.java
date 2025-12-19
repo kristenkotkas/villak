@@ -173,7 +173,15 @@ public enum Reducer {
             }
         });
         return clone;
-    });
+    }),
+    TOGGLE_FIRST_PLAYER_VISIBLE((game, message) -> {
+        Game clone = SerializationUtils.clone(game);
+        clone.getFastMoney().setHideFirstPlayerScore(
+            !clone.getFastMoney().isHideFirstPlayerScore()
+        );
+        return clone;
+    })
+    ;
 
     private final BiFunction<Game, Message, Game> reducer;
 
