@@ -60,4 +60,6 @@ h1 {
 
 .cross-btn {
   margin: 0 0 0 5em ;
+  background: #940b0b;
+  border: none;
 }

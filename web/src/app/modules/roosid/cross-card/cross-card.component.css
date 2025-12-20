@@ -38,6 +38,7 @@
 }
 
 .cross {
+  padding-top: 0.1em;
   font-size: 7.5vh;
   font-weight: bolder;
   color: white;
