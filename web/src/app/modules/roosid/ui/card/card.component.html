@@ -1,6 +1,6 @@
-<div class="col retro-card">
-  <div class="col retro-card-1">
-    <div class="col retro-card-2">
+<div class="col" [ngClass]="{'retro-card': !red, 'retro-card-red': red}">
+  <div class="col" [ngClass]="{'retro-card-1': !red, 'retro-card-red-1': red}">
+    <div class="col" [ngClass]="{'retro-card-2': !red, 'retro-card-red-2': red}">
       <div class="col retro-card-3" [ngClass]="{'colored': colored, 'red': red}">
         <span class="card-text">{{value}}</span>
         <ng-content></ng-content>

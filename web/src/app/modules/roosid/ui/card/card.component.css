@@ -26,6 +26,24 @@
   border-radius: 1em;
 }
 
+.retro-card-red {
+  background: #f40101;
+  flex: auto;
+  border-radius: 1em;
+}
+
+.retro-card-red-1 {
+  background: #940b0b;
+  margin: 0.5em;
+  border-radius: 1em;
+}
+
+.retro-card-red-2 {
+  background: #f40101;
+  margin: 0.5em;
+  border-radius: 1em;
+}
+
 .card-text {
   font-size: 4em;
   font-weight: 300;

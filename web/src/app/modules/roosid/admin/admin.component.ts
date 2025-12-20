@@ -98,7 +98,7 @@ export class AdminComponent implements OnInit {
   }
 
   getCrosses(crossCount: number): string {
-    return 'X '.repeat(crossCount);
+    return '❌ '.repeat(crossCount);
   }
 
   addCross(): void {

@@ -19,6 +19,7 @@ import { EditorComponent } from './editor/editor.component';
 import { TeamCardComponent } from './team-card/team-card.component';
 import { FastMoneyComponent } from './fast-money/fast-money.component';
 import { FastMoneyAnswerComponent } from './fast-money-answer/fast-money-answer.component';
+import {HostComponent} from "./host/host.component";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { FastMoneyAnswerComponent } from './fast-money-answer/fast-money-answer.
     AnswerCardComponent,
     CrossCardComponent,
     EditorComponent,
+    HostComponent,
     TeamCardComponent,
     FastMoneyComponent,
     FastMoneyAnswerComponent

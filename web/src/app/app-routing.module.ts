@@ -5,6 +5,7 @@ import {VillakComponent} from "./modules/villak/villak.component";
 import {RoosidComponent} from "./modules/roosid/roosid.component";
 import {AdminComponent} from "./modules/roosid/admin/admin.component";
 import {ClientComponent} from "./modules/roosid/client/client.component";
+import {HostComponent} from "./modules/roosid/host/host.component";
 
 const appRoutes: Routes = [
   {
@@ -29,6 +30,10 @@ const appRoutes: Routes = [
   {
     path: 'roosid/edit',
     component: EditorComponent
+  },
+  {
+    path: 'roosid/host',
+    component: HostComponent
   }
 ];
 

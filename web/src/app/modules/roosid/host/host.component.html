@@ -1,0 +1,47 @@
+<div class="container">
+  <ng-container *ngIf="activeRound">
+    <h2 *ngIf="activeRound.multiplayer > 1">Kõik punktid korrutatakse <span class="number-highlight">{{activeRound.multiplayer}}</span>ga</h2>
+    <h2>Laual on <span class="number-highlight">{{activeRound.answers.length}}</span> kõige populaarsemat vastust küsimusele:</h2>
+    <div class="question">{{activeRound.question}}</div>
+  </ng-container>
+  <ng-container *ngIf="game.fastMoney.active">
+    <h3>lõppmäng</h3>
+    <div *ngFor="let question of game.fastMoney.questions; let i = index" style="margin-bottom: 3em">
+      <div style="">
+        <h2>{{i+1}}. {{question.question}}</h2>
+        <h3 *ngIf="game.fastMoney.questions[i].secondPlayer.questionVisible"
+            style="opacity: 0.6">
+          <span style="opacity: 0.5">populaarseim: </span>
+          <span>{{question.answers[0].answer}} - {{question.answers[0].score}}p</span>
+        </h3>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<div class="bottom-bar" *ngIf="game">
+  <div *ngIf="game.fastMoney.active" style="margin: 0.5em 0">
+    lõppmängu skoor: {{game.fastMoney.currentScore}}
+  </div>
+  <div class="cross-container" *ngIf="!game.fastMoney.active">
+    <div style="justify-items: center; width: 50%; align-content: end; border-right: solid rgba(96,96,96,0.3)">
+      <div style="width: fit-content; text-wrap-mode:nowrap; margin-bottom: 0.3em">{{game.teams[0].name}}</div>
+      <div style="display: flex; justify-items: center; align-items: center">
+        <div class="score">{{game.teams[0].score}}</div>
+        <div style="width: 5em">
+          <span>{{'❌ '.repeat(game.teams[0].crossCount)}}</span>
+          <span style="opacity: 0.15">{{'❌ '.repeat(3-game.teams[0].crossCount)}}</span>
+        </div>
+      </div>
+    </div>
+    <div style="justify-items: center; width: 50%; align-content: end">
+      <div style="width: fit-content; text-wrap-mode:nowrap; margin-bottom: 0.3em">{{game.teams[1].name}}</div>
+      <div style="display: flex; justify-items: center; align-items: center">
+        <div style="width: 5em">
+          <span>{{'❌ '.repeat(game.teams[1].crossCount)}}</span>
+          <span style="opacity: 0.15">{{'❌ '.repeat(3-game.teams[1].crossCount)}}</span>
+        </div>
+        <div class="score">{{game.teams[1].score}}</div>
+      </div>
+    </div>
+  </div>
+</div>
