@@ -17,4 +17,8 @@ export class GameRepository {
     return this.http.post(`${Util.getApiUrl()}/api/roosid`, game).pipe().toPromise();
   }
 
+  getDownloadLink(): string {
+    return `${Util.getApiUrl()}/api/roosid/download`;
+  }
+
 }

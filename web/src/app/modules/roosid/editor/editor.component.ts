@@ -183,4 +183,8 @@ export class EditorComponent implements OnInit {
       }
     });
   }
+
+  downloadGamePdf(): void {
+    window.open(this.gameRepo.getDownloadLink(), '_blank');
+  }
 }

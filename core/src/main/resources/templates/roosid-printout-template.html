@@ -1,0 +1,100 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: "Quicksand", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .half-section {
+            min-height: 142mm;
+            width: 100%;
+            box-sizing: border-box;
+            padding-left: 15mm;
+            padding-right: 15mm;
+            padding-top: 10mm;
+        }
+
+        .half-section-title {
+            font-size: x-large;
+            margin-bottom: 5mm;
+        }
+
+        .round {
+            margin-bottom: 6mm;
+        }
+
+        .question {
+            font-size: large;
+            font-weight: 600;
+        }
+
+        .num-highlight {
+            font-weight: 700;
+            font-size: large;
+        }
+
+        .fast-score {
+            margin-left: 0;
+        }
+
+        .popular-answer {
+            font-weight: 600;
+        }
+
+        .section-border {
+            border-bottom: dotted;
+        }
+
+        .final-info {
+            margin-bottom: 2mm;
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700" rel="stylesheet"></link>
+</head>
+
+<body>
+<div class="half-section">
+    <div class="half-section-title">põhivoor</div>
+
+    <div th:each="round, stats : ${rounds}" class="round">
+        <span th:if="${round.multiplayer > 1}">Kõik punktid korrutatakse <span class="num-highlight"
+                                                                              th:text="${round.multiplayer}"/>-ga.
+        </span>
+        <span>Lauas on <span class="num-highlight" th:text="${round.answers.size()}"/> kõige populaarsemat vastust
+            küsimusele:
+        </span>
+        <div class="question">
+            <span th:text="${stats.index + 1}"/>. <span th:text="${round.question}"/>
+        </div>
+    </div>
+</div>
+<div th:if="${fastMoneyQuestions.size() > 0}">
+    <div class="section-border"></div>
+    <div class="half-section">
+        <div class="half-section-title">lõpuvoor</div>
+        <div class="final-info">Et lõppmängu võita, on vaja saada kahe mängija peale kokku 200 punkti.</div>
+
+        <div th:each="question, stats: ${fastMoneyQuestions}" class="round">
+            <div class="question">
+                <span th:text="${stats.index + 1}"/>. <span th:text="${question.question}"/>
+            </div>
+            <div class="fast-score">
+                <span>populaarseim vastus:</span>
+                <span class="popular-answer" th:text="${question.answers[0].answer}"/>
+                <span th:text="${question.answers[0].score}"/>p
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

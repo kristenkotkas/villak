@@ -80,6 +80,12 @@ button {
   border: 1px black solid;
 }
 
+.admin-download {
+  background: #4549ef;
+  color: white;
+  border: 1px black solid;
+}
+
 .admin-stop {
   background: #D9534F;
   color: white;
